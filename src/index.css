@@ -1,13 +1,42 @@
+:root {
+  --primary-color: #0dcaf0;
+}
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* background-color: #2b3233; */
+  background-color: #29332e;
+  color: white !important;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+.h1 {
+  font-size: clamp(2rem, 5vw, 3rem) !important;
+}
+
+.h2 {
+  font-size: clamp(1.5rem, 4vw, 2.2rem) !important;
+}
+
+.h3 {
+  font-size: clamp(1.2rem, 3vw, 1.5rem) !important;
+}
+
+.h4 {
+  font-size: clamp(1rem, 2.5vw, 1.2rem) !important;
+}
+
+.h5 {
+  font-size: clamp(0.9rem, 2vw, 1rem) !important;
+}
+
+.h6 {
+  font-size: 0.9rem; /* Set a fixed size for h6 in vw */
 }
