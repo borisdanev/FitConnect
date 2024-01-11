@@ -1,25 +1,27 @@
-import React, { ElementType, ReactElement } from "react";
+import React from "react";
 import Button from "@mui/material/Button";
 import { IconType } from "react-icons";
-import { JsxElement } from "typescript";
-
+import Typography from "@mui/material/Typography";
 interface Props {
   text: string;
-  icon: ReactElement;
+  Icon: IconType;
+  active: string;
 }
-const SideBarLink: React.FC<Props> = ({ text, icon }) => {
+const SideBarLink: React.FC<Props> = ({ text, Icon, active }) => {
   return (
     <Button
-      className="h4"
+      className="h5"
+      variant={active !== text ? "text" : "contained"}
       sx={{
         color: "white",
         width: "100%",
         display: "flex",
         justifyContent: "start",
+        pl: 2,
       }}
     >
-      {icon}
-      {text}
+      <Icon style={{ marginRight: "0.5rem" }} />
+      <Typography className="h5">{text}</Typography>
     </Button>
   );
 };

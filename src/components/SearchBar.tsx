@@ -1,15 +1,18 @@
+import { useState } from "react";
 import { FormEvent } from "react";
 import { IoIosSearch } from "react-icons/io";
 const SearchBar = () => {
+  const [value, setValue] = useState<string>("");
   const handleSubmit = (e: FormEvent): void => {
     e.preventDefault();
-    console.log("somethig");
+    console.log(value);
+    setValue("");
   };
   return (
     <form
       onSubmit={handleSubmit}
       style={{
-        width: "30rem",
+        width: "40rem",
         position: "relative",
         height: "2.5rem",
         fontSize: "1.2rem",
@@ -24,6 +27,7 @@ const SearchBar = () => {
         }}
       />
       <input
+        value={value}
         style={{
           paddingLeft: "10%",
           width: "90%",
@@ -31,6 +35,7 @@ const SearchBar = () => {
           borderRadius: "5rem",
           border: "none",
         }}
+        onChange={(e) => setValue(e.target.value)}
         placeholder="Search"
       />
     </form>

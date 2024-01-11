@@ -8,11 +8,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* background-color: #2b3233; */
   background-color: #29332e;
   color: white !important;
 }
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -38,5 +36,5 @@ code {
 }
 
 .h6 {
-  font-size: 0.9rem; /* Set a fixed size for h6 in vw */
+  font-size: 0.9rem;
 }

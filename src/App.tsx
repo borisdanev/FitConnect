@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "./components/Sidebar";
 import { ThemeProvider } from "@mui/material/styles";
 import { darkTheme } from "./themes/theme";
@@ -10,7 +10,6 @@ const App: React.FC = () => {
         <Sidebar />
         <MainContent />
       </div>
-      //{" "}
     </ThemeProvider>
   );
 };
