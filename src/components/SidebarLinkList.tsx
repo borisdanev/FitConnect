@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { selectView } from "../store";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -8,8 +9,9 @@ import { IoBarbellSharp } from "react-icons/io5";
 import { IoMdSettings } from "react-icons/io";
 import { IoLogOut } from "react-icons/io5";
 import { FaClipboard } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 const SidebarLinkList = () => {
-  const [active, setActive] = useState<string>("Home");
+  const dispatch = useDispatch();
   const links = [
     { text: "Home", icon: IoMdHome },
     {
@@ -17,6 +19,7 @@ const SidebarLinkList = () => {
       icon: IoBarbellSharp,
     },
     { text: "Settings", icon: IoMdSettings },
+    { text: "Profile", icon: FaUser },
     { text: "My Programs", icon: FaClipboard },
   ];
   return (
@@ -31,12 +34,16 @@ const SidebarLinkList = () => {
     >
       <List>
         {links.map((link, i) => (
-          <ListItem key={i} sx={{ p: 0 }} onClick={() => setActive(link.text)}>
-            <SideBarLink text={link.text} Icon={link.icon} active={active} />
+          <ListItem
+            key={i}
+            sx={{ px: 0 }}
+            onClick={() => dispatch(selectView(link.text))}
+          >
+            <SideBarLink text={link.text} Icon={link.icon} />
           </ListItem>
         ))}
       </List>
-      <SideBarLink text={"Log out"} Icon={IoLogOut} active={active} />
+      <SideBarLink text={"Log out"} Icon={IoLogOut} />
     </Box>
   );
 };

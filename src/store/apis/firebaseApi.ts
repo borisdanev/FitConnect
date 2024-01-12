@@ -21,7 +21,8 @@ export const firebaseApi = createApi({
       queryFn: async () => {
         const snapshots = await getDocs(collection(db, "workouts"));
         const data = snapshots.docs.map((doc) => doc.data() as WorkoutModel);
-        data.splice(1, 0, ...data.slice(0, 1));
+        // data.splice(1, 0, ...data.slice(0, 1));
+        data.splice(1, 0, ...Array(10).fill(data[0]));
         return { data };
       },
     }),

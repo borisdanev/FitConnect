@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { rootReducer } from "./rootReducer";
-import { firebaseApi } from "./apis/firebaseApi";
-import { useGetWorkoutsQuery } from "./apis/firebaseApi";
+import { firebaseApi, useGetWorkoutsQuery } from "./apis/firebaseApi";
+import { selectView } from "./slices/viewSlice";
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleWare) =>
@@ -9,5 +9,6 @@ const store = configureStore({
       firebaseApi.middleware,
     ]),
 });
-export { useGetWorkoutsQuery };
+export type RootState = ReturnType<typeof store.getState>;
+export { useGetWorkoutsQuery, selectView };
 export default store;

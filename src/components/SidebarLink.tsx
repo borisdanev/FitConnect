@@ -1,17 +1,19 @@
 import React from "react";
+import { RootState } from "../store";
+import { useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import { IconType } from "react-icons";
 import Typography from "@mui/material/Typography";
 interface Props {
   text: string;
   Icon: IconType;
-  active: string;
 }
-const SideBarLink: React.FC<Props> = ({ text, Icon, active }) => {
+const SideBarLink: React.FC<Props> = ({ text, Icon }) => {
+  const selectedView = useSelector((state: RootState) => state.view.value);
   return (
     <Button
       className="h5"
-      variant={active !== text ? "text" : "contained"}
+      variant={selectedView !== text ? "text" : "contained"}
       sx={{
         color: "white",
         width: "100%",
