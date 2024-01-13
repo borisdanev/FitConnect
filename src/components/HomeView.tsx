@@ -35,7 +35,7 @@ const HomeView: React.FC = () => {
           mt: 5,
           display: "flex",
           justifyContent: "space-between",
-          height: "5rem",
+          height: "8rem",
           alignItems: "center",
           borderRadius: "10px",
           px: 5,
