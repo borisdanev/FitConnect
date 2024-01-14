@@ -17,8 +17,8 @@ const WorkoutList: React.FC = () => {
           ?.filter(
             (workout) => workout.type === type || type === WorkoutType.All
           )
-          .map((workout: WorkoutModel) => (
-            <Grid key={workout.title} item xs={3}>
+          .map((workout: WorkoutModel, i) => (
+            <Grid key={i} item xs={3}>
               <Workout workout={workout} />
             </Grid>
           ))}

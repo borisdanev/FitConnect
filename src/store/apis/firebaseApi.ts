@@ -1,7 +1,14 @@
 import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
 import { initializeApp } from "firebase/app";
-import { collection, getDocs, getFirestore } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  setDoc,
+  doc,
+} from "firebase/firestore";
 import { WorkoutModel } from "../../types/workout.model";
+import { User } from "../../types/user.mode";
 const config = {
   apiKey: "AIzaSyC3SF-qqer9CuVN_TdSu5WolN-68sB7-dM",
   authDomain: "fitconnect-7de1b.firebaseapp.com",
@@ -21,9 +28,16 @@ export const firebaseApi = createApi({
       queryFn: async () => {
         const snapshots = await getDocs(collection(db, "workouts"));
         const data = snapshots.docs.map((doc) => doc.data() as WorkoutModel);
-        // data.splice(1, 0, ...data.slice(0, 1));
         data.splice(1, 0, ...Array(10).fill(data[0]));
         return { data };
+      },
+    }),
+    createUser: builder.mutation<any, User>({
+      queryFn: async (user) => {
+        const docRef = await setDoc(doc(db, "users", user.id), {
+          ...user,
+        });
+        return { data: docRef };
       },
     }),
   }),

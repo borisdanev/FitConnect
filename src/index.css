@@ -15,29 +15,6 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-/* .h1 {
-  font-size: clamp(2rem, 5vw, 3rem) !important;
-}
-
-.h2 {
-  font-size: clamp(1.5rem, 4vw, 2.2rem) !important;
-}
-
-.h3 {
-  font-size: clamp(1.2rem, 3vw, 1.5rem) !important;
-}
-
-.h4 {
-  font-size: clamp(1rem, 2.5vw, 1.2rem) !important;
-}
-
-.h5 {
-  font-size: clamp(0.9rem, 2vw, 1rem) !important;
-}
-
-.h6 {
-  font-size: 0.9rem;
-} */
 .h1 {
   font-size: clamp(2rem, 5vw, 3rem) !important;
   font-weight: 700 !important;
@@ -96,4 +73,28 @@ code {
     rgba(0, 230, 118, 1) 3%,
     rgba(2, 0, 36, 1) 64%
   );
+}
+.form-input {
+  & label {
+    color: rgb(0, 230, 118);
+  }
+
+  & .MuiInput-underline:after {
+    border-bottom-color: rgb(0, 230, 118);
+  }
+
+  & .MuiOutlinedInput-root {
+    color: #29332e !important;
+    fieldset {
+      border-color: rgb(0, 230, 118);
+    }
+
+    &:hover fieldset {
+      border-color: rgb(0, 230, 118);
+    }
+
+    &.Mui-focused fieldset {
+      border-color: rgb(0, 230, 118);
+    }
+  }
 }

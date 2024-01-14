@@ -1,16 +1,10 @@
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import AuthOverlay from "./AuthOverlay";
-import { FormEvent } from "react";
-import { User } from "../types/user.mode";
-import { v4 as uuidv4 } from "uuid";
-const SignupForm: React.FC = () => {
-  const id = uuidv4();
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    console.log(id);
-  };
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+
+const LoginForm = () => {
+  const handleSubmit = () => {};
   return (
     <AuthOverlay>
       <form
@@ -34,21 +28,21 @@ const SignupForm: React.FC = () => {
             width: "100%",
           }}
         >
-          {["First Name", "Last Name", "Email", "Password"].map((item, i) => (
+          {["Email", "Password"].map((item, i) => (
             <TextField
               key={i}
               variant="outlined"
               label={item}
-              sx={{ mt: i === 1 || 2 ? 2 : 0 }}
+              sx={{ my: i === 1 ? 2 : 0 }}
               className="form-input"
             />
           ))}
         </Box>
         <Button type="submit" variant="contained">
-          Sign Up
+          Login
         </Button>
       </form>
     </AuthOverlay>
   );
 };
-export default SignupForm;
+export default LoginForm;

@@ -45,9 +45,7 @@ const HomeView: React.FC = () => {
         <Typography className="h3" sx={{ width: "50%" }}>
           Upload your own workout program and help the community
         </Typography>
-        <Button variant="contained" sx={{ color: "white" }}>
-          Create Program
-        </Button>
+        <Button variant="contained">Create Program</Button>
       </Box>
     </Box>
   );
