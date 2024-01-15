@@ -84,7 +84,7 @@ code {
   }
 
   & .MuiOutlinedInput-root {
-    color: #29332e !important;
+    /* color: #29332e !important; */
     fieldset {
       border-color: rgb(0, 230, 118);
     }

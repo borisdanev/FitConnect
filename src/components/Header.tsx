@@ -52,8 +52,8 @@ const Header = () => {
           Login
         </Button>
       </Box>
-      {openedSignupForm && <SignupForm />}
-      {openedLoginForm && <LoginForm />}
+      {openedSignupForm && <SignupForm setOpenedForm={setOpenedSignupForm} />}
+      {/* {openedLoginForm && <LoginForm />} */}
     </Box>
   );
 };
