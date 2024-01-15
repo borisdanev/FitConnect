@@ -4,8 +4,10 @@ import TextField from "@mui/material/TextField";
 import AuthOverlay from "./AuthOverlay";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { User } from "../types/user.mode";
 import { v4 as uuidv4 } from "uuid";
+import { useCreateUserMutation, useGetEmailsQuery } from "../store";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../store";
 interface FormValues {
   firstName: string;
   lastName: string;
@@ -16,6 +18,9 @@ interface Props {
   setOpenedForm: Function;
 }
 const SignupForm: React.FC<Props> = ({ setOpenedForm }) => {
+  const { data: emailsList } = useGetEmailsQuery();
+  const [createUser] = useCreateUserMutation();
+  const dispatch = useDispatch();
   const initialValues: FormValues = {
     firstName: "",
     lastName: "",
@@ -28,14 +33,28 @@ const SignupForm: React.FC<Props> = ({ setOpenedForm }) => {
     email: Yup.string()
       .email("Invalid email")
       .matches(/@[^.]*\./, "Invalid email")
-      .required("Email is required"),
+      .required("Email is required")
+      .test(
+        "email",
+        "Email is alredy in use",
+        (value) => !emailsList?.includes(value)
+      ),
     password: Yup.string()
       .min(6, "Password must be at least 6 characters")
       .required("Password is required"),
   });
 
-  const id = uuidv4();
-  const handleSubmit = (value: FormValues) => {
+  const handleSubmit = (values: FormValues) => {
+    const { firstName, lastName, email, password } = values;
+    const user = {
+      firstName,
+      lastName,
+      email,
+      password,
+      id: uuidv4(),
+    };
+    createUser(user);
+    dispatch(setCurrentUser(user));
     setOpenedForm(false);
   };
   const formik = useFormik({
@@ -45,18 +64,7 @@ const SignupForm: React.FC<Props> = ({ setOpenedForm }) => {
   });
   return (
     <AuthOverlay setOpenedForm={setOpenedForm}>
-      <form
-        style={{
-          backgroundColor: "#2E4C3E",
-          borderRadius: "0.5rem",
-          display: "flex",
-          padding: "0 1.5rem 1rem 1.5rem",
-          alignItems: "center",
-          flexDirection: "column",
-          width: "20rem",
-        }}
-        onSubmit={formik.handleSubmit}
-      >
+      <form className="auth-form" onSubmit={formik.handleSubmit}>
         <Box
           sx={{
             my: 3,

@@ -9,6 +9,7 @@ import {
 } from "firebase/firestore";
 import { WorkoutModel } from "../../types/workout.model";
 import { User } from "../../types/user.mode";
+import { buildQueries } from "@testing-library/react";
 const config = {
   apiKey: "AIzaSyC3SF-qqer9CuVN_TdSu5WolN-68sB7-dM",
   authDomain: "fitconnect-7de1b.firebaseapp.com",
@@ -32,6 +33,22 @@ export const firebaseApi = createApi({
         return { data };
       },
     }),
+    getUser: builder.query<User, string>({
+      queryFn: async (email) => {
+        const snapshots = await getDocs(collection(db, "users"));
+        const users = snapshots.docs.map((doc) => doc.data() as User);
+        const [data] = users.filter((user) => user.email === email);
+        return { data };
+      },
+    }),
+    getEmails: builder.query<string[], void>({
+      queryFn: async () => {
+        const snapshots = await getDocs(collection(db, "users"));
+        const users = snapshots.docs.map((doc) => doc.data() as User);
+        const data = users.map((user) => user.email);
+        return { data };
+      },
+    }),
     createUser: builder.mutation<any, User>({
       queryFn: async (user) => {
         const docRef = await setDoc(doc(db, "users", user.id), {
@@ -42,4 +59,9 @@ export const firebaseApi = createApi({
     }),
   }),
 });
-export const { useGetWorkoutsQuery } = firebaseApi;
+export const {
+  useGetWorkoutsQuery,
+  useCreateUserMutation,
+  useGetEmailsQuery,
+  useGetUserQuery,
+} = firebaseApi;

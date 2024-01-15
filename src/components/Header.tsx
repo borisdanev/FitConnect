@@ -7,9 +7,15 @@ import SearchBar from "./SearchBar";
 import { IoMail } from "react-icons/io5";
 import SignupForm from "./SignupForm";
 import LoginForm from "./LoginForm";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+import Typography from "@mui/material/Typography";
 const Header = () => {
   const [openedSignupForm, setOpenedSignupForm] = useState<boolean>(false);
   const [openedLoginForm, setOpenedLoginForm] = useState<boolean>(false);
+  const currentUser = useSelector(
+    (state: RootState) => state.currentUser.value
+  );
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -40,20 +46,24 @@ const Header = () => {
           <IoMail />
         </IconButton>
       </Box>
-      <Box sx={{ display: "flex" }}>
-        <Button
-          variant="contained"
-          sx={{ mr: 3 }}
-          onClick={() => setOpenedSignupForm(true)}
-        >
-          Sign Up
-        </Button>
-        <Button variant="outlined" onClick={() => setOpenedLoginForm(true)}>
-          Login
-        </Button>
-      </Box>
+      {!currentUser ? (
+        <Box sx={{ display: "flex" }}>
+          <Button
+            variant="contained"
+            sx={{ mr: 3 }}
+            onClick={() => setOpenedSignupForm(true)}
+          >
+            Sign Up
+          </Button>
+          <Button variant="outlined" onClick={() => setOpenedLoginForm(true)}>
+            Login
+          </Button>
+        </Box>
+      ) : (
+        <Typography>{currentUser.firstName}</Typography>
+      )}
       {openedSignupForm && <SignupForm setOpenedForm={setOpenedSignupForm} />}
-      {/* {openedLoginForm && <LoginForm />} */}
+      {openedLoginForm && <LoginForm setOpenedForm={setOpenedLoginForm} />}
     </Box>
   );
 };
