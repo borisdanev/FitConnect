@@ -43,13 +43,11 @@ const LoginForm: React.FC<Props> = ({ setOpenedForm }) => {
     initialValues,
     validationSchema,
     onSubmit: handleSubmit,
-    validateOnChange: false,
-    validateOnBlur: false,
   });
   const { data } = useGetUserQuery(formik.values.email);
   return (
     <AuthOverlay setOpenedForm={setOpenedForm}>
-      <form className="auth-form" onClick={formik.handleSubmit}>
+      <form className="auth-form" onSubmit={formik.handleSubmit}>
         <Box
           sx={{
             my: 3,

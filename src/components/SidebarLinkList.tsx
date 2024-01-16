@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { selectView } from "../store";
+import { ViewEnum } from "../enums/View";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -13,14 +14,14 @@ import { FaUser } from "react-icons/fa";
 const SidebarLinkList = () => {
   const dispatch = useDispatch();
   const links = [
-    { text: "Home", icon: IoMdHome },
+    { text: ViewEnum.Home, icon: IoMdHome },
     {
-      text: "My Workouts",
+      text: ViewEnum.MyWorkouts,
       icon: IoBarbellSharp,
     },
-    { text: "Settings", icon: IoMdSettings },
-    { text: "Profile", icon: FaUser },
-    { text: "My Programs", icon: FaClipboard },
+    { text: ViewEnum.Settings, icon: IoMdSettings },
+    { text: ViewEnum.Profile, icon: FaUser },
+    { text: ViewEnum.MyPrograms, icon: FaClipboard },
   ];
   return (
     <Box

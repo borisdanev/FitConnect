@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import WorkoutList from "./WorkoutsList";
 const HomeView: React.FC = () => {
   return (
-    <Box>
+    <>
       <Box
         className="gradient"
         sx={{
@@ -42,12 +42,13 @@ const HomeView: React.FC = () => {
         }}
         className="reverse-gradient"
       >
-        <Typography className="h3" sx={{ width: "50%" }}>
-          Upload your own workout program and help the community
+        <Typography className="h3" sx={{ width: "60%" }}>
+          Empower the community with your unique workout program - inspire
+          others to reach their goals!
         </Typography>
         <Button variant="contained">Create Program</Button>
       </Box>
-    </Box>
+    </>
   );
 };
 export default HomeView;

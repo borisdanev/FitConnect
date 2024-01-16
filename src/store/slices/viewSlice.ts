@@ -1,14 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-const initialState: { value: string } = { value: "Home" };
+import { ViewEnum } from "../../enums/View";
+interface State {
+  value: ViewEnum;
+}
+const initialState: State = { value: ViewEnum.Home };
 export const viewSlice = createSlice({
   name: "view",
   initialState,
   reducers: {
-    selectView(state, action: PayloadAction<string>) {
-      console.log(typeof action.payload);
+    selectView(state, action: PayloadAction<ViewEnum>) {
       state.value = action.payload;
-      // return (state.vale = action.payload);
     },
   },
 });
