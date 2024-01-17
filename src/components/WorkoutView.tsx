@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import RatingStars from "./RatingStars";
+import TrainingSessionList from "./TrainingSessionList";
 const WorkoutView: React.FC = () => {
   const workout = useSelector((state: RootState) => state.currentWorkout.value);
   return (
@@ -18,6 +19,7 @@ const WorkoutView: React.FC = () => {
               rating={workout ? workout.rating : 0}
               rates={workout ? workout.rates : 0}
             />
+            <Typography>Created by: {workout?.creator}</Typography>
           </Grid>
           <Grid item xs={4}>
             <Box
@@ -35,7 +37,9 @@ const WorkoutView: React.FC = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={4}></Grid>
+      <Grid item xs={4}>
+        <TrainingSessionList trainingSessions={workout?.training_sessions} />
+      </Grid>
     </Grid>
   );
 };

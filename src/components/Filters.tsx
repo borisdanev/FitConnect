@@ -14,7 +14,7 @@ const Filters: React.FC<Props> = ({ type, setType }) => {
   return (
     <Box sx={{ display: "flex", mb: 4 }}>
       <FormControl>
-        <InputLabel id="demo-simple-select-label">Type</InputLabel>
+        <InputLabel>Type</InputLabel>
         <Select
           value={type}
           onChange={(e: SelectChangeEvent) => setType(e.target.value)}

@@ -17,10 +17,10 @@ const RatingStars: React.FC<Props> = ({ rating, rates }) => {
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <Typography sx={{ mr: 1 }}>{rating}</Typography>
-      {starArr.map((item) => {
-        if (item === "full") return <FaStar style={starStyle} />;
-        if (item === "empty") return <FaRegStar style={starStyle} />;
-        return <FaStarHalfAlt style={starStyle} />;
+      {starArr.map((item, i) => {
+        if (item === "full") return <FaStar key={i} style={starStyle} />;
+        if (item === "empty") return <FaRegStar key={i} style={starStyle} />;
+        return <FaStarHalfAlt key={i} style={starStyle} />;
       })}
       ({rates})
     </Box>
