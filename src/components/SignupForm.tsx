@@ -51,6 +51,7 @@ const SignupForm: React.FC<Props> = ({ setOpenedForm }) => {
       lastName,
       email,
       password,
+      workouts: [],
       id: uuidv4(),
     };
     createUser(user);

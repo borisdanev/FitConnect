@@ -9,7 +9,7 @@ import {
   getDoc,
 } from "firebase/firestore";
 import { WorkoutModel } from "../../types/workout.model";
-import { User } from "../../types/user.mode";
+import { User } from "../../types/user.model";
 import { Exercise } from "../../types/exercise.model";
 const config = {
   apiKey: "AIzaSyC3SF-qqer9CuVN_TdSu5WolN-68sB7-dM",

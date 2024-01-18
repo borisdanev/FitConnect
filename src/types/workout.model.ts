@@ -14,4 +14,5 @@ export interface WorkoutModel {
     name: string;
     exercises: Exercise[];
   }[];
+  id: string;
 }
