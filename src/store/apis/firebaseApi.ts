@@ -6,7 +6,8 @@ import {
   getFirestore,
   setDoc,
   doc,
-  getDoc,
+  arrayUnion,
+  updateDoc,
 } from "firebase/firestore";
 import { WorkoutModel } from "../../types/workout.model";
 import { User } from "../../types/user.model";
@@ -65,6 +66,15 @@ export const firebaseApi = createApi({
         return { data: docRef };
       },
     }),
+    joinWorkout: builder.mutation<any, { workout: WorkoutModel; id: string }>({
+      queryFn: async (args) => {
+        const docRef = doc(db, "users", args.id);
+        await updateDoc(docRef, {
+          workouts: arrayUnion(args.workout),
+        });
+        return { data: docRef };
+      },
+    }),
   }),
 });
 export const {
@@ -73,4 +83,5 @@ export const {
   useGetEmailsQuery,
   useGetUserQuery,
   useGetExercisesQuery,
+  useJoinWorkoutMutation,
 } = firebaseApi;

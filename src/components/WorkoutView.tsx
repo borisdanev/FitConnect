@@ -1,5 +1,12 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import { useSelector, useDispatch } from "react-redux";
+import useIsMember from "../hooks/useIsMember";
+import {
+  RootState,
+  setOpenedSignupForm,
+  useJoinWorkoutMutation,
+  useGetUserQuery,
+  setCurrentUser,
+} from "../store";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -7,9 +14,23 @@ import Button from "@mui/material/Button";
 import RatingStars from "./RatingStars";
 import TrainingSessionList from "./TrainingSessionList";
 const WorkoutView: React.FC = () => {
+  const dispatch = useDispatch();
   const workout = useSelector(
     (state: RootState) => state.currentWorkout.value!
   );
+  const currentUser = useSelector(
+    (state: RootState) => state.currentUser.value!
+  );
+  const { data: user, refetch } = useGetUserQuery(currentUser.email);
+  const isMember = useIsMember(workout.id, currentUser.workouts);
+  const [joinWorkout] = useJoinWorkoutMutation();
+  const handleJoin = () => {
+    if (currentUser) {
+      joinWorkout({ workout, id: currentUser.id });
+      refetch();
+      if (user) dispatch(setCurrentUser(user));
+    } else dispatch(setOpenedSignupForm(true));
+  };
   return (
     <Grid container>
       <Grid item xs={8}>
@@ -29,9 +50,15 @@ const WorkoutView: React.FC = () => {
               }}
             >
               <img src={workout.img_url} alt="workout program cover" />
-              <Button variant="contained" sx={{ width: "100%" }}>
-                Join Now
-              </Button>
+              {!isMember && (
+                <Button
+                  variant="contained"
+                  sx={{ width: "100%", mt: 2 }}
+                  onClick={handleJoin}
+                >
+                  Join Now
+                </Button>
+              )}
             </Box>
           </Grid>
         </Grid>
@@ -39,6 +66,7 @@ const WorkoutView: React.FC = () => {
       <Grid item xs={4}>
         <TrainingSessionList
           trainingSessions={workout.training_sessions}
+          userWorkouts={currentUser ? currentUser.workouts : []}
           id={workout.id}
         />
       </Grid>

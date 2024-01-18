@@ -1,3 +1,10 @@
+import { useDispatch } from "react-redux";
+import {
+  useCreateUserMutation,
+  useGetEmailsQuery,
+  setCurrentUser,
+  setOpenedSignupForm,
+} from "../store";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -5,19 +12,13 @@ import AuthOverlay from "./AuthOverlay";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { v4 as uuidv4 } from "uuid";
-import { useCreateUserMutation, useGetEmailsQuery } from "../store";
-import { useDispatch } from "react-redux";
-import { setCurrentUser } from "../store";
 interface FormValues {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
 }
-interface Props {
-  setOpenedForm: Function;
-}
-const SignupForm: React.FC<Props> = ({ setOpenedForm }) => {
+const SignupForm: React.FC = () => {
   const { data: emailsList } = useGetEmailsQuery();
   const [createUser] = useCreateUserMutation();
   const dispatch = useDispatch();
@@ -56,7 +57,7 @@ const SignupForm: React.FC<Props> = ({ setOpenedForm }) => {
     };
     createUser(user);
     dispatch(setCurrentUser(user));
-    setOpenedForm(false);
+    dispatch(setOpenedSignupForm(false));
   };
   const formik = useFormik({
     initialValues,
@@ -64,7 +65,7 @@ const SignupForm: React.FC<Props> = ({ setOpenedForm }) => {
     onSubmit: handleSubmit,
   });
   return (
-    <AuthOverlay setOpenedForm={setOpenedForm}>
+    <AuthOverlay setOpenedForm={setOpenedSignupForm}>
       <form className="auth-form" onSubmit={formik.handleSubmit}>
         <Box
           sx={{

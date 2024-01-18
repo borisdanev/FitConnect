@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
 import Box from "@mui/material/Box";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -8,6 +6,7 @@ import { Exercise } from "../types/exercise.model";
 import { SelectChangeEvent } from "@mui/material/Select";
 import TrainingSession from "./TrainingSession";
 import useIsMember from "../hooks/useIsMember";
+import { WorkoutModel } from "../types/workout.model";
 import Grid from "@mui/material/Grid";
 import { IoIosLock } from "react-icons/io";
 interface Props {
@@ -15,16 +14,19 @@ interface Props {
     name: string;
     exercises: Exercise[];
   }[];
+  userWorkouts: WorkoutModel[];
   id: string;
 }
-const TrainingSessionList: React.FC<Props> = ({ trainingSessions, id }) => {
+const TrainingSessionList: React.FC<Props> = ({
+  trainingSessions,
+  id,
+  userWorkouts,
+}) => {
   const [value, setValue] = useState<string>(
     trainingSessions ? trainingSessions[0]?.name : ""
   );
-  const currentUser = useSelector(
-    (state: RootState) => state.currentUser.value!
-  );
-  const isMember = useIsMember(id, currentUser?.workouts);
+
+  const isMember = useIsMember(id, userWorkouts!);
   return (
     <Box sx={{ ml: 2 }}>
       <Select

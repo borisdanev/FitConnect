@@ -1,4 +1,5 @@
-import { ChangeEvent, ReactElement } from "react";
+import { ReactElement } from "react";
+import { useDispatch } from "react-redux";
 import Box from "@mui/material/Box";
 import Logo from "../images/FitConnect_logo.webp";
 interface Props {
@@ -6,10 +7,11 @@ interface Props {
   setOpenedForm: Function;
 }
 const AuthOverlay: React.FC<Props> = ({ children, setOpenedForm }) => {
+  const dispatch = useDispatch();
   const handleClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
     if (target.id !== "1") return;
-    setOpenedForm(false);
+    dispatch(setOpenedForm(false));
   };
   return (
     <Box
