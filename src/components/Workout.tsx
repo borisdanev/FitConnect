@@ -19,7 +19,11 @@ const Workout: React.FC<Props> = ({ workout }) => {
   };
   return (
     <Box onClick={handleClick}>
-      <img src={workout.img_url} alt="workout cover image" />
+      <img
+        src={workout.img_url}
+        style={{ maxWidth: "100%", height: "auto" }}
+        alt="workout cover image"
+      />
       <Typography variant="h4" className="h3">
         {workout.title}
       </Typography>

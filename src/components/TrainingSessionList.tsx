@@ -5,8 +5,6 @@ import MenuItem from "@mui/material/MenuItem";
 import { Exercise } from "../types/exercise.model";
 import { SelectChangeEvent } from "@mui/material/Select";
 import TrainingSession from "./TrainingSession";
-import useIsMember from "../hooks/useIsMember";
-import { WorkoutModel } from "../types/workout.model";
 import Grid from "@mui/material/Grid";
 import { IoIosLock } from "react-icons/io";
 interface Props {
@@ -14,21 +12,17 @@ interface Props {
     name: string;
     exercises: Exercise[];
   }[];
-  userWorkouts: WorkoutModel[];
-  id: string;
+  isMember: boolean;
 }
 const TrainingSessionList: React.FC<Props> = ({
   trainingSessions,
-  id,
-  userWorkouts,
+  isMember,
 }) => {
   const [value, setValue] = useState<string>(
     trainingSessions ? trainingSessions[0]?.name : ""
   );
-
-  const isMember = useIsMember(id, userWorkouts!);
   return (
-    <Box sx={{ ml: 2 }}>
+    <Box sx={{ ml: 2, height: "26rem", overflow: "auto" }}>
       <Select
         value={value}
         sx={{

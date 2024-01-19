@@ -9,7 +9,7 @@ export interface WorkoutModel {
   participants: number;
   rates: number;
   type: WorkoutType;
-  timesPerWeek: number;
+  times_per_week: number;
   training_sessions: {
     name: string;
     exercises: Exercise[];

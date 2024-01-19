@@ -9,10 +9,11 @@ import {
 } from "../store";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import RatingStars from "./RatingStars";
+import WorkoutDetails from "./WorkoutDetails";
 import TrainingSessionList from "./TrainingSessionList";
+import MembersChat from "./MembersChat";
+import MembershipBenefits from "./MembershipBenefits";
 const WorkoutView: React.FC = () => {
   const dispatch = useDispatch();
   const workout = useSelector(
@@ -21,36 +22,47 @@ const WorkoutView: React.FC = () => {
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value!
   );
-  const { data: user, refetch } = useGetUserQuery(currentUser.email);
-  const isMember = useIsMember(workout.id, currentUser.workouts);
+  const { data: user, refetch } = useGetUserQuery(
+    currentUser ? currentUser.email : ""
+  );
+  const isMember = useIsMember(workout.id, user ? user.workouts : []);
   const [joinWorkout] = useJoinWorkoutMutation();
   const handleJoin = () => {
     if (currentUser) {
       joinWorkout({ workout, id: currentUser.id });
       refetch();
       if (user) dispatch(setCurrentUser(user));
-    } else dispatch(setOpenedSignupForm(true));
+      return;
+    }
+    dispatch(setOpenedSignupForm(true));
   };
   return (
     <Grid container>
       <Grid item xs={8}>
         <Grid container>
           <Grid item xs={8}>
-            <Typography className="h1">{workout.title}</Typography>
-            <Typography className="h4">{workout.description}</Typography>
-            <RatingStars rating={workout.rating} rates={workout.rates} />
-            <Typography>Created by: {workout.creator}</Typography>
+            <WorkoutDetails
+              title={workout.title}
+              desc={workout.description}
+              rating={workout.rating}
+              rates={workout.rates}
+              members={workout.participants}
+              creator={workout.creator}
+            />
           </Grid>
           <Grid item xs={4}>
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center",
               }}
             >
-              <img src={workout.img_url} alt="workout program cover" />
-              {!isMember && (
+              <img
+                src={workout.img_url}
+                style={{ maxWidth: "100%" }}
+                alt="workout program cover"
+              />
+              {!isMember ? (
                 <Button
                   variant="contained"
                   sx={{ width: "100%", mt: 2 }}
@@ -58,7 +70,12 @@ const WorkoutView: React.FC = () => {
                 >
                   Join Now
                 </Button>
+              ) : (
+                <Button variant="outlined" sx={{ width: "100%", mt: 2 }}>
+                  Start Workout
+                </Button>
               )}
+              <MembershipBenefits timesPerWeek={workout.times_per_week} />
             </Box>
           </Grid>
         </Grid>
@@ -66,9 +83,9 @@ const WorkoutView: React.FC = () => {
       <Grid item xs={4}>
         <TrainingSessionList
           trainingSessions={workout.training_sessions}
-          userWorkouts={currentUser ? currentUser.workouts : []}
-          id={workout.id}
+          isMember={isMember}
         />
+        <MembersChat isMember={isMember} />
       </Grid>
     </Grid>
   );

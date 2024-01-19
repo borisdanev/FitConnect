@@ -5,19 +5,17 @@ import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import SideBarLink from "./SidebarLink";
-import { IoMdHome } from "react-icons/io";
-import { IoBarbellSharp } from "react-icons/io5";
+import { FaHouse, FaDumbbell } from "react-icons/fa6";
 import { IoMdSettings } from "react-icons/io";
 import { IoLogOut } from "react-icons/io5";
-import { FaClipboard } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
+import { FaClipboard, FaUser } from "react-icons/fa";
 const SidebarLinkList = () => {
   const dispatch = useDispatch();
   const links = [
-    { text: ViewEnum.Home, icon: IoMdHome },
+    { text: ViewEnum.Home, icon: FaHouse },
     {
       text: ViewEnum.MyWorkouts,
-      icon: IoBarbellSharp,
+      icon: FaDumbbell,
     },
     { text: ViewEnum.Settings, icon: IoMdSettings },
     { text: ViewEnum.Profile, icon: FaUser },
