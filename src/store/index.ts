@@ -10,6 +10,8 @@ import {
   useJoinWorkoutMutation,
   useSetUserProfilePictureMutation,
   useGetProfilePictureQuery,
+  useSendMessageMutation,
+  useGetMembersChatQuery,
 } from "./apis/firebaseApi";
 import { selectView } from "./slices/viewSlice";
 import { setCurrentUser } from "./slices/userSlice";
@@ -37,5 +39,7 @@ export {
   useJoinWorkoutMutation,
   useSetUserProfilePictureMutation,
   useGetProfilePictureQuery,
+  useSendMessageMutation,
+  useGetMembersChatQuery,
 };
 export default store;

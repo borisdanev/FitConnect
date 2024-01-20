@@ -11,6 +11,7 @@ import SearchBar from "./SearchBar";
 import SignupForm from "./SignupForm";
 import LoginForm from "./LoginForm";
 import Typography from "@mui/material/Typography";
+import ProfilePicture from "./ProfilePicture";
 const Header = () => {
   const dispatch = useDispatch();
 
@@ -72,17 +73,13 @@ const Header = () => {
       ) : (
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography>{currentUser.firstName}</Typography>
-          <Box
-            sx={{
-              ml: 1,
-              borderRadius: "50%",
-              width: "2rem",
-              height: "2rem",
-              bgcolor: "white",
-              position: "relative",
-            }}
-            onClick={() => dispatch(selectView(ViewEnum.Profile))}
-          ></Box>
+          <Box onClick={() => dispatch(selectView(ViewEnum.Profile))}>
+            <ProfilePicture
+              userId={currentUser.id}
+              width="2rem"
+              height="2rem"
+            />
+          </Box>
         </Box>
       )}
       {openedSignupForm && <SignupForm />}

@@ -1,11 +1,19 @@
+import { useSelector } from "react-redux";
+import { useGetMembersChatQuery, RootState } from "../store";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { IoIosLock } from "react-icons/io";
 import ChatMessage from "./ChatMessage";
+import ChatInput from "./ChatInput";
 interface Props {
   isMember: boolean;
 }
 const MembersChat: React.FC<Props> = ({ isMember }) => {
+  const currentWorkout = useSelector(
+    (state: RootState) => state.currentWorkout.value!
+  );
+  const { data: chatMessages } = useGetMembersChatQuery(currentWorkout.id);
+  console.log(chatMessages);
   return (
     <Box
       sx={{
@@ -36,19 +44,28 @@ const MembersChat: React.FC<Props> = ({ isMember }) => {
           </Typography>
         </Box>
       ) : (
-        [
-          { writer: "John Doe", message: "hello there" },
-          { writer: "John Doe", message: "me again" },
-        ].map((item, i, arr) => {
-          return (
-            <ChatMessage
-              key={i}
-              writer={item.writer}
-              message={item.message}
-              lastSender={i > 0 ? arr[i - 1].writer : ""}
-            />
-          );
-        })
+        <>
+          <Box
+            sx={{
+              height: "80%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "end",
+            }}
+          >
+            {chatMessages?.map((item, i, arr) => {
+              return (
+                <ChatMessage
+                  key={i}
+                  sender={item.senderId}
+                  message={item.content}
+                  lastSender={i > 0 ? arr[i - 1].senderId : ""}
+                />
+              );
+            })}
+          </Box>
+          <ChatInput />
+        </>
       )}
     </Box>
   );

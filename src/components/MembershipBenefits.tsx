@@ -16,8 +16,8 @@ const MembershipBenefits: React.FC<Props> = ({ timesPerWeek }) => {
           text: "Access to workout discussion",
         },
         { icon: <IoIosInfinite />, text: "Full lifetime access" },
-      ].map((item) => (
-        <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+      ].map((item, i) => (
+        <Box key={i} sx={{ display: "flex", alignItems: "center", mb: 1 }}>
           {item.icon}
           <Typography textAlign="start" sx={{ ml: 2 }}>
             {item.text}

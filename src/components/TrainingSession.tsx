@@ -22,7 +22,7 @@ const TrainingSession: React.FC<Props> = ({ exercises }) => {
         >
           <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
             <img
-              src={item.gif_url}
+              src={item.gifUrl}
               style={{ width: "4rem", marginRight: "1rem" }}
               alt="exercise demonstration"
             />

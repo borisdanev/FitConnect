@@ -8,11 +8,13 @@ import {
   doc,
   arrayUnion,
   updateDoc,
+  getDoc,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { WorkoutModel } from "../../types/workout.model";
 import { User } from "../../types/user.model";
 import { Exercise } from "../../types/exercise.model";
+import { Message } from "../../types/message.model";
 const config = {
   apiKey: "AIzaSyC3SF-qqer9CuVN_TdSu5WolN-68sB7-dM",
   authDomain: "fitconnect-7de1b.firebaseapp.com",
@@ -59,6 +61,15 @@ export const firebaseApi = createApi({
         return { data };
       },
     }),
+    getMembersChat: builder.query<Message[], string>({
+      queryFn: async (workoutId) => {
+        const docRef = doc(db, "workouts", workoutId);
+        const snap = await getDoc(docRef);
+        const data = snap.data() as WorkoutModel;
+        const messages = data.membersChat;
+        return { data: messages };
+      },
+    }),
     getProfilePicture: builder.query<string, string>({
       queryFn: async (id) => {
         try {
@@ -66,7 +77,13 @@ export const firebaseApi = createApi({
           const url = (await getDownloadURL(ref(storage, id))) as string;
           return { data: url };
         } catch (err) {
-          return { error: "Not Good" };
+          return {
+            error: {
+              status: 500,
+              statusText: "Internal Server Error",
+              data: "Invalid ID provided.",
+            },
+          };
         }
       },
     }),
@@ -87,11 +104,20 @@ export const firebaseApi = createApi({
         return { data: docRef };
       },
     }),
+    sendMessage: builder.mutation<any, Message>({
+      queryFn: async (message) => {
+        const docRef = doc(db, "workouts", message.workoutId);
+        await updateDoc(docRef, {
+          membersChat: arrayUnion(message),
+        });
+        return { data: "somehin" };
+      },
+    }),
     setUserProfilePicture: builder.mutation<any, { file: File; id: string }>({
       queryFn: async (args) => {
         const storage = getStorage();
         const storageRef = ref(storage, args.id);
-        const snapshots = await uploadBytes(storageRef, args.file);
+        await uploadBytes(storageRef, args.file);
         return { data: "data" };
       },
     }),
@@ -106,4 +132,6 @@ export const {
   useJoinWorkoutMutation,
   useSetUserProfilePictureMutation,
   useGetProfilePictureQuery,
+  useSendMessageMutation,
+  useGetMembersChatQuery,
 } = firebaseApi;

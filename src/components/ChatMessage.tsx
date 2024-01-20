@@ -1,13 +1,14 @@
 import Box from "@mui/material/Box";
 interface Props {
   message: string;
-  writer: string;
+  sender: string;
   lastSender: string;
 }
-const ChatMessage: React.FC<Props> = ({ message, writer, lastSender }) => {
+const ChatMessage: React.FC<Props> = ({ message, sender, lastSender }) => {
+  console.log(message, sender, lastSender);
   return (
     <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
-      {lastSender !== writer && (
+      {lastSender !== sender && (
         <Box
           sx={{
             borderRadius: "50%",
@@ -24,7 +25,7 @@ const ChatMessage: React.FC<Props> = ({ message, writer, lastSender }) => {
           p: 1,
           borderRadius: "8rem",
 
-          ml: lastSender === writer ? 5 : 0,
+          ml: lastSender === sender ? 5 : 0,
         }}
       >
         {message}

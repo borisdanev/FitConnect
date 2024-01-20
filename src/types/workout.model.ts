@@ -1,18 +1,20 @@
 import { WorkoutType } from "../enums/WorkoutType";
 import { Exercise } from "./exercise.model";
+import { Message } from "./message.model";
 export interface WorkoutModel {
   title: string;
   description: string;
   creator: string;
-  img_url: string;
+  imgUrl: string;
   rating: number;
   participants: number;
   rates: number;
   type: WorkoutType;
-  times_per_week: number;
-  training_sessions: {
+  timesPerWeek: number;
+  trainingSessions: {
     name: string;
     exercises: Exercise[];
   }[];
+  membersChat: Message[];
   id: string;
 }

@@ -58,7 +58,7 @@ const WorkoutView: React.FC = () => {
               }}
             >
               <img
-                src={workout.img_url}
+                src={workout.imgUrl}
                 style={{ maxWidth: "100%" }}
                 alt="workout program cover"
               />
@@ -75,14 +75,14 @@ const WorkoutView: React.FC = () => {
                   Start Workout
                 </Button>
               )}
-              <MembershipBenefits timesPerWeek={workout.times_per_week} />
+              <MembershipBenefits timesPerWeek={workout.timesPerWeek} />
             </Box>
           </Grid>
         </Grid>
       </Grid>
       <Grid item xs={4}>
         <TrainingSessionList
-          trainingSessions={workout.training_sessions}
+          trainingSessions={workout.trainingSessions}
           isMember={isMember}
         />
         <MembersChat isMember={isMember} />
