@@ -8,6 +8,8 @@ import {
   useGetUserQuery,
   useGetExercisesQuery,
   useJoinWorkoutMutation,
+  useSetUserProfilePictureMutation,
+  useGetProfilePictureQuery,
 } from "./apis/firebaseApi";
 import { selectView } from "./slices/viewSlice";
 import { setCurrentUser } from "./slices/userSlice";
@@ -33,5 +35,7 @@ export {
   setOpenedSignupForm,
   setOpenedLoginForm,
   useJoinWorkoutMutation,
+  useSetUserProfilePictureMutation,
+  useGetProfilePictureQuery,
 };
 export default store;

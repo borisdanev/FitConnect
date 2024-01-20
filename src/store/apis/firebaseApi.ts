@@ -9,6 +9,7 @@ import {
   arrayUnion,
   updateDoc,
 } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { WorkoutModel } from "../../types/workout.model";
 import { User } from "../../types/user.model";
 import { Exercise } from "../../types/exercise.model";
@@ -58,6 +59,17 @@ export const firebaseApi = createApi({
         return { data };
       },
     }),
+    getProfilePicture: builder.query<string, string>({
+      queryFn: async (id) => {
+        try {
+          const storage = getStorage();
+          const url = (await getDownloadURL(ref(storage, id))) as string;
+          return { data: url };
+        } catch (err) {
+          return { error: "Not Good" };
+        }
+      },
+    }),
     createUser: builder.mutation<any, User>({
       queryFn: async (user) => {
         const docRef = await setDoc(doc(db, "users", user.id), {
@@ -75,6 +87,14 @@ export const firebaseApi = createApi({
         return { data: docRef };
       },
     }),
+    setUserProfilePicture: builder.mutation<any, { file: File; id: string }>({
+      queryFn: async (args) => {
+        const storage = getStorage();
+        const storageRef = ref(storage, args.id);
+        const snapshots = await uploadBytes(storageRef, args.file);
+        return { data: "data" };
+      },
+    }),
   }),
 });
 export const {
@@ -84,4 +104,6 @@ export const {
   useGetUserQuery,
   useGetExercisesQuery,
   useJoinWorkoutMutation,
+  useSetUserProfilePictureMutation,
+  useGetProfilePictureQuery,
 } = firebaseApi;

@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import HomeView from "./HomeView";
 import WorkoutView from "./WorkoutView";
+import ProfileView from "./ProfileView";
 const SelectedView = () => {
   const selectedView = useSelector((state: RootState) => state.view.value);
   switch (selectedView) {
@@ -18,6 +19,13 @@ const SelectedView = () => {
       return (
         <Box sx={{ mt: 5 }}>
           <WorkoutView />
+        </Box>
+      );
+    }
+    case ViewEnum.Profile: {
+      return (
+        <Box sx={{ mt: 5 }}>
+          <ProfileView />
         </Box>
       );
     }
