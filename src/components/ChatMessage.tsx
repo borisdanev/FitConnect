@@ -1,23 +1,26 @@
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 import Box from "@mui/material/Box";
+import ProfilePicture from "./ProfilePicture";
 interface Props {
   message: string;
   sender: string;
   lastSender: string;
 }
 const ChatMessage: React.FC<Props> = ({ message, sender, lastSender }) => {
-  console.log(message, sender, lastSender);
+  const currentUser = useSelector(
+    (state: RootState) => state.currentUser.value!
+  );
   return (
-    <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
-      {lastSender !== sender && (
-        <Box
-          sx={{
-            borderRadius: "50%",
-            height: "2rem",
-            width: "2rem",
-            mr: 1,
-            bgcolor: "white",
-          }}
-        ></Box>
+    <Box
+      sx={{
+        display: "flex",
+        mt: 1,
+        justifyContent: currentUser.id === sender ? "end" : "start",
+      }}
+    >
+      {lastSender !== sender && currentUser.id !== sender && (
+        <ProfilePicture userId={sender} width="2rem" height="2rem" />
       )}
       <Box
         sx={{

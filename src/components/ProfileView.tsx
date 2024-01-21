@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import { useSetUserProfilePictureMutation } from "../store";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
@@ -14,14 +13,13 @@ const ProfileView = () => {
   const [selectedImage, setSelectedImage] = useState<string>("");
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) {
-      setUserProfilePicture({ file: file, id: currentUser.id });
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
+    if (!file) return;
+    setUserProfilePicture({ file: file, id: currentUser.id });
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setSelectedImage(reader.result as string);
+    };
+    reader.readAsDataURL(file);
   };
   return (
     <>

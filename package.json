@@ -50,6 +50,9 @@
     ]
   },
   "devDependencies": {
-    "@types/uuid": "^9.0.7"
+    "@types/node-sass": "^4.11.7",
+    "@types/uuid": "^9.0.7",
+    "node-sass": "^7.0.3",
+    "sass": "^1.70.0"
   }
 }

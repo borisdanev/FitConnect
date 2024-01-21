@@ -1,18 +1,21 @@
+$font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+$code-font-stack: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  monospace;
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: $font-stack;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #29332e;
   color: white !important;
+
+  code {
+    font-family: $code-font-stack;
+  }
 }
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-/* .h1 {
+.h1 {
   font-size: clamp(2rem, 5vw, 3rem) !important;
   font-weight: 700 !important;
   letter-spacing: 0.02em !important;
@@ -53,6 +56,7 @@ code {
   letter-spacing: 0.005em !important;
   line-height: 1.6 !important;
 }
+
 .gradient {
   background: rgb(2, 0, 36);
   background: linear-gradient(
@@ -62,6 +66,7 @@ code {
     rgba(0, 212, 255, 1) 100%
   );
 }
+
 .reverse-gradient {
   background: rgb(0, 230, 118);
   background: linear-gradient(
@@ -71,6 +76,7 @@ code {
     rgba(2, 0, 36, 1) 64%
   );
 }
+
 .form-input {
   & label {
     color: rgb(0, 230, 118);
@@ -94,6 +100,7 @@ code {
     }
   }
 }
+
 .auth-form {
   background-color: #2e4c3e;
   border-radius: 0.5rem;
@@ -102,4 +109,19 @@ code {
   align-items: center;
   flex-direction: column;
   width: 20rem;
-} */
+}
+
+.chat-scrollbar {
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+}

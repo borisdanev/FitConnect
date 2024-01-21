@@ -66,7 +66,7 @@ export const firebaseApi = createApi({
         const docRef = doc(db, "workouts", workoutId);
         const snap = await getDoc(docRef);
         const data = snap.data() as WorkoutModel;
-        const messages = data.membersChat;
+        const messages = data.membersChat.reverse();
         return { data: messages };
       },
     }),

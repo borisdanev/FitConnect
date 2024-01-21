@@ -1,3 +1,4 @@
+import { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useGetMembersChatQuery, RootState } from "../store";
 import Box from "@mui/material/Box";
@@ -12,8 +13,19 @@ const MembersChat: React.FC<Props> = ({ isMember }) => {
   const currentWorkout = useSelector(
     (state: RootState) => state.currentWorkout.value!
   );
-  const { data: chatMessages } = useGetMembersChatQuery(currentWorkout.id);
-  console.log(chatMessages);
+  const { data: chatMessages, refetch } = useGetMembersChatQuery(
+    currentWorkout.id
+  );
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const scrollToBottom = () => {
+    if (!scrollContainerRef.current) return;
+    const scrollHeight = scrollContainerRef.current.scrollHeight;
+    const clientHeight = scrollContainerRef.current.clientHeight;
+    scrollContainerRef.current.scrollTop = scrollHeight - clientHeight;
+  };
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatMessages]);
   return (
     <Box
       sx={{
@@ -40,31 +52,31 @@ const MembersChat: React.FC<Props> = ({ isMember }) => {
         >
           <IoIosLock style={{ fontSize: "4rem" }} />
           <Typography className="h4" textAlign="center" width="80%">
-            Join this workouts to see workout discussion
+            Join this workout to see workout discussion
           </Typography>
         </Box>
       ) : (
         <>
           <Box
+            ref={scrollContainerRef}
+            className="chat-scrollbar"
             sx={{
               height: "80%",
+              pb: 2,
               display: "flex",
-              flexDirection: "column",
-              justifyContent: "end",
+              flexDirection: "column-reverse",
             }}
           >
-            {chatMessages?.map((item, i, arr) => {
-              return (
-                <ChatMessage
-                  key={i}
-                  sender={item.senderId}
-                  message={item.content}
-                  lastSender={i > 0 ? arr[i - 1].senderId : ""}
-                />
-              );
-            })}
+            {chatMessages?.map((item, i, arr) => (
+              <ChatMessage
+                key={i}
+                sender={item.senderId}
+                message={item.content}
+                lastSender={i < arr.length - 1 ? arr[i + 1].senderId : ""}
+              />
+            ))}
           </Box>
-          <ChatInput />
+          <ChatInput refetch={refetch} />
         </>
       )}
     </Box>

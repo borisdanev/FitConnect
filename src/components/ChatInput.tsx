@@ -3,7 +3,10 @@ import { useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useSendMessageMutation, RootState } from "../store";
-const ChatInput: React.FC = () => {
+interface Props {
+  refetch: Function;
+}
+const ChatInput: React.FC<Props> = ({ refetch }) => {
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value!
   );
@@ -14,11 +17,13 @@ const ChatInput: React.FC = () => {
   const [message, setMessage] = useState<string>("");
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    if (!message) return;
     sendMessage({
       senderId: currentUser.id,
       content: message,
       workoutId: currentWorkout.id,
     });
+    refetch();
     setMessage("");
   };
   return (
