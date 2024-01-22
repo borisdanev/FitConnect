@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import useIsMember from "../hooks/useIsMember";
 import { RootState, useGetUserQuery } from "../store";
+import { TrainingSessionModel } from "../types/trainingSession.model";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import WorkoutDetails from "./WorkoutDetails";
@@ -9,16 +11,15 @@ import MembersChat from "./MembersChat";
 import MembershipBenefits from "./MembershipBenefits";
 import JoinButton from "./JoinButton ";
 import StartWorkoutButton from "./StartWorkoutButton";
+import ActiveWorkout from "./ActiveWorkout";
 const WorkoutView: React.FC = () => {
-  const workout = useSelector(
-    (state: RootState) => state.currentWorkout.value!
-  );
+  const workout = useSelector((state: RootState) => state.currentWorkout.value);
+  const [selectedTrainingSession, setSelectedTrainingSession] =
+    useState<TrainingSessionModel>(workout.trainingSessions[0]);
   const currentUser = useSelector(
-    (state: RootState) => state.currentUser.value!
+    (state: RootState) => state.currentUser.value
   );
-  const { data: user, refetch } = useGetUserQuery(
-    currentUser ? currentUser.email : ""
-  );
+  const { data: user, refetch } = useGetUserQuery(currentUser.email);
   const isMember = useIsMember(workout.id, user ? user.workouts : []);
   return (
     <Grid container>
@@ -60,9 +61,11 @@ const WorkoutView: React.FC = () => {
         <TrainingSessionList
           trainingSessions={workout.trainingSessions}
           isMember={isMember}
+          setSelectedTrainingSession={setSelectedTrainingSession}
         />
         <MembersChat isMember={isMember} />
       </Grid>
+      <ActiveWorkout trainingSession={selectedTrainingSession} />
     </Grid>
   );
 };

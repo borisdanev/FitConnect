@@ -46,7 +46,7 @@ const TrainingSession: React.FC<Props> = ({ exercises }) => {
               </Box>
             </Box>
           </Box>
-          <Checkbox />
+          <Checkbox disabled />
         </Box>
       ))}
     </Box>

@@ -9,7 +9,7 @@ interface Props {
 }
 const ChatMessage: React.FC<Props> = ({ message, sender, lastSender }) => {
   const currentUser = useSelector(
-    (state: RootState) => state.currentUser.value!
+    (state: RootState) => state.currentUser.value
   );
   return (
     <Box

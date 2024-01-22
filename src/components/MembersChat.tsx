@@ -11,7 +11,7 @@ interface Props {
 }
 const MembersChat: React.FC<Props> = ({ isMember }) => {
   const currentWorkout = useSelector(
-    (state: RootState) => state.currentWorkout.value!
+    (state: RootState) => state.currentWorkout.value
   );
   const { data: chatMessages, refetch } = useGetMembersChatQuery(
     currentWorkout.id

@@ -8,10 +8,10 @@ interface Props {
 }
 const ChatInput: React.FC<Props> = ({ refetch }) => {
   const currentUser = useSelector(
-    (state: RootState) => state.currentUser.value!
+    (state: RootState) => state.currentUser.value
   );
   const currentWorkout = useSelector(
-    (state: RootState) => state.currentWorkout.value!
+    (state: RootState) => state.currentWorkout.value
   );
   const [sendMessage] = useSendMessageMutation();
   const [message, setMessage] = useState<string>("");

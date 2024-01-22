@@ -54,7 +54,7 @@ const Header = () => {
           <IoMail />
         </IconButton>
       </Box>
-      {!currentUser ? (
+      {!currentUser.id ? (
         <Box sx={{ display: "flex" }}>
           <Button
             variant="contained"

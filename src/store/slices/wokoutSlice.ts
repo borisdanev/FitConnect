@@ -1,10 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { WorkoutModel } from "../../types/workout.model";
 import { PayloadAction } from "@reduxjs/toolkit";
+import { WorkoutType } from "../../enums/WorkoutType";
 interface State {
-  value: WorkoutModel | null;
+  value: WorkoutModel;
 }
-const initialState: State = { value: null };
+const initialState: State = {
+  value: {
+    title: "",
+    description: "",
+    creator: "",
+    imgUrl: "",
+    rating: 0,
+    participants: 0,
+    rates: 0,
+    type: WorkoutType.All,
+    timesPerWeek: 0,
+    trainingSessions: [
+      {
+        name: "",
+        exercises: [],
+      },
+    ],
+    membersChat: [],
+    id: "",
+  },
+};
 export const workoutSlice = createSlice({
   name: "workout",
   initialState,

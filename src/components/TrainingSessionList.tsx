@@ -7,20 +7,27 @@ import { SelectChangeEvent } from "@mui/material/Select";
 import TrainingSession from "./TrainingSession";
 import Grid from "@mui/material/Grid";
 import { IoIosLock } from "react-icons/io";
+import { TrainingSessionModel } from "../types/trainingSession.model";
 interface Props {
-  trainingSessions: {
-    name: string;
-    exercises: Exercise[];
-  }[];
+  trainingSessions: TrainingSessionModel[];
   isMember: boolean;
+  setSelectedTrainingSession: (trainingSession: TrainingSessionModel) => void;
 }
 const TrainingSessionList: React.FC<Props> = ({
   trainingSessions,
   isMember,
+  setSelectedTrainingSession,
 }) => {
   const [value, setValue] = useState<string>(
     trainingSessions ? trainingSessions[0]?.name : ""
   );
+  const handleChange = (event: SelectChangeEvent) => {
+    setValue(event.target.value);
+    const [trainingSession] = trainingSessions.filter(
+      (item) => item.name === event.target.value
+    );
+    setSelectedTrainingSession(trainingSession);
+  };
   return (
     <Box sx={{ ml: 2, height: "26rem", overflow: "auto" }}>
       <Select
@@ -30,7 +37,7 @@ const TrainingSessionList: React.FC<Props> = ({
         }}
         disableUnderline
         variant="standard"
-        onChange={(e: SelectChangeEvent) => setValue(e.target.value)}
+        onChange={(event) => handleChange(event)}
         label="S"
       >
         {trainingSessions.map((item, i) => (

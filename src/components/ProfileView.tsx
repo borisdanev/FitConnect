@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import ProfilePicture from "./ProfilePicture";
 const ProfileView = () => {
   const currentUser = useSelector(
-    (state: RootState) => state.currentUser.value!
+    (state: RootState) => state.currentUser.value
   );
   const [setUserProfilePicture] = useSetUserProfilePictureMutation();
   const [selectedImage, setSelectedImage] = useState<string>("");
