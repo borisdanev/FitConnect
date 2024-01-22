@@ -1,21 +1,15 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import useIsMember from "../hooks/useIsMember";
-import {
-  RootState,
-  setOpenedSignupForm,
-  useJoinWorkoutMutation,
-  useGetUserQuery,
-  setCurrentUser,
-} from "../store";
+import { RootState, useGetUserQuery } from "../store";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
 import WorkoutDetails from "./WorkoutDetails";
 import TrainingSessionList from "./TrainingSessionList";
 import MembersChat from "./MembersChat";
 import MembershipBenefits from "./MembershipBenefits";
+import JoinButton from "./JoinButton ";
+import StartWorkoutButton from "./StartWorkoutButton";
 const WorkoutView: React.FC = () => {
-  const dispatch = useDispatch();
   const workout = useSelector(
     (state: RootState) => state.currentWorkout.value!
   );
@@ -26,16 +20,6 @@ const WorkoutView: React.FC = () => {
     currentUser ? currentUser.email : ""
   );
   const isMember = useIsMember(workout.id, user ? user.workouts : []);
-  const [joinWorkout] = useJoinWorkoutMutation();
-  const handleJoin = () => {
-    if (currentUser) {
-      joinWorkout({ workout, id: currentUser.id });
-      refetch();
-      if (user) dispatch(setCurrentUser(user));
-      return;
-    }
-    dispatch(setOpenedSignupForm(true));
-  };
   return (
     <Grid container>
       <Grid item xs={8}>
@@ -63,17 +47,9 @@ const WorkoutView: React.FC = () => {
                 alt="workout program cover"
               />
               {!isMember ? (
-                <Button
-                  variant="contained"
-                  sx={{ width: "100%", mt: 2 }}
-                  onClick={handleJoin}
-                >
-                  Join Now
-                </Button>
+                <JoinButton refetch={refetch} workout={workout} user={user} />
               ) : (
-                <Button variant="outlined" sx={{ width: "100%", mt: 2 }}>
-                  Start Workout
-                </Button>
+                <StartWorkoutButton />
               )}
               <MembershipBenefits timesPerWeek={workout.timesPerWeek} />
             </Box>
