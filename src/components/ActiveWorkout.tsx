@@ -1,11 +1,12 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, setFinishedExercises } from "../store";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { TrainingSessionModel } from "../types/trainingSession.model";
-import Checkbox from "@mui/material/Checkbox";
 import { ExerciseModel } from "../types/exercise.model";
+import ExerciseSet from "./ExerciseSet";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
 interface Props {
   trainingSession: TrainingSessionModel;
 }
@@ -17,9 +18,11 @@ const ActiveWorkout: React.FC<Props> = ({ trainingSession }) => {
   const [currentExercise, setCurrentExercise] = useState<ExerciseModel>(
     trainingSession.exercises[exerciseIndex]
   );
-  console.log(exerciseIndex);
   const [timerOn, setTimerOn] = useState<boolean>(false);
   const [finishedSets, setFinishedSets] = useState<string[]>([]);
+  useEffect(() => {
+    setCurrentExercise(trainingSession.exercises[exerciseIndex]);
+  }, [exerciseIndex]);
   const handleChange = (event: ChangeEvent) => {
     const currentId = event.target.id;
     let added = false;
@@ -33,8 +36,10 @@ const ActiveWorkout: React.FC<Props> = ({ trainingSession }) => {
       setTimerOn(false);
     }
     const finished = added ? finishedSets.length + 1 : finishedSets.length;
-    if (finished === currentExercise.sets.length)
+    if (finished === currentExercise.sets.length) {
+      setFinishedSets([]);
       dispatch(setFinishedExercises(currentExercise.id));
+    }
   };
   return (
     <Box
@@ -57,23 +62,29 @@ const ActiveWorkout: React.FC<Props> = ({ trainingSession }) => {
           style={{ width: "14rem" }}
           alt="Exercise demonstration"
         />
-        {timerOn && <Typography>{currentExercise.restBetweenSets}</Typography>}
+        {timerOn && (
+          <Box sx={{ display: "flex", justifyContent: "end" }}>
+            <CountdownCircleTimer
+              isPlaying
+              duration={currentExercise.restBetweenSets * 60}
+              colors={["#00e676", "#00e676", "#00e676", "#00e676"]}
+              colorsTime={[7, 5, 2, 0]}
+              size={50}
+              strokeWidth={2}
+            >
+              {({ remainingTime }) => `${remainingTime}s`}
+            </CountdownCircleTimer>
+          </Box>
+        )}
         {currentExercise.sets.map((item, i) => {
           return (
-            <Box
+            <ExerciseSet
               key={i}
-              sx={{
-                display: "flex",
-                width: "100%",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Typography>
-                {item.weight}kg x {item.reps}
-              </Typography>
-              <Checkbox id={`${i}`} onChange={(event) => handleChange(event)} />
-            </Box>
+              weight={item.weight}
+              reps={item.reps}
+              index={i}
+              handleChange={handleChange}
+            />
           );
         })}
       </Box>
