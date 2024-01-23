@@ -21,6 +21,7 @@ const WorkoutView: React.FC = () => {
   );
   const { data: user, refetch } = useGetUserQuery(currentUser.email);
   const isMember = useIsMember(workout.id, user ? user.workouts : []);
+  const [finishedExercises, setFinishedExercises] = useState<string[]>([]);
   return (
     <Grid container>
       <Grid item xs={8}>
@@ -62,10 +63,15 @@ const WorkoutView: React.FC = () => {
           trainingSessions={workout.trainingSessions}
           isMember={isMember}
           setSelectedTrainingSession={setSelectedTrainingSession}
+          finishedExercises={finishedExercises}
         />
         <MembersChat isMember={isMember} />
       </Grid>
-      <ActiveWorkout trainingSession={selectedTrainingSession} />
+      <ActiveWorkout
+        trainingSession={selectedTrainingSession}
+        setFinishedExercises={setFinishedExercises}
+        finishedExercises={finishedExercises}
+      />
     </Grid>
   );
 };

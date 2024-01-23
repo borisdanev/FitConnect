@@ -2,7 +2,6 @@ import { useState } from "react";
 import Box from "@mui/material/Box";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { Exercise } from "../types/exercise.model";
 import { SelectChangeEvent } from "@mui/material/Select";
 import TrainingSession from "./TrainingSession";
 import Grid from "@mui/material/Grid";
@@ -12,11 +11,13 @@ interface Props {
   trainingSessions: TrainingSessionModel[];
   isMember: boolean;
   setSelectedTrainingSession: (trainingSession: TrainingSessionModel) => void;
+  finishedExercises: string[];
 }
 const TrainingSessionList: React.FC<Props> = ({
   trainingSessions,
   isMember,
   setSelectedTrainingSession,
+  finishedExercises,
 }) => {
   const [value, setValue] = useState<string>(
     trainingSessions ? trainingSessions[0]?.name : ""
@@ -66,7 +67,11 @@ const TrainingSessionList: React.FC<Props> = ({
       {trainingSessions
         .filter((item) => item.name === value)
         .map((item, i) => (
-          <TrainingSession key={i} exercises={item.exercises} />
+          <TrainingSession
+            key={i}
+            exercises={item.exercises}
+            finishedExercises={finishedExercises}
+          />
         ))}
     </Box>
   );

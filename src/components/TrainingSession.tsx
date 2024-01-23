@@ -5,6 +5,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { FaClock } from "react-icons/fa6";
 interface Props {
   exercises: Exercise[];
+  finishedExercises: string[];
 }
 const TrainingSession: React.FC<Props> = ({ exercises }) => {
   return (
