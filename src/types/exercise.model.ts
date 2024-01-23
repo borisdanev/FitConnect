@@ -1,4 +1,4 @@
-export interface Exercise {
+export interface ExerciseModel {
   name: string;
   gifUrl: string;
   sets: { weight: number; reps: number }[];

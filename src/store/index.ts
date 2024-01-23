@@ -16,6 +16,10 @@ import {
 import { selectView } from "./slices/viewSlice";
 import { setCurrentUser } from "./slices/userSlice";
 import { setWorkout } from "./slices/wokoutSlice";
+import {
+  setFinishedExercises,
+  setCurrentExerciseIndex,
+} from "./slices/activeWorkoutSlice";
 import { setOpenedSignupForm, setOpenedLoginForm } from "./slices/formSlice";
 const store = configureStore({
   reducer: rootReducer,
@@ -41,5 +45,7 @@ export {
   useGetProfilePictureQuery,
   useSendMessageMutation,
   useGetMembersChatQuery,
+  setFinishedExercises,
+  setCurrentExerciseIndex,
 };
 export default store;

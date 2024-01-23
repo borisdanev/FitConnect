@@ -13,7 +13,7 @@ import {
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { WorkoutModel } from "../../types/workout.model";
 import { User } from "../../types/user.model";
-import { Exercise } from "../../types/exercise.model";
+import { ExerciseModel } from "../../types/exercise.model";
 import { Message } from "../../types/message.model";
 const config = {
   apiKey: "AIzaSyC3SF-qqer9CuVN_TdSu5WolN-68sB7-dM",
@@ -54,10 +54,10 @@ export const firebaseApi = createApi({
         return { data };
       },
     }),
-    getExercises: builder.query<Exercise[], void>({
+    getExercises: builder.query<ExerciseModel[], void>({
       queryFn: async () => {
         const snapshots = await getDocs(collection(db, "exercises"));
-        const data = snapshots.docs.map((doc) => doc.data() as Exercise);
+        const data = snapshots.docs.map((doc) => doc.data() as ExerciseModel);
         return { data };
       },
     }),

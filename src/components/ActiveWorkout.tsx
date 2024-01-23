@@ -1,18 +1,23 @@
 import { useState, ChangeEvent } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, setFinishedExercises } from "../store";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { TrainingSessionModel } from "../types/trainingSession.model";
 import Checkbox from "@mui/material/Checkbox";
+import { ExerciseModel } from "../types/exercise.model";
 interface Props {
   trainingSession: TrainingSessionModel;
-  finishedExercises: string[];
-  setFinishedExercises: (exerciseId: string[]) => void;
 }
-const ActiveWorkout: React.FC<Props> = ({
-  trainingSession,
-  setFinishedExercises,
-  finishedExercises,
-}) => {
+const ActiveWorkout: React.FC<Props> = ({ trainingSession }) => {
+  const dispatch = useDispatch();
+  const exerciseIndex = useSelector(
+    (state: RootState) => state.activeWorkout.currentExerciseIndex
+  );
+  const [currentExercise, setCurrentExercise] = useState<ExerciseModel>(
+    trainingSession.exercises[exerciseIndex]
+  );
+  console.log(exerciseIndex);
   const [timerOn, setTimerOn] = useState<boolean>(false);
   const [finishedSets, setFinishedSets] = useState<string[]>([]);
   const handleChange = (event: ChangeEvent) => {
@@ -28,10 +33,8 @@ const ActiveWorkout: React.FC<Props> = ({
       setTimerOn(false);
     }
     const finished = added ? finishedSets.length + 1 : finishedSets.length;
-    if (finished === trainingSession.exercises[0].sets.length) {
-      const exercises = [...finishedExercises, currentId];
-      setFinishedExercises(exercises);
-    }
+    if (finished === currentExercise.sets.length)
+      dispatch(setFinishedExercises(currentExercise.id));
   };
   return (
     <Box
@@ -50,16 +53,12 @@ const ActiveWorkout: React.FC<Props> = ({
     >
       <Box sx={{ p: 5 }}>
         <img
-          src={trainingSession.exercises[0].gifUrl}
+          src={currentExercise.gifUrl}
           style={{ width: "14rem" }}
           alt="Exercise demonstration"
         />
-        {timerOn && (
-          <Typography>
-            {trainingSession.exercises[0].restBetweenSets}
-          </Typography>
-        )}
-        {trainingSession.exercises[0].sets.map((item, i) => {
+        {timerOn && <Typography>{currentExercise.restBetweenSets}</Typography>}
+        {currentExercise.sets.map((item, i) => {
           return (
             <Box
               key={i}
@@ -73,10 +72,7 @@ const ActiveWorkout: React.FC<Props> = ({
               <Typography>
                 {item.weight}kg x {item.reps}
               </Typography>
-              <Checkbox
-                id={trainingSession.exercises[0].id}
-                onChange={(event) => handleChange(event)}
-              />
+              <Checkbox id={`${i}`} onChange={(event) => handleChange(event)} />
             </Box>
           );
         })}
