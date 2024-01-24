@@ -12,6 +12,7 @@ import MembershipBenefits from "./MembershipBenefits";
 import JoinButton from "./JoinButton ";
 import StartWorkoutButton from "./StartWorkoutButton";
 import ActiveWorkout from "./ActiveWorkout";
+import WorkoutProgress from "./CalendarProgress";
 const WorkoutView: React.FC = () => {
   const workout = useSelector((state: RootState) => state.currentWorkout.value);
   const [selectedTrainingSession, setSelectedTrainingSession] =
@@ -67,6 +68,9 @@ const WorkoutView: React.FC = () => {
           setSelectedTrainingSession={setSelectedTrainingSession}
         />
         <MembersChat isMember={isMember} />
+      </Grid>
+      <Grid item xs={8}>
+        <WorkoutProgress timesPerWeek={workout.timesPerWeek} />
       </Grid>
       {isActiveWorkout && (
         <ActiveWorkout trainingSession={selectedTrainingSession} />
