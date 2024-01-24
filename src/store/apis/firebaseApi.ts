@@ -99,18 +99,27 @@ export const firebaseApi = createApi({
       queryFn: async (args) => {
         const docRef = doc(db, "users", args.id);
         await updateDoc(docRef, {
-          workouts: arrayUnion(args.workout),
+          workouts: arrayUnion({ workout: args.workout, finishedSessions: 0 }),
         });
         return { data: docRef };
       },
     }),
-    sendMessage: builder.mutation<any, Message>({
+    setFinishedSession: builder.mutation<void, { id: string; value: number }>({
+      queryFn: async (args) => {
+        const docRef = doc(db, "users", args.id);
+        await updateDoc(docRef, {
+          finishedSessions: args.value,
+        });
+        return { data: undefined };
+      },
+    }),
+    sendMessage: builder.mutation<void, Message>({
       queryFn: async (message) => {
         const docRef = doc(db, "workouts", message.workoutId);
         await updateDoc(docRef, {
           membersChat: arrayUnion(message),
         });
-        return { data: "somehin" };
+        return { data: undefined };
       },
     }),
     setUserProfilePicture: builder.mutation<any, { file: File; id: string }>({
@@ -130,6 +139,7 @@ export const {
   useGetUserQuery,
   useGetExercisesQuery,
   useJoinWorkoutMutation,
+  useSetFinishedSessionMutation,
   useSetUserProfilePictureMutation,
   useGetProfilePictureQuery,
   useSendMessageMutation,

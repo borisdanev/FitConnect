@@ -1,9 +1,9 @@
-import { WorkoutModel } from "./workout.model";
+import { JoinedWorkout } from "./joinedWorkout.model";
 export interface User {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-  workouts: WorkoutModel[];
+  workouts: JoinedWorkout[];
   id: string;
 }

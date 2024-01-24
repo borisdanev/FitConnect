@@ -12,7 +12,7 @@ import MembershipBenefits from "./MembershipBenefits";
 import JoinButton from "./JoinButton ";
 import StartWorkoutButton from "./StartWorkoutButton";
 import ActiveWorkout from "./ActiveWorkout";
-import WorkoutProgress from "./CalendarProgress";
+import WorkoutProgress from "./WorkoutProgress";
 const WorkoutView: React.FC = () => {
   const workout = useSelector((state: RootState) => state.currentWorkout.value);
   const [selectedTrainingSession, setSelectedTrainingSession] =
