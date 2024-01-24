@@ -1,12 +1,11 @@
 import { useState, ChangeEvent, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState, setFinishedExercises } from "../store";
+import { RootState, setFinishedExercises, setVisibleOverlay } from "../store";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import { TrainingSessionModel } from "../types/trainingSession.model";
 import { ExerciseModel } from "../types/exercise.model";
 import ExerciseSet from "./ExerciseSet";
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import RestTimer from "./RestTimer";
 interface Props {
   trainingSession: TrainingSessionModel;
 }
@@ -15,14 +14,18 @@ const ActiveWorkout: React.FC<Props> = ({ trainingSession }) => {
   const exerciseIndex = useSelector(
     (state: RootState) => state.activeWorkout.currentExerciseIndex
   );
+  const visibleOverlay = useSelector(
+    (state: RootState) => state.activeWorkout.visibleOverlay
+  );
   const [currentExercise, setCurrentExercise] = useState<ExerciseModel>(
     trainingSession.exercises[exerciseIndex]
   );
   const [timerOn, setTimerOn] = useState<boolean>(false);
   const [finishedSets, setFinishedSets] = useState<string[]>([]);
-  useEffect(() => {
-    setCurrentExercise(trainingSession.exercises[exerciseIndex]);
-  }, [exerciseIndex]);
+  useEffect(
+    () => setCurrentExercise(trainingSession.exercises[exerciseIndex]),
+    [exerciseIndex]
+  );
   const handleChange = (event: ChangeEvent) => {
     const currentId = event.target.id;
     let added = false;
@@ -49,12 +52,15 @@ const ActiveWorkout: React.FC<Props> = ({ trainingSession }) => {
         left: "0",
         bottom: "0",
         right: "0",
-        display: "flex",
+        display: visibleOverlay ? "flex" : "none",
         justifyContent: "center",
         alignItems: "center",
         background: "rgba(0, 0, 0, 0.5)",
         zIndex: 1201,
       }}
+      onClick={(e) =>
+        e.target === e.currentTarget && dispatch(setVisibleOverlay(false))
+      }
     >
       <Box sx={{ p: 5 }}>
         <img
@@ -63,30 +69,17 @@ const ActiveWorkout: React.FC<Props> = ({ trainingSession }) => {
           alt="Exercise demonstration"
         />
         {timerOn && (
-          <Box sx={{ display: "flex", justifyContent: "end" }}>
-            <CountdownCircleTimer
-              isPlaying
-              duration={currentExercise.restBetweenSets * 60}
-              colors={["#00e676", "#00e676", "#00e676", "#00e676"]}
-              colorsTime={[7, 5, 2, 0]}
-              size={50}
-              strokeWidth={2}
-            >
-              {({ remainingTime }) => `${remainingTime}s`}
-            </CountdownCircleTimer>
-          </Box>
+          <RestTimer restBetweenSets={currentExercise.restBetweenSets} />
         )}
-        {currentExercise.sets.map((item, i) => {
-          return (
-            <ExerciseSet
-              key={i}
-              weight={item.weight}
-              reps={item.reps}
-              index={i}
-              handleChange={handleChange}
-            />
-          );
-        })}
+        {currentExercise.sets.map((item, i) => (
+          <ExerciseSet
+            key={i}
+            weight={item.weight}
+            reps={item.reps}
+            index={i}
+            handleChange={handleChange}
+          />
+        ))}
       </Box>
     </Box>
   );

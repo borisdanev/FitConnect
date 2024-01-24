@@ -19,6 +19,9 @@ const WorkoutView: React.FC = () => {
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value
   );
+  const isActiveWorkout = useSelector(
+    (state: RootState) => state.activeWorkout.isActive
+  );
   const { data: user, refetch } = useGetUserQuery(currentUser.email);
   const isMember = useIsMember(workout.id, user ? user.workouts : []);
   return (
@@ -65,7 +68,9 @@ const WorkoutView: React.FC = () => {
         />
         <MembersChat isMember={isMember} />
       </Grid>
-      <ActiveWorkout trainingSession={selectedTrainingSession} />
+      {isActiveWorkout && (
+        <ActiveWorkout trainingSession={selectedTrainingSession} />
+      )}
     </Grid>
   );
 };

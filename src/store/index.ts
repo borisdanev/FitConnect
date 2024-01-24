@@ -17,6 +17,8 @@ import { selectView } from "./slices/viewSlice";
 import { setCurrentUser } from "./slices/userSlice";
 import { setWorkout } from "./slices/wokoutSlice";
 import {
+  setIsActiveWorkout,
+  setVisibleOverlay,
   setFinishedExercises,
   setCurrentExerciseIndex,
 } from "./slices/activeWorkoutSlice";
@@ -45,6 +47,8 @@ export {
   useGetProfilePictureQuery,
   useSendMessageMutation,
   useGetMembersChatQuery,
+  setIsActiveWorkout,
+  setVisibleOverlay,
   setFinishedExercises,
   setCurrentExerciseIndex,
 };
