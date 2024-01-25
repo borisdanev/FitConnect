@@ -1,3 +1,7 @@
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrentExerciseIndex } from "../store";
+import { RootState } from "../store";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Checkbox from "@mui/material/Checkbox";
@@ -7,8 +11,27 @@ interface Props {
   gifUrl: string;
   name: string;
   index: number;
+  totalExercises: number;
 }
-const Exercise: React.FC<Props> = ({ id, gifUrl, name, index }) => {
+const Exercise: React.FC<Props> = ({
+  id,
+  gifUrl,
+  name,
+  index,
+  totalExercises,
+}) => {
+  const dispatch = useDispatch();
+  const finishedExercises = useSelector(
+    (state: RootState) => state.activeWorkout.finishedExercises
+  );
+  useEffect(() => {
+    if (
+      finishedExercises.includes(id) &&
+      finishedExercises.length < totalExercises
+    ) {
+      dispatch(setCurrentExerciseIndex(index + 1));
+    }
+  }, [finishedExercises]);
   return (
     <Box
       sx={{

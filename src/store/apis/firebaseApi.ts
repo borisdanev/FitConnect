@@ -7,6 +7,7 @@ import {
   setDoc,
   doc,
   arrayUnion,
+  arrayRemove,
   updateDoc,
   getDoc,
 } from "firebase/firestore";
@@ -15,6 +16,7 @@ import { WorkoutModel } from "../../types/workout.model";
 import { User } from "../../types/user.model";
 import { ExerciseModel } from "../../types/exercise.model";
 import { Message } from "../../types/message.model";
+import { JoinedWorkout } from "../../types/joinedWorkout.model";
 const config = {
   apiKey: "AIzaSyC3SF-qqer9CuVN_TdSu5WolN-68sB7-dM",
   authDomain: "fitconnect-7de1b.firebaseapp.com",
@@ -44,6 +46,15 @@ export const firebaseApi = createApi({
         const users = snapshots.docs.map((doc) => doc.data() as User);
         const [data] = users.filter((user) => user.email === email);
         return { data };
+      },
+    }),
+    getUserWorkouts: builder.query<JoinedWorkout[], string>({
+      queryFn: async (userId) => {
+        const docRef = doc(db, "users", userId);
+        const snapshot = await getDoc(docRef);
+        const data = snapshot.data() as User;
+        const workouts = data.workouts;
+        return { data: workouts };
       },
     }),
     getEmails: builder.query<string[], void>({
@@ -104,12 +115,20 @@ export const firebaseApi = createApi({
         return { data: docRef };
       },
     }),
-    setFinishedSession: builder.mutation<void, { id: string; value: number }>({
+    setFinishedSession: builder.mutation<
+      void,
+      { userId: string; workouts: JoinedWorkout[] | undefined }
+    >({
       queryFn: async (args) => {
-        const docRef = doc(db, "users", args.id);
-        await updateDoc(docRef, {
-          finishedSessions: args.value,
-        });
+        const docRef = doc(db, "users", args.userId);
+        if (args.workouts) {
+          await updateDoc(docRef, {
+            workouts: args.workouts,
+          });
+        }
+        // await updateDoc(docRef, {
+        //   finishedSessions: args.value,
+        // });
         return { data: undefined };
       },
     }),
@@ -137,6 +156,7 @@ export const {
   useCreateUserMutation,
   useGetEmailsQuery,
   useGetUserQuery,
+  useGetUserWorkoutsQuery,
   useGetExercisesQuery,
   useJoinWorkoutMutation,
   useSetFinishedSessionMutation,
