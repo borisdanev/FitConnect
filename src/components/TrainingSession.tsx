@@ -5,6 +5,7 @@ import {
   useSetFinishedSessionMutation,
   finishTrainingSession,
   useGetJoinedWorkoutQuery,
+  setVisibleOverlay,
 } from "../store";
 import Box from "@mui/material/Box";
 import Exercise from "./Exercise";

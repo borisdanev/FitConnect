@@ -31,6 +31,10 @@ export const activeWorkoutSlice = createSlice({
     },
     finishTrainingSession(state) {
       state.finishedTrainingSessions = state.finishedTrainingSessions + 1;
+      state.visibleOverlay = false;
+      state.isActive = false;
+      state.finishedExercises = [];
+      state.currentExerciseIndex = 0;
     },
   },
 });

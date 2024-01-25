@@ -26,11 +26,7 @@ const ExerciseSet: React.FC<Props> = ({
       <Typography>
         {weight}kg x {reps}
       </Typography>
-      <Checkbox
-        checked={false}
-        id={`${index}`}
-        onChange={(event) => handleChange(event)}
-      />
+      <Checkbox id={`${index}`} onChange={(event) => handleChange(event)} />
     </Box>
   );
 };

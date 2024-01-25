@@ -25,6 +25,9 @@ const WorkoutProgress: React.FC<Props> = ({
   // const finishedTrainingSessions = useSelector(
   //   (state: RootState) => state.activeWorkout.finishedTrainingSessions
   // );
+  const calculateValue = (finishedSessions: number) => {
+    return (finishedSessions / timesPerWeek) * 100;
+  };
   const { data, refetch } = useGetJoinedWorkoutQuery({
     userId: currentUser.id,
     workoutId: currentWorkout.id,
@@ -35,7 +38,11 @@ const WorkoutProgress: React.FC<Props> = ({
   return (
     <Box>
       <CircularProgressbarWithChildren
-        value={data ? (data.finishedSessions / timesPerWeek) * 100 : 0}
+        value={
+          variant === "current"
+            ? calculateValue(data ? data.finishedSessions : 1)
+            : calculateValue(data ? data.previousWeekProgress : 1)
+        }
         strokeWidth={10}
         styles={buildStyles({
           strokeLinecap: "butt",
