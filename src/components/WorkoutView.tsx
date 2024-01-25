@@ -67,10 +67,29 @@ const WorkoutView: React.FC = () => {
           isMember={isMember}
           setSelectedTrainingSession={setSelectedTrainingSession}
         />
-        <MembersChat isMember={isMember} />
       </Grid>
       <Grid item xs={8}>
-        <WorkoutProgress timesPerWeek={workout.timesPerWeek} />
+        <Grid container columnSpacing={4}>
+          <Grid item xs={5}>
+            <WorkoutProgress
+              timesPerWeek={workout.timesPerWeek}
+              variant="current"
+              currentUser={currentUser}
+              currentWorkout={workout}
+            />
+          </Grid>
+          <Grid item xs={5}>
+            <WorkoutProgress
+              timesPerWeek={workout.timesPerWeek}
+              variant="previous"
+              currentUser={currentUser}
+              currentWorkout={workout}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={4}>
+        <MembersChat isMember={isMember} />
       </Grid>
       {isActiveWorkout && (
         <ActiveWorkout trainingSession={selectedTrainingSession} />

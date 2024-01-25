@@ -4,14 +4,14 @@ interface State {
   visibleOverlay: boolean;
   finishedExercises: string[];
   currentExerciseIndex: number;
-  isFinishedTrainingSession: boolean;
+  finishedTrainingSessions: number;
 }
 const initialState: State = {
   isActive: false,
   visibleOverlay: true,
   finishedExercises: [],
   currentExerciseIndex: 0,
-  isFinishedTrainingSession: false,
+  finishedTrainingSessions: 0,
 };
 export const activeWorkoutSlice = createSlice({
   name: "activeWorkout",
@@ -29,8 +29,8 @@ export const activeWorkoutSlice = createSlice({
     setCurrentExerciseIndex(state, action: PayloadAction<number>) {
       state.currentExerciseIndex = action.payload;
     },
-    setIsFinishedTrainingSession(state, action: PayloadAction<boolean>) {
-      state.isFinishedTrainingSession = action.payload;
+    finishTrainingSession(state) {
+      state.finishedTrainingSessions = state.finishedTrainingSessions + 1;
     },
   },
 });
@@ -39,5 +39,5 @@ export const {
   setVisibleOverlay,
   setFinishedExercises,
   setCurrentExerciseIndex,
-  setIsFinishedTrainingSession,
+  finishTrainingSession,
 } = activeWorkoutSlice.actions;

@@ -1,6 +1,10 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import { RootState, useGetJoinedWorkoutQuery } from "../store";
+import { WorkoutModel } from "../types/workout.model";
+import { User } from "../types/user.model";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import {
   CircularProgressbarWithChildren,
   buildStyles,
@@ -8,15 +12,30 @@ import {
 import "react-circular-progressbar/dist/styles.css";
 interface Props {
   timesPerWeek: number;
+  variant: string;
+  currentWorkout: WorkoutModel;
+  currentUser: User;
 }
-const WorkoutProgress: React.FC<Props> = ({ timesPerWeek }) => {
-  const finishedTrainingSession = useSelector(
-    (state: RootState) => state.activeWorkout.isFinishedTrainingSession
-  );
+const WorkoutProgress: React.FC<Props> = ({
+  timesPerWeek,
+  variant,
+  currentUser,
+  currentWorkout,
+}) => {
+  // const finishedTrainingSessions = useSelector(
+  //   (state: RootState) => state.activeWorkout.finishedTrainingSessions
+  // );
+  const { data, refetch } = useGetJoinedWorkoutQuery({
+    userId: currentUser.id,
+    workoutId: currentWorkout.id,
+  });
+  useEffect(() => {
+    refetch();
+  }, [data]);
   return (
-    <Box sx={{ width: "50%" }}>
+    <Box>
       <CircularProgressbarWithChildren
-        value={finishedTrainingSession ? 33.33 : 0}
+        value={data ? (data.finishedSessions / timesPerWeek) * 100 : 0}
         strokeWidth={10}
         styles={buildStyles({
           strokeLinecap: "butt",
@@ -24,10 +43,19 @@ const WorkoutProgress: React.FC<Props> = ({ timesPerWeek }) => {
           trailColor: "rgb(255, 255, 255)",
         })}
       >
+        <Typography
+          className="h4"
+          sx={{ width: "60%", textAlign: "center", color: "#00e676" }}
+        >
+          {variant === "current"
+            ? "Sessions Finished This Week"
+            : "Sessions Finished Previous Week"}
+        </Typography>
         {Array(timesPerWeek)
           .fill(null)
           .map((_, index) => (
             <Box
+              key={index}
               style={{
                 position: "absolute",
                 height: "100%",

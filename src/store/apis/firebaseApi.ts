@@ -7,7 +7,6 @@ import {
   setDoc,
   doc,
   arrayUnion,
-  arrayRemove,
   updateDoc,
   getDoc,
 } from "firebase/firestore";
@@ -55,6 +54,20 @@ export const firebaseApi = createApi({
         const data = snapshot.data() as User;
         const workouts = data.workouts;
         return { data: workouts };
+      },
+    }),
+    getJoinedWorkout: builder.query<
+      JoinedWorkout,
+      { userId: string; workoutId: string }
+    >({
+      queryFn: async (args) => {
+        const docRef = doc(db, "users", args.userId);
+        const snapshot = await getDoc(docRef);
+        const data = snapshot.data() as User;
+        const [workout] = data.workouts.filter(
+          (item) => item.workout.id === args.workoutId
+        );
+        return { data: workout };
       },
     }),
     getEmails: builder.query<string[], void>({
@@ -126,9 +139,6 @@ export const firebaseApi = createApi({
             workouts: args.workouts,
           });
         }
-        // await updateDoc(docRef, {
-        //   finishedSessions: args.value,
-        // });
         return { data: undefined };
       },
     }),
@@ -157,6 +167,7 @@ export const {
   useGetEmailsQuery,
   useGetUserQuery,
   useGetUserWorkoutsQuery,
+  useGetJoinedWorkoutQuery,
   useGetExercisesQuery,
   useJoinWorkoutMutation,
   useSetFinishedSessionMutation,

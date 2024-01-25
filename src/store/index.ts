@@ -7,6 +7,7 @@ import {
   useGetEmailsQuery,
   useGetUserQuery,
   useGetUserWorkoutsQuery,
+  useGetJoinedWorkoutQuery,
   useGetExercisesQuery,
   useJoinWorkoutMutation,
   useSetFinishedSessionMutation,
@@ -23,7 +24,7 @@ import {
   setVisibleOverlay,
   setFinishedExercises,
   setCurrentExerciseIndex,
-  setIsFinishedTrainingSession,
+  finishTrainingSession,
 } from "./slices/activeWorkoutSlice";
 import { setOpenedSignupForm, setOpenedLoginForm } from "./slices/formSlice";
 const store = configureStore({
@@ -42,6 +43,7 @@ export {
   useGetEmailsQuery,
   useGetUserQuery,
   useGetUserWorkoutsQuery,
+  useGetJoinedWorkoutQuery,
   setWorkout,
   useGetExercisesQuery,
   setOpenedSignupForm,
@@ -56,6 +58,6 @@ export {
   setVisibleOverlay,
   setFinishedExercises,
   setCurrentExerciseIndex,
-  setIsFinishedTrainingSession,
+  finishTrainingSession,
 };
 export default store;
