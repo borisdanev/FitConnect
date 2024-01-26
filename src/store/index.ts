@@ -26,7 +26,11 @@ import {
   setCurrentExerciseIndex,
   finishTrainingSession,
 } from "./slices/activeWorkoutSlice";
-import { setOpenedSignupForm, setOpenedLoginForm } from "./slices/formSlice";
+import {
+  setOpenedSignupForm,
+  setOpenedLoginForm,
+  setOpenedCreateProgramForm,
+} from "./slices/formSlice";
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleWare) =>
@@ -48,6 +52,7 @@ export {
   useGetExercisesQuery,
   setOpenedSignupForm,
   setOpenedLoginForm,
+  setOpenedCreateProgramForm,
   useJoinWorkoutMutation,
   useSetFinishedSessionMutation,
   useSetUserProfilePictureMutation,

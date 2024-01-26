@@ -3,10 +3,12 @@ import { PayloadAction } from "@reduxjs/toolkit";
 interface State {
   openedSignupForm: boolean;
   openedLoginForm: boolean;
+  openedCreateProgramForm: boolean;
 }
 const initialState: State = {
   openedSignupForm: false,
   openedLoginForm: false,
+  openedCreateProgramForm: false,
 };
 export const formSlice = createSlice({
   name: "form",
@@ -18,6 +20,13 @@ export const formSlice = createSlice({
     setOpenedLoginForm(state, action: PayloadAction<boolean>) {
       state.openedLoginForm = action.payload;
     },
+    setOpenedCreateProgramForm(state, action: PayloadAction<boolean>) {
+      state.openedCreateProgramForm = action.payload;
+    },
   },
 });
-export const { setOpenedSignupForm, setOpenedLoginForm } = formSlice.actions;
+export const {
+  setOpenedSignupForm,
+  setOpenedLoginForm,
+  setOpenedCreateProgramForm,
+} = formSlice.actions;
