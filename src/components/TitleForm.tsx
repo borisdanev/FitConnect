@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import Slider from "react-slick";
-import { sliderClasses } from "@mui/material";
+
 interface Props {
   sliderRef: React.RefObject<Slider>;
 }

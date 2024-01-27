@@ -44,13 +44,15 @@ const CreateWorkoutForm: React.FC = () => {
           >
             <Typography className="h3">Create Program</Typography>
             <Slider ref={sliderRef} {...sliderSettings}>
-              {[<TitleForm sliderRef={sliderRef} />, <WorkoutTypeForm />].map(
-                (item, i) => (
-                  <Box key={i} sx={{ height: "100%" }}>
-                    {item}
-                  </Box>
-                )
-              )}
+              {[
+                <TitleForm sliderRef={sliderRef} />,
+                <WorkoutTypeForm sliderRef={sliderRef} />,
+              ].map((item, i) => (
+                <Box key={i} sx={{ height: "100%" }}>
+                  {item}
+                </Box>
+              ))}
+              <Box>Something</Box>
             </Slider>
           </Box>
         </Grid>

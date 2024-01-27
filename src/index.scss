@@ -56,7 +56,12 @@ body {
   letter-spacing: 0.005em !important;
   line-height: 1.6 !important;
 }
-
+.position-fill {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
 .gradient {
   background: rgb(2, 0, 36);
   background: linear-gradient(
@@ -126,7 +131,7 @@ body {
   }
 }
 .slick-slider {
-  height: 80%;
+  height: 90%;
 }
 .slick-dots {
   pointer-events: none;
@@ -137,4 +142,22 @@ body {
 }
 .slick-dots li.slick-active button:before {
   color: rgb(0, 230, 118) !important;
+}
+.type-field .overlay {
+  opacity: 0;
+}
+.type-field .text-container {
+  opacity: 0;
+}
+.type-field:hover .overlay {
+  opacity: 0.5;
+}
+.type-field:hover .text-container {
+  opacity: 1;
+}
+.active-type-field .overlay {
+  opacity: 0.5;
+}
+.active-type-field .text-container {
+  opacity: 1;
 }
