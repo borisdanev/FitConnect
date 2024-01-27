@@ -125,3 +125,13 @@ body {
     background-color: transparent;
   }
 }
+.slick-dots {
+  pointer-events: none;
+}
+.slick-dots li button:before {
+  color: white !important;
+  font-size: 0.5rem !important;
+}
+.slick-dots li.slick-active button:before {
+  color: rgb(0, 230, 118) !important;
+}

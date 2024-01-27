@@ -1,11 +1,22 @@
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { useDispatch } from "react-redux";
-import { setOpenedCreateProgramForm } from "../store";
+import { useRef } from "react";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import CreateProgramImg from "../images/create_program.jpg";
+import Slider from "react-slick";
+import Typography from "@mui/material/Typography";
+import TitleForm from "./TitleForm";
+import WorkoutTypeForm from "./WorkoutTypeForm";
 const CreateWorkoutForm: React.FC = () => {
+  const sliderSettings = {
+    arrows: false,
+    dots: true,
+    swipe: false,
+  };
   const dispatch = useDispatch();
+  const sliderRef = useRef<Slider | null>(null);
   return (
     <Box
       sx={{
@@ -20,28 +31,29 @@ const CreateWorkoutForm: React.FC = () => {
         justifyContent: "center",
         alignItems: "center",
       }}
-      // onClick={(e) =>
-      //   e.target === e.currentTarget &&
-      //   dispatch(setOpenedCreateProgramForm(false))
-      // }
     >
       <Grid container width="60rem">
         <Grid item xs={6}>
-          <Box sx={{ bgcolor: "#2e4c3e", p: 2 }}>
-            <TextField
-              label="Title"
-              className="form-input"
-              sx={{ width: "100%" }}
-            />
-            <TextField
-              label="Description"
-              className="form-input"
-              sx={{ width: "100%" }}
-            />
+          <Box
+            sx={{
+              bgcolor: "#2e4c3e",
+              p: 2,
+              maxWidth: "100% !important",
+              height: "20rem",
+            }}
+          >
+            <Typography className="h3">Create Program</Typography>
+            <Slider ref={sliderRef} {...sliderSettings}>
+              {[<TitleForm sliderRef={sliderRef} />, <WorkoutTypeForm />].map(
+                (item, i) => (
+                  <Box key={i}>{item}</Box>
+                )
+              )}
+            </Slider>
           </Box>
         </Grid>
         <Grid item xs={6}>
-          <Box>
+          <Box height="100%">
             <img
               style={{ maxWidth: "100%", height: "100%" }}
               src={CreateProgramImg}
