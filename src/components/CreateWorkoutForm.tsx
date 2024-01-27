@@ -32,31 +32,34 @@ const CreateWorkoutForm: React.FC = () => {
         alignItems: "center",
       }}
     >
-      <Grid container width="60rem">
-        <Grid item xs={6}>
+      <Grid container width="70rem">
+        <Grid item xs={7}>
           <Box
             sx={{
               bgcolor: "#2e4c3e",
               p: 2,
               maxWidth: "100% !important",
-              height: "20rem",
+              height: "30rem",
             }}
           >
             <Typography className="h3">Create Program</Typography>
             <Slider ref={sliderRef} {...sliderSettings}>
               {[<TitleForm sliderRef={sliderRef} />, <WorkoutTypeForm />].map(
                 (item, i) => (
-                  <Box key={i}>{item}</Box>
+                  <Box key={i} sx={{ height: "100%" }}>
+                    {item}
+                  </Box>
                 )
               )}
             </Slider>
           </Box>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={5}>
           <Box height="100%">
             <img
-              style={{ maxWidth: "100%", height: "100%" }}
+              style={{ maxWidth: "100%", height: "100%", objectFit: "cover" }}
               src={CreateProgramImg}
+              alt="Man lifting barbell"
             />
           </Box>
         </Grid>
