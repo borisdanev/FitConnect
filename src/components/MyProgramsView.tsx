@@ -5,7 +5,7 @@ import {
   setOpenedCreateProgramForm,
 } from "../store";
 import Button from "@mui/material/Button";
-import CreateWorkoutForm from "./CreateWorkoutForm";
+import CreateProgramForm from "./CreateProgramForm";
 const MyProgramsView: React.FC = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector(
@@ -23,7 +23,7 @@ const MyProgramsView: React.FC = () => {
       <Button onClick={handleClick} variant="contained">
         Create Program
       </Button>
-      {openedCreateProgramForm && <CreateWorkoutForm />}
+      {openedCreateProgramForm && <CreateProgramForm />}
     </>
   );
 };

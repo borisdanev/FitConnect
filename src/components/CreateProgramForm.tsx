@@ -1,22 +1,44 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useDispatch } from "react-redux";
-import { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useRef, useState } from "react";
+import { WorkoutType } from "../enums/WorkoutType";
+import { RootState } from "../store";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import CreateProgramImg from "../images/create_program.png";
 import Logo from "../images/FitConnect_logo.webp";
 import Slider from "react-slick";
-import TitleForm from "./TitleForm";
+import MediaForm from "./MediaForm";
 import WorkoutTypeForm from "./WorkoutTypeForm";
 import SessionForm from "./SessionForm";
-const CreateWorkoutForm: React.FC = () => {
+import { WorkoutModel } from "../types/workout.model";
+import { v4 as uuidv4 } from "uuid";
+const CreateProgramForm: React.FC = () => {
+  const currentUser = useSelector(
+    (state: RootState) => state.currentUser.value
+  );
   const sliderSettings = {
     arrows: false,
     dots: true,
     swipe: false,
   };
-  const dispatch = useDispatch();
+  const model: WorkoutModel = {
+    title: "",
+    description: "",
+    creator: `${currentUser.firstName} ${currentUser.lastName}`,
+    imgUrl: "",
+    rating: 0,
+    participants: 0,
+    rates: 0,
+    type: WorkoutType.All,
+    timesPerWeek: 0,
+    trainingSessions: [],
+    membersChat: [],
+    id: uuidv4(),
+  };
+  const [createdProgram, setCreatedProgram] = useState<WorkoutModel>(model);
+  console.log(createdProgram);
   const sliderRef = useRef<Slider | null>(null);
   return (
     <Box
@@ -51,7 +73,11 @@ const CreateWorkoutForm: React.FC = () => {
           >
             <Slider ref={sliderRef} {...sliderSettings}>
               {[
-                <TitleForm sliderRef={sliderRef} />,
+                <MediaForm
+                  sliderRef={sliderRef}
+                  createdProgram={createdProgram}
+                  setCreatedProgram={setCreatedProgram}
+                />,
                 <WorkoutTypeForm sliderRef={sliderRef} />,
                 <SessionForm />,
               ].map((item, i) => (
@@ -75,4 +101,4 @@ const CreateWorkoutForm: React.FC = () => {
     </Box>
   );
 };
-export default CreateWorkoutForm;
+export default CreateProgramForm;
