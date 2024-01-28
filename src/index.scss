@@ -134,7 +134,7 @@ body {
   height: 90%;
 }
 .slick-dots {
-  pointer-events: none;
+  // pointer-events: none;
 }
 .slick-dots li button:before {
   color: white !important;
@@ -160,4 +160,18 @@ body {
 }
 .active-type-field .text-container {
   opacity: 1;
+}
+.type-scrollbar {
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
 }

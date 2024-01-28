@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { WorkoutType } from "../enums/WorkoutType";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import MuscleBuildingImg from "../images/muscle_building.jpg";
 import WeightLossImg from "../images/weight_loss.jpg";
 import EnduranceImg from "../images/endurance.jpg";
@@ -10,6 +9,7 @@ import StrengthImg from "../images/strength.jpg";
 import FlexibilityImg from "../images/flexibility.jpg";
 import Grid from "@mui/material/Grid";
 import Slider from "react-slick";
+import FormContainer from "./FormContainer";
 interface Props {
   sliderRef: React.RefObject<Slider>;
 }
@@ -25,13 +25,12 @@ const WorkoutTypeForm: React.FC<Props> = ({ sliderRef }) => {
     setSelectedField(el);
     setValue(value);
   };
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement> | undefined) => {
     if (!value || !sliderRef.current) return;
     sliderRef.current.slickGoTo(2);
   };
   return (
-    <form onSubmit={(e) => handleSubmit(e)}>
+    <FormContainer handleSubmit={handleSubmit} text="Workout Type">
       <Grid container rowSpacing={2} columnSpacing={2}>
         {[
           { src: MuscleBuildingImg, value: WorkoutType.MuscleBuilding },
@@ -73,10 +72,8 @@ const WorkoutTypeForm: React.FC<Props> = ({ sliderRef }) => {
             </Box>
           </Grid>
         ))}
-        {value}
       </Grid>
-      <Button type="submit">Next</Button>
-    </form>
+    </FormContainer>
   );
 };
 export default WorkoutTypeForm;
