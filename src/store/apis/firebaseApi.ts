@@ -111,21 +111,21 @@ export const firebaseApi = createApi({
         }
       },
     }),
-    createUser: builder.mutation<any, User>({
+    createUser: builder.mutation<void, User>({
       queryFn: async (user) => {
         const docRef = await setDoc(doc(db, "users", user.id), {
           ...user,
         });
-        return { data: docRef };
+        return { data: undefined };
       },
     }),
-    joinWorkout: builder.mutation<any, { workout: WorkoutModel; id: string }>({
+    joinWorkout: builder.mutation<void, { workout: WorkoutModel; id: string }>({
       queryFn: async (args) => {
         const docRef = doc(db, "users", args.id);
         await updateDoc(docRef, {
           workouts: arrayUnion({ workout: args.workout, finishedSessions: 0 }),
         });
-        return { data: docRef };
+        return { data: undefined };
       },
     }),
     setFinishedSession: builder.mutation<
@@ -151,12 +151,13 @@ export const firebaseApi = createApi({
         return { data: undefined };
       },
     }),
-    setUserProfilePicture: builder.mutation<any, { file: File; id: string }>({
+    uploadImage: builder.mutation<void, { file: File; id: string }>({
       queryFn: async (args) => {
+        console.log(args);
         const storage = getStorage();
         const storageRef = ref(storage, args.id);
         await uploadBytes(storageRef, args.file);
-        return { data: "data" };
+        return { data: undefined };
       },
     }),
   }),
@@ -171,7 +172,7 @@ export const {
   useGetExercisesQuery,
   useJoinWorkoutMutation,
   useSetFinishedSessionMutation,
-  useSetUserProfilePictureMutation,
+  useUploadImageMutation,
   useGetProfilePictureQuery,
   useSendMessageMutation,
   useGetMembersChatQuery,

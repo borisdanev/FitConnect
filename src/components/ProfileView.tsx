@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSetUserProfilePictureMutation } from "../store";
+import { useUploadImageMutation } from "../store";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import Box from "@mui/material/Box";
@@ -9,7 +9,7 @@ const ProfileView = () => {
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value
   );
-  const [setUserProfilePicture] = useSetUserProfilePictureMutation();
+  const [setUserProfilePicture] = useUploadImageMutation();
   const [selectedImage, setSelectedImage] = useState<string>("");
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -42,16 +42,13 @@ const ProfileView = () => {
         >
           Choose new photo
           <input
+            type="file"
+            accept="image/*"
             style={{
               opacity: 0,
               position: "absolute",
-              top: 0,
-              bottom: 0,
-              left: 0,
-              right: 0,
             }}
-            type="file"
-            accept="image/*"
+            className="position-fill"
             onChange={(e) => handleImageChange(e)}
           />
         </Typography>

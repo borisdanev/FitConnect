@@ -1,6 +1,6 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useRef, useState } from "react";
 import { WorkoutType } from "../enums/WorkoutType";
 import { RootState } from "../store";
@@ -38,7 +38,6 @@ const CreateProgramForm: React.FC = () => {
     id: uuidv4(),
   };
   const [createdProgram, setCreatedProgram] = useState<WorkoutModel>(model);
-  console.log(createdProgram);
   const sliderRef = useRef<Slider | null>(null);
   return (
     <Box

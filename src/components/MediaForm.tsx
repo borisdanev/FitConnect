@@ -1,12 +1,14 @@
+import { useUploadImageMutation } from "../store";
+import { useFormik } from "formik";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import * as Yup from "yup";
-import { useFormik } from "formik";
 import Slider from "react-slick";
 import FormContainer from "./FormContainer";
 import { FaImage } from "react-icons/fa6";
 import Typography from "@mui/material/Typography";
 import { WorkoutModel } from "../types/workout.model";
+import FormHelperText from "@mui/material/FormHelperText";
 interface Props {
   sliderRef: React.RefObject<Slider>;
   createdProgram: WorkoutModel;
@@ -15,25 +17,40 @@ interface Props {
 interface FormValues {
   title: string;
   description: string;
+  imgFile: File | null;
 }
 const MediaForm: React.FC<Props> = ({
   sliderRef,
   createdProgram,
   setCreatedProgram,
 }) => {
+  const [setWorkoutImage] = useUploadImageMutation();
   const initialValues: FormValues = {
     title: "",
     description: "",
+    imgFile: null as File | null,
   };
   const validationSchema = Yup.object().shape({
     title: Yup.string().required("Title is required"),
     description: Yup.string().required("Description is required"),
+    imgFile: Yup.mixed().test("is-valid-size", "File is too large", (value) => {
+      console.log(value);
+      if (value) {
+        console.log(value);
+      }
+      return false;
+    }),
   });
   const handleSubmit = (values: FormValues) => {
     if (!sliderRef.current) return;
     const { title, description } = values;
     setCreatedProgram({ ...createdProgram, title, description });
     sliderRef.current.slickGoTo(1);
+  };
+  const setImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    // setWorkoutImage({ file: file, id: createdProgram.id });
   };
   const formik = useFormik({
     initialValues,
@@ -84,12 +101,21 @@ const MediaForm: React.FC<Props> = ({
           >
             <FaImage />
             <Typography className="h4">
-              Choose Photo For Your Program
+              Choose Image For Your Program
             </Typography>
+            <FormHelperText sx={{ textAlign: "center" }}>
+              {formik.touched.imgFile && formik.errors.imgFile}
+            </FormHelperText>
             <input
               type="file"
+              accept="image/*"
+              id="imgFile"
+              name="imgFile"
               style={{ position: "absolute", opacity: 0 }}
               className="position-fill"
+              onChange={(event) =>
+                formik.setFieldValue("file", event.currentTarget.files?.[0])
+              }
             />
           </Box>
         </Box>
