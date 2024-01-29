@@ -33,24 +33,20 @@ const MediaForm: React.FC<Props> = ({
   const validationSchema = Yup.object().shape({
     title: Yup.string().required("Title is required"),
     description: Yup.string().required("Description is required"),
-    imgFile: Yup.mixed().test("is-valid-size", "File is too large", (value) => {
-      console.log(value);
-      if (value) {
-        console.log(value);
-      }
-      return false;
-    }),
+    imgFile: Yup.mixed()
+      .required()
+      .test(
+        "imgFile",
+        "Maximum file size is 700KB",
+        (value) => (value as File).size < 700000
+      ),
   });
   const handleSubmit = (values: FormValues) => {
-    if (!sliderRef.current) return;
-    const { title, description } = values;
+    const { title, description, imgFile } = values;
+    if (!sliderRef.current || !imgFile) return;
     setCreatedProgram({ ...createdProgram, title, description });
+    setWorkoutImage({ file: imgFile, id: createdProgram.id });
     sliderRef.current.slickGoTo(1);
-  };
-  const setImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    // setWorkoutImage({ file: file, id: createdProgram.id });
   };
   const formik = useFormik({
     initialValues,
@@ -114,7 +110,10 @@ const MediaForm: React.FC<Props> = ({
               style={{ position: "absolute", opacity: 0 }}
               className="position-fill"
               onChange={(event) =>
-                formik.setFieldValue("file", event.currentTarget.files?.[0])
+                formik.setFieldValue(
+                  "imgFile",
+                  event.currentTarget.files ? event.currentTarget.files[0] : ""
+                )
               }
             />
           </Box>

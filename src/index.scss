@@ -164,7 +164,7 @@ body {
 .type-scrollbar {
   overflow: auto;
   &::-webkit-scrollbar {
-    width: 0;
+    width: 0.4rem;
   }
 
   &::-webkit-scrollbar-track {
@@ -172,6 +172,9 @@ body {
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: transparent;
+    // background-color: transparent;
+    background-color: white;
+    // background-color: #00e676;
+    border-radius: 1rem;
   }
 }

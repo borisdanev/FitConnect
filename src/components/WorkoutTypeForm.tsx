@@ -10,11 +10,18 @@ import FlexibilityImg from "../images/flexibility.jpg";
 import Grid from "@mui/material/Grid";
 import Slider from "react-slick";
 import FormContainer from "./FormContainer";
+import { WorkoutModel } from "../types/workout.model";
 interface Props {
   sliderRef: React.RefObject<Slider>;
+  createdProgram: WorkoutModel;
+  setCreatedProgram: (program: WorkoutModel) => void;
 }
-const WorkoutTypeForm: React.FC<Props> = ({ sliderRef }) => {
-  const [value, setValue] = useState<string>("");
+const WorkoutTypeForm: React.FC<Props> = ({
+  sliderRef,
+  createdProgram,
+  setCreatedProgram,
+}) => {
+  const [value, setValue] = useState<WorkoutType>(WorkoutType.All);
   const [selectedField, setSelectedField] = useState<HTMLDivElement | null>(
     null
   );
@@ -26,7 +33,8 @@ const WorkoutTypeForm: React.FC<Props> = ({ sliderRef }) => {
     setValue(value);
   };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement> | undefined) => {
-    if (!value || !sliderRef.current) return;
+    if (!selectedField || !sliderRef.current) return;
+    setCreatedProgram({ ...createdProgram, type: value });
     sliderRef.current.slickGoTo(2);
   };
   return (
@@ -37,8 +45,8 @@ const WorkoutTypeForm: React.FC<Props> = ({ sliderRef }) => {
           { src: WeightLossImg, value: WorkoutType.WeightLoss },
           { src: EnduranceImg, value: WorkoutType.EnduranceWorkout },
           { src: StrengthImg, value: WorkoutType.StrengthWorkout },
-        ].map((option) => (
-          <Grid item xs={6}>
+        ].map((option, i) => (
+          <Grid key={i} item xs={6}>
             <Box
               sx={{ position: "relative" }}
               className="type-field"

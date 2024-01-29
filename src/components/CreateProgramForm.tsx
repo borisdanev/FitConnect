@@ -1,9 +1,9 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useSelector } from "react-redux";
-import { useRef, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useRef, useState, useEffect } from "react";
 import { WorkoutType } from "../enums/WorkoutType";
-import { RootState } from "../store";
+import { RootState, setOpenedCreateProgramForm } from "../store";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import CreateProgramImg from "../images/create_program.png";
@@ -15,6 +15,7 @@ import SessionForm from "./SessionForm";
 import { WorkoutModel } from "../types/workout.model";
 import { v4 as uuidv4 } from "uuid";
 const CreateProgramForm: React.FC = () => {
+  const dispatch = useDispatch();
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value
   );
@@ -38,7 +39,17 @@ const CreateProgramForm: React.FC = () => {
     id: uuidv4(),
   };
   const [createdProgram, setCreatedProgram] = useState<WorkoutModel>(model);
+  console.log(createdProgram);
   const sliderRef = useRef<Slider | null>(null);
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        dispatch(setOpenedCreateProgramForm(false));
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
   return (
     <Box
       sx={{
@@ -77,7 +88,11 @@ const CreateProgramForm: React.FC = () => {
                   createdProgram={createdProgram}
                   setCreatedProgram={setCreatedProgram}
                 />,
-                <WorkoutTypeForm sliderRef={sliderRef} />,
+                <WorkoutTypeForm
+                  sliderRef={sliderRef}
+                  createdProgram={createdProgram}
+                  setCreatedProgram={setCreatedProgram}
+                />,
                 <SessionForm />,
               ].map((item, i) => (
                 <Box key={i} sx={{ height: "100%" }}>
