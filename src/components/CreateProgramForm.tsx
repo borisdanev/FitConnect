@@ -11,7 +11,7 @@ import Logo from "../images/FitConnect_logo.webp";
 import Slider from "react-slick";
 import MediaForm from "./MediaForm";
 import WorkoutTypeForm from "./WorkoutTypeForm";
-import SessionForm from "./SessionForm";
+import TrainingSessionForm from "./TrainingSessionForm";
 import { WorkoutModel } from "../types/workout.model";
 import { v4 as uuidv4 } from "uuid";
 const CreateProgramForm: React.FC = () => {
@@ -93,7 +93,7 @@ const CreateProgramForm: React.FC = () => {
                   createdProgram={createdProgram}
                   setCreatedProgram={setCreatedProgram}
                 />,
-                <SessionForm />,
+                <TrainingSessionForm />,
               ].map((item, i) => (
                 <Box key={i} sx={{ height: "100%" }}>
                   {item}
