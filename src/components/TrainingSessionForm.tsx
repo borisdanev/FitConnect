@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { ExerciseModel } from "../types/exercise.model";
+import * as Yup from "yup";
+import { useFormik } from "formik";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import FormContainer from "./FormContainer";
@@ -9,6 +10,11 @@ import SelectionCalendar from "./SelectionCalendar";
 import { CiSquarePlus } from "react-icons/ci";
 import ExerciseSelection from "./ExerciseSelection";
 import ExerciseDetailsSelection from "./ExerciseDetailsSelection";
+interface FormValues {
+  sets: string;
+  reps: string;
+  restTimer: string;
+}
 const TrainingSessionForm: React.FC = () => {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [selectedExercises, setSelectedExercises] = useState<ExerciseModel[]>(
@@ -17,14 +23,28 @@ const TrainingSessionForm: React.FC = () => {
   const [providedDetails, setProvidedDetails] = useState<boolean>(true);
   const [visibleExerciseSelection, setVisibleExerciseSelection] =
     useState<boolean>(false);
-  const handleClick = (values?: Object) => {
-    console.log(values);
+  const initialValues = {
+    sets: "",
+    reps: "",
+    restTimer: "",
+  };
+  const validationSchema = Yup.object().shape({
+    sets: Yup.string().required("Field is required"),
+    reps: Yup.string().required("Field is required"),
+    restTimer: Yup.string().required("Field is required"),
+  });
+  const handleSubmit = (values: FormValues) => {};
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: handleSubmit,
+  });
+  const handleClick = (values?: FormValues) => {
     if (!providedDetails) return;
     setVisibleExerciseSelection(true);
   };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement> | undefined) => {};
   return (
-    <FormContainer text="Sessions" handleSubmit={handleSubmit}>
+    <FormContainer text="Sessions" handleSubmit={formik.handleSubmit}>
       <SelectionCalendar
         selectedDays={selectedDays}
         setSelectedDays={setSelectedDays}
@@ -47,7 +67,8 @@ const TrainingSessionForm: React.FC = () => {
                 key={i}
                 name={item.name}
                 gifUrl={item.gifUrl}
-                handleOpenSelection={handleClick}
+                values={formik.values}
+                handleChange={formik.handleChange}
               />
             ))}
             <Box
