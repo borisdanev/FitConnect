@@ -19,7 +19,7 @@ const ExerciseSelection: React.FC<Props> = ({
   const handleSelectExercise = (exercise: ExerciseModel) => {
     setSelectedExercises([...selectedExercises, exercise]);
     setVisibleExerciseSelection(false);
-    setProvidedDetails(false);
+    // setProvidedDetails(false);
   };
   return (
     <Box

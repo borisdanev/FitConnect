@@ -3,6 +3,7 @@ import { ExerciseModel } from "../types/exercise.model";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import FormContainer from "./FormContainer";
@@ -21,6 +22,7 @@ const TrainingSessionForm: React.FC = () => {
     []
   );
   const [providedDetails, setProvidedDetails] = useState<boolean>(true);
+
   const [visibleExerciseSelection, setVisibleExerciseSelection] =
     useState<boolean>(false);
   const initialValues = {
@@ -29,20 +31,26 @@ const TrainingSessionForm: React.FC = () => {
     restTimer: "",
   };
   const validationSchema = Yup.object().shape({
-    sets: Yup.string().required("Field is required"),
-    reps: Yup.string().required("Field is required"),
-    restTimer: Yup.string().required("Field is required"),
+    sets: Yup.string().required("Required"),
+    reps: Yup.string().required("Required"),
+    restTimer: Yup.string().required("Required"),
   });
-  const handleSubmit = (values: FormValues) => {};
+
+  const handleClick = () => {
+    // if (!providedDetails) return;
+    if (Object.keys(formik.errors).length > 0) return;
+    setVisibleExerciseSelection(true);
+  };
+  const handleSubmit = (values: FormValues) => {
+    console.log("values");
+    console.log(values);
+  };
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: handleSubmit,
   });
-  const handleClick = (values?: FormValues) => {
-    if (!providedDetails) return;
-    setVisibleExerciseSelection(true);
-  };
+  console.log(formik.errors);
   return (
     <FormContainer text="Sessions" handleSubmit={formik.handleSubmit}>
       <SelectionCalendar
@@ -67,21 +75,23 @@ const TrainingSessionForm: React.FC = () => {
                 key={i}
                 name={item.name}
                 gifUrl={item.gifUrl}
-                values={formik.values}
-                handleChange={formik.handleChange}
+                formik={formik}
               />
             ))}
-            <Box
+            <Button
               sx={{
                 display: "flex",
                 alignItems: "center",
+                color: "white",
                 my: 2,
+                textTransform: "none",
               }}
-              onClick={() => handleClick()}
+              onClick={handleClick}
+              // type={providedDetails ? "button" : "submit"}
             >
               <CiSquarePlus fontSize="2rem" />
               <Typography sx={{ ml: 1 }}>Add Exercise</Typography>
-            </Box>
+            </Button>
             {visibleExerciseSelection && (
               <ExerciseSelection
                 selectedExercises={selectedExercises}
