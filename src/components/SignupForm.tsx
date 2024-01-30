@@ -90,7 +90,6 @@ const SignupForm: React.FC = () => {
               label={item.text}
               sx={{ mt: i === 1 || 2 ? 2 : 0 }}
               className="form-input"
-              inputProps={{}}
               helperText={
                 formik.touched[item.value as keyof FormValues] &&
                 formik.errors[item.value as keyof FormValues]

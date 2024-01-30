@@ -39,7 +39,6 @@ const CreateProgramForm: React.FC = () => {
     id: uuidv4(),
   };
   const [createdProgram, setCreatedProgram] = useState<WorkoutModel>(model);
-  console.log(createdProgram);
   const sliderRef = useRef<Slider | null>(null);
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

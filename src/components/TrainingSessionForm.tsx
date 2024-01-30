@@ -1,19 +1,27 @@
 import { useState } from "react";
 import { ExerciseModel } from "../types/exercise.model";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import FormContainer from "./FormContainer";
 import SelectionCalendar from "./SelectionCalendar";
 import { CiSquarePlus } from "react-icons/ci";
 import ExerciseSelection from "./ExerciseSelection";
+import ExerciseDetailsSelection from "./ExerciseDetailsSelection";
 const TrainingSessionForm: React.FC = () => {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [selectedExercises, setSelectedExercises] = useState<ExerciseModel[]>(
     []
   );
+  const [providedDetails, setProvidedDetails] = useState<boolean>(true);
   const [visibleExerciseSelection, setVisibleExerciseSelection] =
     useState<boolean>(false);
+  const handleClick = (values?: Object) => {
+    console.log(values);
+    if (!providedDetails) return;
+    setVisibleExerciseSelection(true);
+  };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement> | undefined) => {};
   return (
     <FormContainer text="Sessions" handleSubmit={handleSubmit}>
@@ -35,29 +43,20 @@ const TrainingSessionForm: React.FC = () => {
           >
             <TextField label="Session Name" />
             {selectedExercises.map((item, i) => (
-              <Box sx={{ display: "flex", height: "3rem", mt: 2 }}>
-                <img
-                  src={item.gifUrl}
-                  style={{ maxWidth: "100%", height: "auto" }}
-                  alt="Exercise Demonstration"
-                />
-                <Box>
-                  <Typography sx={{ ml: 1, mt: 1.4 }}>{item.name}</Typography>
-                  <Box sx={{ display: "flex" }}>
-                    {["sets", "reps", "restTime"].map((item) => (
-                      <TextField
-                        sx={{ mr: 1 }}
-                        label={item}
-                        variant="standard"
-                      />
-                    ))}
-                  </Box>
-                </Box>
-              </Box>
+              <ExerciseDetailsSelection
+                key={i}
+                name={item.name}
+                gifUrl={item.gifUrl}
+                handleOpenSelection={handleClick}
+              />
             ))}
             <Box
-              sx={{ display: "flex", alignItems: "center", my: 2 }}
-              onClick={() => setVisibleExerciseSelection(true)}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                my: 2,
+              }}
+              onClick={() => handleClick()}
             >
               <CiSquarePlus fontSize="2rem" />
               <Typography sx={{ ml: 1 }}>Add Exercise</Typography>
@@ -67,6 +66,7 @@ const TrainingSessionForm: React.FC = () => {
                 selectedExercises={selectedExercises}
                 setSelectedExercises={setSelectedExercises}
                 setVisibleExerciseSelection={setVisibleExerciseSelection}
+                setProvidedDetails={setProvidedDetails}
               />
             )}
           </Box>
