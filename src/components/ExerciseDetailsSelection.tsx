@@ -2,7 +2,8 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Input from "@mui/material/Input";
 import { FormikProps } from "formik";
-
+import { MdDelete } from "react-icons/md";
+import IconButton from "@mui/material/IconButton";
 interface FormValues {
   sets: string;
   reps: string;
@@ -26,7 +27,12 @@ const ExerciseDetailsSelection: React.FC<Props> = ({
         alt="Exercise Demonstration"
       />
       <Box sx={{ pl: 1 }}>
-        <Typography>{name}</Typography>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography>{name}</Typography>
+          <IconButton>
+            <MdDelete />
+          </IconButton>
+        </Box>
         <Box sx={{ display: "flex" }}>
           {["sets", "reps", "restTimer"].map((item) => (
             <Box key={item} sx={{ mr: 1 }}>

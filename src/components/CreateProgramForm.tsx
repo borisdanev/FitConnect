@@ -92,7 +92,7 @@ const CreateProgramForm: React.FC = () => {
                   createdProgram={createdProgram}
                   setCreatedProgram={setCreatedProgram}
                 />,
-                <TrainingSessionForm />,
+                <TrainingSessionForm createdProgram={createdProgram} />,
               ].map((item, i) => (
                 <Box key={i} sx={{ height: "100%" }}>
                   {item}

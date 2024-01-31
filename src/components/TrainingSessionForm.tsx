@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { ExerciseModel } from "../types/exercise.model";
-import * as Yup from "yup";
+import { WorkoutModel } from "../types/workout.model";
 import { useFormik } from "formik";
+import * as Yup from "yup";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -16,7 +17,10 @@ interface FormValues {
   reps: string;
   restTimer: string;
 }
-const TrainingSessionForm: React.FC = () => {
+interface Props {
+  createdProgram: WorkoutModel;
+}
+const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [selectedExercises, setSelectedExercises] = useState<ExerciseModel[]>(
     []
@@ -38,6 +42,7 @@ const TrainingSessionForm: React.FC = () => {
 
   const handleClick = () => {
     // if (!providedDetails) return;
+    console.log(formik.errors);
     if (Object.keys(formik.errors).length > 0) return;
     setVisibleExerciseSelection(true);
   };
@@ -87,7 +92,7 @@ const TrainingSessionForm: React.FC = () => {
                 textTransform: "none",
               }}
               onClick={handleClick}
-              // type={providedDetails ? "button" : "submit"}
+              // type={formik ? "button" : "submit"}
             >
               <CiSquarePlus fontSize="2rem" />
               <Typography sx={{ ml: 1 }}>Add Exercise</Typography>
