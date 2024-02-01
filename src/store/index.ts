@@ -20,6 +20,13 @@ import { selectView } from "./slices/viewSlice";
 import { setCurrentUser } from "./slices/userSlice";
 import { setWorkout } from "./slices/wokoutSlice";
 import {
+  addToSelectedDays,
+  removeFromSelectedDays,
+  addToSelectedExercises,
+  removeFromSelectedExercises,
+  setVisibleExerciseSelection,
+} from "./slices/programSlice";
+import {
   setIsActiveWorkout,
   setVisibleOverlay,
   setFinishedExercises,
@@ -64,5 +71,10 @@ export {
   setFinishedExercises,
   setCurrentExerciseIndex,
   finishTrainingSession,
+  addToSelectedDays,
+  removeFromSelectedDays,
+  addToSelectedExercises,
+  removeFromSelectedExercises,
+  setVisibleExerciseSelection,
 };
 export default store;

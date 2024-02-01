@@ -1,21 +1,20 @@
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, addToSelectedDays, removeFromSelectedDays } from "../store";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-interface Props {
-  selectedDays: string[];
-  setSelectedDays: (id: string[]) => void;
-}
-const SelectionCalendar: React.FC<Props> = ({
-  selectedDays,
-  setSelectedDays,
-}) => {
+const SelectionCalendar: React.FC = () => {
+  const dispatch = useDispatch();
+  const selectedDays = useSelector(
+    (state: RootState) => state.program.selectedDays
+  );
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const currentId = (event.target as HTMLButtonElement).id;
     if (selectedDays.includes(currentId)) {
-      const newArr = selectedDays.filter((item) => item !== currentId);
-      setSelectedDays(newArr);
+      const index = selectedDays.findIndex((item) => item === currentId);
+      dispatch(removeFromSelectedDays(index));
       return;
     }
-    setSelectedDays([...selectedDays, currentId]);
+    dispatch(addToSelectedDays(currentId));
   };
   return (
     <Box sx={{ display: "flex", justifyContent: "space-between" }}>

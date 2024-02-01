@@ -1,3 +1,5 @@
+import { useDispatch } from "react-redux";
+import { removeFromSelectedExercises } from "../store";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Input from "@mui/material/Input";
@@ -13,12 +15,15 @@ interface Props {
   name: string;
   gifUrl: string;
   formik: FormikProps<FormValues>;
+  index: number;
 }
 const ExerciseDetailsSelection: React.FC<Props> = ({
   name,
   gifUrl,
   formik,
+  index,
 }) => {
+  const dispatch = useDispatch();
   return (
     <Box sx={{ display: "flex", mt: 2, ml: 1.5 }}>
       <img
@@ -29,15 +34,17 @@ const ExerciseDetailsSelection: React.FC<Props> = ({
       <Box sx={{ pl: 1 }}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography>{name}</Typography>
-          <IconButton>
+          <IconButton
+            onClick={() => dispatch(removeFromSelectedExercises(index))}
+          >
             <MdDelete />
           </IconButton>
         </Box>
         <Box sx={{ display: "flex" }}>
-          {["sets", "reps", "restTimer"].map((item) => (
+          {["sets", "reps", "rest"].map((item, i) => (
             <Box key={item} sx={{ mr: 1 }}>
               <Input
-                id={item}
+                id={`input${index * 3 + i + 1}`}
                 name={item}
                 sx={{ height: "1.5rem" }}
                 value={formik.values[item as keyof FormValues]}

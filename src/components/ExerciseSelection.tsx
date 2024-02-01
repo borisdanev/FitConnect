@@ -1,24 +1,19 @@
-import { useGetExercisesQuery } from "../store";
+import { useDispatch } from "react-redux";
+import {
+  useGetExercisesQuery,
+  addToSelectedExercises,
+  setVisibleExerciseSelection,
+} from "../store";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Skeleton from "@mui/material/Skeleton";
 import { ExerciseModel } from "../types/exercise.model";
-interface Props {
-  selectedExercises: ExerciseModel[];
-  setSelectedExercises: (exercises: ExerciseModel[]) => void;
-  setVisibleExerciseSelection: (isVisible: boolean) => void;
-  setProvidedDetails: (isProvided: boolean) => void;
-}
-const ExerciseSelection: React.FC<Props> = ({
-  setSelectedExercises,
-  selectedExercises,
-  setVisibleExerciseSelection,
-  setProvidedDetails,
-}) => {
+const ExerciseSelection: React.FC = () => {
+  const dispatch = useDispatch();
   const { data: exercises, isLoading } = useGetExercisesQuery();
   const handleSelectExercise = (exercise: ExerciseModel) => {
-    setSelectedExercises([...selectedExercises, exercise]);
-    setVisibleExerciseSelection(false);
+    dispatch(addToSelectedExercises(exercise));
+    dispatch(setVisibleExerciseSelection(false));
     // setProvidedDetails(false);
   };
   return (

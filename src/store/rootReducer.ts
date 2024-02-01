@@ -5,6 +5,7 @@ import { userSlice } from "./slices/userSlice";
 import { workoutSlice } from "./slices/wokoutSlice";
 import { formSlice } from "./slices/formSlice";
 import { activeWorkoutSlice } from "./slices/activeWorkoutSlice";
+import { programSlice } from "./slices/programSlice";
 export const rootReducer = combineReducers({
   [firebaseApi.reducerPath]: firebaseApi.reducer,
   view: viewSlice.reducer,
@@ -12,4 +13,5 @@ export const rootReducer = combineReducers({
   currentWorkout: workoutSlice.reducer,
   form: formSlice.reducer,
   activeWorkout: activeWorkoutSlice.reducer,
+  program: programSlice.reducer,
 });

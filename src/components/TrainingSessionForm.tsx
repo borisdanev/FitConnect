@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { ExerciseModel } from "../types/exercise.model";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, setVisibleExerciseSelection } from "../store";
 import { WorkoutModel } from "../types/workout.model";
 import { useFormik } from "formik";
+import useDynamicSchema from "../hooks/useDynamicSchema";
 import * as Yup from "yup";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -12,6 +14,7 @@ import SelectionCalendar from "./SelectionCalendar";
 import { CiSquarePlus } from "react-icons/ci";
 import ExerciseSelection from "./ExerciseSelection";
 import ExerciseDetailsSelection from "./ExerciseDetailsSelection";
+import useDynamicInitialValues from "../hooks/useDynamicInitialValues";
 interface FormValues {
   sets: string;
   reps: string;
@@ -21,32 +24,31 @@ interface Props {
   createdProgram: WorkoutModel;
 }
 const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
-  const [selectedDays, setSelectedDays] = useState<string[]>([]);
-  const [selectedExercises, setSelectedExercises] = useState<ExerciseModel[]>(
-    []
+  const dispatch = useDispatch();
+  const selectedDays = useSelector(
+    (state: RootState) => state.program.selectedDays
   );
+  const selectedExercises = useSelector(
+    (state: RootState) => state.program.selectedExercises
+  );
+  const validationSchema = useDynamicSchema(selectedExercises.length * 3);
+  const initialValues = useDynamicInitialValues(selectedExercises.length * 3);
   const [providedDetails, setProvidedDetails] = useState<boolean>(true);
-
-  const [visibleExerciseSelection, setVisibleExerciseSelection] =
-    useState<boolean>(false);
-  const initialValues = {
-    sets: "",
-    reps: "",
-    restTimer: "",
-  };
-  const validationSchema = Yup.object().shape({
-    sets: Yup.string().required("Required"),
-    reps: Yup.string().required("Required"),
-    restTimer: Yup.string().required("Required"),
-  });
-
+  const visibleExerciseSelection = useSelector(
+    (state: RootState) => state.program.visibleExerciseSelection
+  );
+  // const validationSchema = Yup.object().shape({
+  //   sets: Yup.string().required("Required"),
+  //   reps: Yup.string().required("Required"),
+  //   restTimer: Yup.string().required("Required"),
+  // });
   const handleClick = () => {
     // if (!providedDetails) return;
     console.log(formik.errors);
-    if (Object.keys(formik.errors).length > 0) return;
-    setVisibleExerciseSelection(true);
+    // if (Object.keys(formik.errors).length > 0) return;
+    dispatch(setVisibleExerciseSelection(true));
   };
-  const handleSubmit = (values: FormValues) => {
+  const handleSubmit = (values: any) => {
     console.log("values");
     console.log(values);
   };
@@ -55,13 +57,9 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
     validationSchema,
     onSubmit: handleSubmit,
   });
-  console.log(formik.errors);
   return (
     <FormContainer text="Sessions" handleSubmit={formik.handleSubmit}>
-      <SelectionCalendar
-        selectedDays={selectedDays}
-        setSelectedDays={setSelectedDays}
-      />
+      <SelectionCalendar />
       {selectedDays.length > 0 ? (
         <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
           <Box
@@ -81,6 +79,7 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
                 name={item.name}
                 gifUrl={item.gifUrl}
                 formik={formik}
+                index={i}
               />
             ))}
             <Button
@@ -97,14 +96,7 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
               <CiSquarePlus fontSize="2rem" />
               <Typography sx={{ ml: 1 }}>Add Exercise</Typography>
             </Button>
-            {visibleExerciseSelection && (
-              <ExerciseSelection
-                selectedExercises={selectedExercises}
-                setSelectedExercises={setSelectedExercises}
-                setVisibleExerciseSelection={setVisibleExerciseSelection}
-                setProvidedDetails={setProvidedDetails}
-              />
-            )}
+            {visibleExerciseSelection && <ExerciseSelection />}
           </Box>
         </Box>
       ) : (
