@@ -4,11 +4,13 @@ interface State {
   selectedDays: string[];
   selectedExercises: ExerciseModel[];
   visibleExerciseSelection: boolean;
+  removedExerciseIndex: number;
 }
 const initialState: State = {
   selectedDays: [],
   selectedExercises: [],
   visibleExerciseSelection: false,
+  removedExerciseIndex: 0,
 };
 export const programSlice = createSlice({
   name: "program",
@@ -29,6 +31,9 @@ export const programSlice = createSlice({
     setVisibleExerciseSelection(state, action: PayloadAction<boolean>) {
       state.visibleExerciseSelection = action.payload;
     },
+    setRemovedExerciseIndex(state, action: PayloadAction<number>) {
+      state.removedExerciseIndex = action.payload;
+    },
   },
 });
 export const {
@@ -37,4 +42,5 @@ export const {
   addToSelectedExercises,
   removeFromSelectedExercises,
   setVisibleExerciseSelection,
+  setRemovedExerciseIndex,
 } = programSlice.actions;

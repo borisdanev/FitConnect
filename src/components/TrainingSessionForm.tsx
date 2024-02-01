@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, setVisibleExerciseSelection } from "../store";
 import { WorkoutModel } from "../types/workout.model";
 import { useFormik } from "formik";
 import useDynamicSchema from "../hooks/useDynamicSchema";
-import * as Yup from "yup";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -31,25 +30,30 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
   const selectedExercises = useSelector(
     (state: RootState) => state.program.selectedExercises
   );
+  const removedExerciseIndex = useSelector(
+    (state: RootState) => state.program.removedExerciseIndex
+  );
   const validationSchema = useDynamicSchema(selectedExercises.length * 3);
   const initialValues = useDynamicInitialValues(selectedExercises.length * 3);
-  const [providedDetails, setProvidedDetails] = useState<boolean>(true);
   const visibleExerciseSelection = useSelector(
     (state: RootState) => state.program.visibleExerciseSelection
   );
-  // const validationSchema = Yup.object().shape({
-  //   sets: Yup.string().required("Required"),
-  //   reps: Yup.string().required("Required"),
-  //   restTimer: Yup.string().required("Required"),
-  // });
+  console.log(removedExerciseIndex);
+  useEffect(() => {
+    const isLastExercise =
+      Object.keys(initialValues).length > removedExerciseIndex + 3;
+    if (isLastExercise) {
+      formik.values = initialValues;
+      console.log(formik.values);
+      return;
+    }
+  }, [removedExerciseIndex]);
   const handleClick = () => {
-    // if (!providedDetails) return;
-    console.log(formik.errors);
     // if (Object.keys(formik.errors).length > 0) return;
     dispatch(setVisibleExerciseSelection(true));
   };
   const handleSubmit = (values: any) => {
-    console.log("values");
+    console.log("valid");
     console.log(values);
   };
   const formik = useFormik({

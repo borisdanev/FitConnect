@@ -25,6 +25,7 @@ import {
   addToSelectedExercises,
   removeFromSelectedExercises,
   setVisibleExerciseSelection,
+  setRemovedExerciseIndex,
 } from "./slices/programSlice";
 import {
   setIsActiveWorkout,
@@ -76,5 +77,6 @@ export {
   addToSelectedExercises,
   removeFromSelectedExercises,
   setVisibleExerciseSelection,
+  setRemovedExerciseIndex,
 };
 export default store;
