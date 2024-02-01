@@ -6,7 +6,7 @@ import { WorkoutType } from "../enums/WorkoutType";
 import { RootState, setOpenedCreateProgramForm } from "../store";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import CreateProgramImg from "../images/create_program.png";
+import CreateProgramImg from "../images/create_program.webp";
 import Logo from "../images/FitConnect_logo.webp";
 import Slider from "react-slick";
 import MediaForm from "./MediaForm";

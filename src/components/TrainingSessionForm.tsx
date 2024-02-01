@@ -41,10 +41,13 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
   console.log(removedExerciseIndex);
   useEffect(() => {
     const isLastExercise =
-      Object.keys(initialValues).length > removedExerciseIndex + 3;
+      Object.keys(initialValues).length + 3 === removedExerciseIndex + 3;
+    console.log(initialValues);
+    console.log(isLastExercise);
     if (isLastExercise) {
-      formik.values = initialValues;
+      console.log("smaller");
       console.log(formik.values);
+      formik.values = { ...initialValues };
       return;
     }
   }, [removedExerciseIndex]);
