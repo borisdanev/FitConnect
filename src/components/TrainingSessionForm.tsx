@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, setVisibleExerciseSelection } from "../store";
 import { WorkoutModel } from "../types/workout.model";
@@ -14,11 +13,7 @@ import { CiSquarePlus } from "react-icons/ci";
 import ExerciseSelection from "./ExerciseSelection";
 import ExerciseDetailsSelection from "./ExerciseDetailsSelection";
 import useDynamicInitialValues from "../hooks/useDynamicInitialValues";
-interface FormValues {
-  sets: string;
-  reps: string;
-  restTimer: string;
-}
+import useAdjustInputValues from "../hooks/useAdjustInputValues";
 interface Props {
   createdProgram: WorkoutModel;
 }
@@ -30,27 +25,11 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
   const selectedExercises = useSelector(
     (state: RootState) => state.program.selectedExercises
   );
-  const removedExerciseIndex = useSelector(
-    (state: RootState) => state.program.removedExerciseIndex
-  );
   const validationSchema = useDynamicSchema(selectedExercises.length * 3);
   const initialValues = useDynamicInitialValues(selectedExercises.length * 3);
   const visibleExerciseSelection = useSelector(
     (state: RootState) => state.program.visibleExerciseSelection
   );
-  console.log(removedExerciseIndex);
-  useEffect(() => {
-    const isLastExercise =
-      Object.keys(initialValues).length + 3 === removedExerciseIndex + 3;
-    console.log(initialValues);
-    console.log(isLastExercise);
-    if (isLastExercise) {
-      console.log("smaller");
-      console.log(formik.values);
-      formik.values = { ...initialValues };
-      return;
-    }
-  }, [removedExerciseIndex]);
   const handleClick = () => {
     // if (Object.keys(formik.errors).length > 0) return;
     dispatch(setVisibleExerciseSelection(true));
@@ -64,6 +43,7 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
     validationSchema,
     onSubmit: handleSubmit,
   });
+  useAdjustInputValues(initialValues, formik);
   return (
     <FormContainer text="Sessions" handleSubmit={formik.handleSubmit}>
       <SelectionCalendar />
