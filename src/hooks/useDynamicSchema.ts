@@ -1,5 +1,4 @@
 import * as Yup from "yup";
-
 const useDynamicSchema = (totalInputs: number) => {
   const schemaObject: { [key: string]: Yup.StringSchema<string> } = {};
   Array(totalInputs)

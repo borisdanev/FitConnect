@@ -106,7 +106,7 @@ const CreateProgramForm: React.FC = () => {
             <img
               style={{ maxWidth: "100%", height: "100%", objectFit: "cover" }}
               src={CreateProgramImg}
-              alt="Man lifting barbell"
+              alt="Man lifting dumbbell"
             />
           </Box>
         </Grid>

@@ -53,7 +53,10 @@ const ExerciseDetailsSelection: React.FC<Props> = ({
                 placeholder={item}
               />
               <Box sx={{ color: "#59B386" }}>
-                {formik.errors[`input${index * 3 + i + 1}`]}
+                {
+                  // formik.touched[`input${index * 3 + i + 1}`] &&
+                  formik.errors[`input${index * 3 + i + 1}`]
+                }
               </Box>
             </Box>
           ))}

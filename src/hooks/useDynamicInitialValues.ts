@@ -2,7 +2,6 @@ interface FormValues {
   [key: string]: string;
 }
 const useDynamicInitialValues = (totalInputs: number) => {
-  console.log(totalInputs);
   const initialValues: FormValues = {};
   Array(totalInputs)
     .fill(null)

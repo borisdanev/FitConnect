@@ -13,18 +13,37 @@ const useAdjustInputValues = (
   useEffect(() => {
     if (removedExerciseIndex === undefined) return;
     const adjustValues = async () => {
-      const keysToRemove = Object.keys(formik.values).slice(
+      if (Object.keys(initialValues).length === 0) {
+        await formik.setValues({});
+        return;
+      }
+      console.log(formik.values);
+      console.log(initialValues);
+      const addedValues: { [key: string]: string } = {};
+      Object.keys(initialValues).forEach((key) => {
+        let changedKey: string | number = parseFloat(key.split("input")[1]);
+        changedKey = `input${changedKey - 3}`;
+        if (Object.keys(formik.values).includes(key)) {
+          addedValues[key] = formik.values[key];
+        }
+        addedValues[key] = "";
+      });
+      console.log(addedValues);
+      const keysToRemove = Object.keys(initialValues).slice(
         removedExerciseIndex,
         removedExerciseIndex + 3
       );
       let updatedKeys = Object.keys(formik.values).filter(
         (key) => !keysToRemove.includes(key)
       );
+      console.log(updatedKeys);
       const emptyFields = Object.keys(initialValues).filter(
         (item) => !updatedKeys.includes(item)
       );
+      console.log(emptyFields);
       const adjustedValues = { ...formik.values };
       emptyFields.forEach((key) => (adjustedValues[key] = ""));
+
       await formik.setValues({ ...adjustedValues });
     };
     adjustValues();
