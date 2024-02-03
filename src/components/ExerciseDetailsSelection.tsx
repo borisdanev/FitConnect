@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { removeFromSelectedExercises, setRemovedExerciseIndex } from "../store";
 import Box from "@mui/material/Box";
@@ -53,10 +52,8 @@ const ExerciseDetailsSelection: React.FC<Props> = ({
                 placeholder={item}
               />
               <Box sx={{ color: "#59B386" }}>
-                {
-                  // formik.touched[`input${index * 3 + i + 1}`] &&
-                  formik.errors[`input${index * 3 + i + 1}`]
-                }
+                {formik.touched[`input${index * 3 + i + 1}`] &&
+                  formik.errors[`input${index * 3 + i + 1}`]}
               </Box>
             </Box>
           ))}

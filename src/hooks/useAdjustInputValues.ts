@@ -12,52 +12,36 @@ const useAdjustInputValues = (
   const dispatch = useDispatch();
   useEffect(() => {
     if (removedExerciseIndex === undefined) return;
-    console.log(initialValues);
-    console.log(formik.values);
-    console.log(removedExerciseIndex);
-    const adjustedValues = Object.keys(formik.values)
-      .map((key) => parseInt(key.split("input")[1]))
-      .filter(
-        (item) =>
-          !(item >= removedExerciseIndex && item <= removedExerciseIndex + 3)
-      )
-      .map((item) => `input${item}`);
-    console.log(adjustedValues);
-    // const adjustValues = async () => {
-    //   if (Object.keys(initialValues).length === 0) {
-    //     await formik.setValues({});
-    //     return;
-    //   }
-    //   console.log(formik.values);
-    //   console.log(initialValues);
-    //   const addedValues: { [key: string]: string } = {};
-    //   Object.keys(initialValues).forEach((key) => {
-    //     let changedKey: string | number = parseFloat(key.split("input")[1]);
-    //     changedKey = `input${changedKey - 3}`;
-    //     if (Object.keys(formik.values).includes(key)) {
-    //       addedValues[key] = formik.values[key];
-    //     }
-    //     addedValues[key] = "";
-    //   });
-    //   console.log(addedValues);
-    //   const keysToRemove = Object.keys(initialValues).slice(
-    //     removedExerciseIndex,
-    //     removedExerciseIndex + 3
-    //   );
-    //   let updatedKeys = Object.keys(formik.values).filter(
-    //     (key) => !keysToRemove.includes(key)
-    //   );
-    //   console.log(updatedKeys);
-    //   const emptyFields = Object.keys(initialValues).filter(
-    //     (item) => !updatedKeys.includes(item)
-    //   );
-    //   console.log(emptyFields);
-    //   const adjustedValues = { ...formik.values };
-    //   emptyFields.forEach((key) => (adjustedValues[key] = ""));
-
-    //   await formik.setValues({ ...adjustedValues });
-    // };
-    // adjustValues();
+    const adjustValues = async () => {
+      if (Object.keys(initialValues).length === 0) {
+        await formik.setValues({});
+        return;
+      }
+      const dynamicValues: { [key: string]: string } = {};
+      const adjustedValues = Object.keys(formik.values)
+        .map((key) => parseInt(key.split("input")[1]))
+        .filter(
+          (item) =>
+            !(item > removedExerciseIndex && item <= removedExerciseIndex + 3)
+        )
+        .map((item) => ({
+          key:
+            item > removedExerciseIndex + 3
+              ? `input${item - 3}`
+              : `input${item}`,
+          value: formik.values[`input${item}`],
+        }));
+      Object.keys(initialValues).forEach((key) => {
+        const presentValue = adjustedValues.find((item) => item.key === key);
+        if (!presentValue) {
+          dynamicValues[key] = "";
+          return;
+        }
+        dynamicValues[key] = presentValue.value;
+      });
+      await formik.setValues({ ...dynamicValues });
+    };
+    adjustValues();
     dispatch(setRemovedExerciseIndex(undefined));
   }, [removedExerciseIndex]);
 };
