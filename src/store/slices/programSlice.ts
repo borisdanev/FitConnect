@@ -4,12 +4,16 @@ interface State {
   selectedDays: string[];
   selectedExercises: ExerciseModel[];
   visibleExerciseSelection: boolean;
+  visibleAlertMessage: boolean;
+  agreeToRemove: boolean;
   removedExerciseIndex: number | undefined;
 }
 const initialState: State = {
   selectedDays: [],
   selectedExercises: [],
   visibleExerciseSelection: false,
+  visibleAlertMessage: false,
+  agreeToRemove: false,
   removedExerciseIndex: undefined,
 };
 export const programSlice = createSlice({
@@ -31,6 +35,12 @@ export const programSlice = createSlice({
     setVisibleExerciseSelection(state, action: PayloadAction<boolean>) {
       state.visibleExerciseSelection = action.payload;
     },
+    setVisibleAlert(state, action: PayloadAction<boolean>) {
+      state.visibleAlertMessage = action.payload;
+    },
+    setAgreeToRemove(state, action: PayloadAction<boolean>) {
+      state.agreeToRemove = action.payload;
+    },
     setRemovedExerciseIndex(state, action: PayloadAction<number | undefined>) {
       state.removedExerciseIndex = action.payload;
     },
@@ -42,5 +52,7 @@ export const {
   addToSelectedExercises,
   removeFromSelectedExercises,
   setVisibleExerciseSelection,
+  setVisibleAlert,
+  setAgreeToRemove,
   setRemovedExerciseIndex,
 } = programSlice.actions;

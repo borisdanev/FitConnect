@@ -25,6 +25,8 @@ import {
   addToSelectedExercises,
   removeFromSelectedExercises,
   setVisibleExerciseSelection,
+  setVisibleAlert,
+  setAgreeToRemove,
   setRemovedExerciseIndex,
 } from "./slices/programSlice";
 import {
@@ -77,6 +79,8 @@ export {
   addToSelectedExercises,
   removeFromSelectedExercises,
   setVisibleExerciseSelection,
+  setVisibleAlert,
+  setAgreeToRemove,
   setRemovedExerciseIndex,
 };
 export default store;

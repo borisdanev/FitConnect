@@ -1,17 +1,35 @@
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState, addToSelectedDays, removeFromSelectedDays } from "../store";
+import {
+  RootState,
+  addToSelectedDays,
+  removeFromSelectedDays,
+  setAgreeToRemove,
+  setVisibleAlert,
+} from "../store";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 const SelectionCalendar: React.FC = () => {
   const dispatch = useDispatch();
+  const [indexToRemove, setIndexToRemove] = useState<number>(0);
   const selectedDays = useSelector(
     (state: RootState) => state.program.selectedDays
   );
+  const agreeToRemove = useSelector(
+    (state: RootState) => state.program.agreeToRemove
+  );
+  useEffect(() => {
+    if (agreeToRemove) {
+      dispatch(removeFromSelectedDays(indexToRemove));
+      dispatch(setAgreeToRemove(false));
+    }
+  }, [agreeToRemove]);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const currentId = (event.target as HTMLButtonElement).id;
     if (selectedDays.includes(currentId)) {
       const index = selectedDays.findIndex((item) => item === currentId);
-      dispatch(removeFromSelectedDays(index));
+      setIndexToRemove(index);
+      dispatch(setVisibleAlert(true));
       return;
     }
     dispatch(addToSelectedDays(currentId));

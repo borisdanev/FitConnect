@@ -1,5 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { RootState, setVisibleExerciseSelection } from "../store";
+import {
+  RootState,
+  setVisibleExerciseSelection,
+  setAgreeToRemove,
+} from "../store";
 import { WorkoutModel } from "../types/workout.model";
 import { useFormik } from "formik";
 import useDynamicSchema from "../hooks/useDynamicSchema";
@@ -14,6 +18,7 @@ import ExerciseSelection from "./ExerciseSelection";
 import ExerciseDetailsSelection from "./ExerciseDetailsSelection";
 import useDynamicInitialValues from "../hooks/useDynamicInitialValues";
 import useAdjustInputValues from "../hooks/useAdjustInputValues";
+import Alert from "@mui/material/Alert";
 interface Props {
   createdProgram: WorkoutModel;
 }
@@ -29,6 +34,9 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
   const initialValues = useDynamicInitialValues(selectedExercises.length * 3);
   const visibleExerciseSelection = useSelector(
     (state: RootState) => state.program.visibleExerciseSelection
+  );
+  const visibleAlert = useSelector(
+    (state: RootState) => state.program.visibleAlertMessage
   );
   const handleClick = () => {
     // if (Object.keys(formik.errors).length > 0) return;
@@ -84,6 +92,23 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
               <Typography sx={{ ml: 1 }}>Add Exercise</Typography>
             </Button>
             {visibleExerciseSelection && <ExerciseSelection />}
+            {visibleAlert && (
+              <Alert
+                variant="outlined"
+                severity="error"
+                action={
+                  <Button
+                    variant="outlined"
+                    sx={{ color: "white" }}
+                    onClick={() => dispatch(setAgreeToRemove(true))}
+                  >
+                    Yes
+                  </Button>
+                }
+              >
+                Are you sure you want to remove this trainig session
+              </Alert>
+            )}
           </Box>
         </Box>
       ) : (
