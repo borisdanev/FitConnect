@@ -14,7 +14,6 @@ const ExerciseSelection: React.FC = () => {
   const handleSelectExercise = (exercise: ExerciseModel) => {
     dispatch(addToSelectedExercises(exercise));
     dispatch(setVisibleExerciseSelection(false));
-    // setProvidedDetails(false);
   };
   return (
     <Box
@@ -35,8 +34,8 @@ const ExerciseSelection: React.FC = () => {
         {isLoading
           ? Array(12)
               .fill(null)
-              .map(() => (
-                <Grid item xs={3}>
+              .map((_, i) => (
+                <Grid key={i} item xs={3}>
                   <Skeleton
                     variant="rectangular"
                     width="5rem"

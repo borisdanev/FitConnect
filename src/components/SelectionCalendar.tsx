@@ -19,10 +19,10 @@ const SelectionCalendar: React.FC = () => {
     (state: RootState) => state.program.agreeToRemove
   );
   useEffect(() => {
-    if (agreeToRemove) {
-      dispatch(removeFromSelectedDays(indexToRemove));
-      dispatch(setAgreeToRemove(false));
-    }
+    if (!agreeToRemove) return;
+    dispatch(removeFromSelectedDays(indexToRemove));
+    dispatch(setAgreeToRemove(false));
+    dispatch(setVisibleAlert(false));
   }, [agreeToRemove]);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const currentId = (event.target as HTMLButtonElement).id;

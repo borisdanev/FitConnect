@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ExerciseModel } from "../../types/exercise.model";
+import { TrainingSessionModel } from "../../types/trainingSession.model";
 interface State {
   selectedDays: string[];
   selectedExercises: ExerciseModel[];
@@ -7,6 +8,7 @@ interface State {
   visibleAlertMessage: boolean;
   agreeToRemove: boolean;
   removedExerciseIndex: number | undefined;
+  trainingSessions: TrainingSessionModel[];
 }
 const initialState: State = {
   selectedDays: [],
@@ -15,6 +17,7 @@ const initialState: State = {
   visibleAlertMessage: false,
   agreeToRemove: false,
   removedExerciseIndex: undefined,
+  trainingSessions: [],
 };
 export const programSlice = createSlice({
   name: "program",
