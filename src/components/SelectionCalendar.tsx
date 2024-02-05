@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { addToTrainingSessions } from "../store";
 import {
   RootState,
   addToSelectedDays,
   removeFromSelectedDays,
   setAgreeToRemove,
   setVisibleAlert,
+  setCurrentSessionIndex,
 } from "../store";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -24,6 +26,10 @@ const SelectionCalendar: React.FC = () => {
     dispatch(setAgreeToRemove(false));
     dispatch(setVisibleAlert(false));
   }, [agreeToRemove]);
+  useEffect(() => {
+    if (selectedDays.length > 0)
+      dispatch(setCurrentSessionIndex(selectedDays.length - 1));
+  }, [selectedDays]);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const currentId = (event.target as HTMLButtonElement).id;
     if (selectedDays.includes(currentId)) {
@@ -33,6 +39,7 @@ const SelectionCalendar: React.FC = () => {
       return;
     }
     dispatch(addToSelectedDays(currentId));
+    dispatch(addToTrainingSessions());
   };
   return (
     <Box sx={{ display: "flex", justifyContent: "space-between" }}>

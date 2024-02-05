@@ -22,11 +22,13 @@ import { setWorkout } from "./slices/wokoutSlice";
 import {
   addToSelectedDays,
   removeFromSelectedDays,
+  addToTrainingSessions,
   addToSelectedExercises,
   removeFromSelectedExercises,
   setVisibleExerciseSelection,
   setVisibleAlert,
   setAgreeToRemove,
+  setCurrentSessionIndex,
   setRemovedExerciseIndex,
 } from "./slices/programSlice";
 import {
@@ -76,11 +78,13 @@ export {
   finishTrainingSession,
   addToSelectedDays,
   removeFromSelectedDays,
+  addToTrainingSessions,
   addToSelectedExercises,
   removeFromSelectedExercises,
   setVisibleExerciseSelection,
   setVisibleAlert,
   setAgreeToRemove,
+  setCurrentSessionIndex,
   setRemovedExerciseIndex,
 };
 export default store;

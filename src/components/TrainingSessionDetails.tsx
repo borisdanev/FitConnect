@@ -5,6 +5,7 @@ import {
   RootState,
 } from "../store";
 import { FormikProps } from "formik";
+import { ExerciseModel } from "../types/exercise.model";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -15,14 +16,15 @@ import ExerciseSelection from "./ExerciseSelection";
 import ExerciseDetailsSelection from "./ExerciseDetailsSelection";
 interface Props {
   formik: FormikProps<{ [key: string]: string }>;
+  selectedExercises: ExerciseModel[];
 }
-const TrainingSessionDetails: React.FC<Props> = ({ formik }) => {
+const TrainingSessionDetails: React.FC<Props> = ({
+  formik,
+  selectedExercises,
+}) => {
   const dispatch = useDispatch();
   const visibleExerciseSelection = useSelector(
     (state: RootState) => state.program.visibleExerciseSelection
-  );
-  const selectedExercises = useSelector(
-    (state: RootState) => state.program.selectedExercises
   );
   const visibleAlert = useSelector(
     (state: RootState) => state.program.visibleAlertMessage

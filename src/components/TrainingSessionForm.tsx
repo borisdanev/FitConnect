@@ -16,8 +16,12 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
   const selectedDays = useSelector(
     (state: RootState) => state.program.selectedDays
   );
+  const currentSessionIndex = useSelector(
+    (state: RootState) => state.program.currentSessionIndex
+  );
   const selectedExercises = useSelector(
-    (state: RootState) => state.program.selectedExercises
+    (state: RootState) =>
+      state.program.trainingSessions[currentSessionIndex].exercises
   );
   const validationSchema = useDynamicSchema(selectedExercises.length * 3);
   const initialValues = useDynamicInitialValues(selectedExercises.length * 3);
@@ -32,9 +36,15 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
     <FormContainer text="Sessions" handleSubmit={formik.handleSubmit}>
       <SelectionCalendar />
       <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
-        {selectedDays.map((_, i) => (
-          <TrainingSessionDetails key={i} formik={formik} />
-        ))}
+        {selectedDays
+          .filter((_, index) => index === currentSessionIndex)
+          .map((_, i) => (
+            <TrainingSessionDetails
+              key={i}
+              formik={formik}
+              selectedExercises={selectedExercises}
+            />
+          ))}
       </Box>
     </FormContainer>
     //

@@ -23,7 +23,7 @@ const ExerciseDetailsSelection: React.FC<Props> = ({
 }) => {
   const dispatch = useDispatch();
   const handleRemoveExercise = () => {
-    dispatch(removeFromSelectedExercises(index));
+    // dispatch(removeFromSelectedExercises(index));
     dispatch(setRemovedExerciseIndex(index * 3));
   };
   return (
