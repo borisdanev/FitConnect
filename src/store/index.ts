@@ -27,7 +27,6 @@ import {
   removeFromSelectedExercises,
   setVisibleExerciseSelection,
   setVisibleAlert,
-  setAgreeToRemove,
   setCurrentSessionIndex,
   setRemovedExerciseIndex,
 } from "./slices/programSlice";
@@ -83,7 +82,6 @@ export {
   removeFromSelectedExercises,
   setVisibleExerciseSelection,
   setVisibleAlert,
-  setAgreeToRemove,
   setCurrentSessionIndex,
   setRemovedExerciseIndex,
 };

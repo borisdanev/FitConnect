@@ -1,8 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import {
   setVisibleExerciseSelection,
-  setAgreeToRemove,
   RootState,
+  removeFromSelectedDays,
+  setVisibleAlert,
 } from "../store";
 import { FormikProps } from "formik";
 import { ExerciseModel } from "../types/exercise.model";
@@ -29,9 +30,16 @@ const TrainingSessionDetails: React.FC<Props> = ({
   const visibleAlert = useSelector(
     (state: RootState) => state.program.visibleAlertMessage
   );
+  const currentSessionIndex = useSelector(
+    (state: RootState) => state.program.currentSessionIndex
+  );
   const handleClick = () => {
     // if (Object.keys(formik.errors).length > 0) return;
     dispatch(setVisibleExerciseSelection(true));
+  };
+  const handleRemoveSession = () => {
+    dispatch(removeFromSelectedDays());
+    dispatch(setVisibleAlert(false));
   };
   return (
     <Box
@@ -69,7 +77,7 @@ const TrainingSessionDetails: React.FC<Props> = ({
         <Typography sx={{ ml: 1 }}>Add Exercise</Typography>
       </Button>
       {visibleExerciseSelection && <ExerciseSelection />}
-      {visibleAlert && (
+      {visibleAlert[currentSessionIndex] && (
         <Alert
           variant="outlined"
           severity="error"
@@ -77,13 +85,13 @@ const TrainingSessionDetails: React.FC<Props> = ({
             <Button
               variant="outlined"
               sx={{ color: "white" }}
-              onClick={() => dispatch(setAgreeToRemove(true))}
+              onClick={() => handleRemoveSession()}
             >
               Yes
             </Button>
           }
         >
-          Are you sure you want to remove this trainig session
+          Are you sure you want to remove this training session
         </Alert>
       )}
     </Box>

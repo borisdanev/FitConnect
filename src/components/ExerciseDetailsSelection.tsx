@@ -1,5 +1,9 @@
-import { useDispatch } from "react-redux";
-import { removeFromSelectedExercises, setRemovedExerciseIndex } from "../store";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  removeFromSelectedExercises,
+  setRemovedExerciseIndex,
+  RootState,
+} from "../store";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Input from "@mui/material/Input";
@@ -15,6 +19,7 @@ interface Props {
   formik: FormikProps<FormValues>;
   index: number;
 }
+
 const ExerciseDetailsSelection: React.FC<Props> = ({
   name,
   gifUrl,
@@ -22,8 +27,16 @@ const ExerciseDetailsSelection: React.FC<Props> = ({
   index,
 }) => {
   const dispatch = useDispatch();
+  const currentSessionIndex = useSelector(
+    (state: RootState) => state.program.currentSessionIndex
+  );
   const handleRemoveExercise = () => {
-    // dispatch(removeFromSelectedExercises(index));
+    // dispatch(
+    //   removeFromSelectedExercises({
+    //     sessionIndex: currentSessionIndex,
+    //     exerciseIndex: index,
+    //   })
+    // );
     dispatch(setRemovedExerciseIndex(index * 3));
   };
   return (

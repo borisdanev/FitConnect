@@ -4,8 +4,7 @@ import { TrainingSessionModel } from "../../types/trainingSession.model";
 interface State {
   selectedDays: number[];
   visibleExerciseSelection: boolean;
-  visibleAlertMessage: boolean;
-  agreeToRemove: boolean;
+  visibleAlertMessage: boolean[];
   removedExerciseIndex: number | undefined;
   currentSessionIndex: number;
   trainingSessions: TrainingSessionModel[];
@@ -13,8 +12,7 @@ interface State {
 const initialState: State = {
   selectedDays: [],
   visibleExerciseSelection: false,
-  visibleAlertMessage: false,
-  agreeToRemove: false,
+  visibleAlertMessage: Array(7).fill(false),
   removedExerciseIndex: undefined,
   currentSessionIndex: 0,
   trainingSessions: Array(7).fill({ name: "", exercises: [] }),
@@ -26,10 +24,11 @@ export const programSlice = createSlice({
     addToSelectedDays(state, action: PayloadAction<number>) {
       state.selectedDays.push(action.payload);
     },
-    removeFromSelectedDays(state, action: PayloadAction<number>) {
+    removeFromSelectedDays(state) {
       const index = state.selectedDays.findIndex(
-        (item) => item === action.payload
+        (item) => item === state.currentSessionIndex
       );
+      console.log(index);
       state.selectedDays.splice(index, 1);
     },
     addToTrainingSessions(state) {
@@ -43,22 +42,19 @@ export const programSlice = createSlice({
         action.payload
       );
     },
-    removeFromSelectedExercises(
-      state,
-      action: PayloadAction<{ sessionIndex: number; exerciseIndex: number }>
-    ) {
-      const { sessionIndex, exerciseIndex } = action.payload;
-      state.trainingSessions[sessionIndex].exercises.splice(exerciseIndex, 1);
+    removeFromSelectedExercises(state, action: PayloadAction<number>) {
+      state.trainingSessions[state.currentSessionIndex].exercises.splice(
+        action.payload,
+        1
+      );
     },
     setVisibleExerciseSelection(state, action: PayloadAction<boolean>) {
       state.visibleExerciseSelection = action.payload;
     },
     setVisibleAlert(state, action: PayloadAction<boolean>) {
-      state.visibleAlertMessage = action.payload;
+      state.visibleAlertMessage[state.currentSessionIndex] = action.payload;
     },
-    setAgreeToRemove(state, action: PayloadAction<boolean>) {
-      state.agreeToRemove = action.payload;
-    },
+
     setCurrentSessionIndex(state, action: PayloadAction<number>) {
       state.currentSessionIndex = action.payload;
     },
@@ -75,7 +71,6 @@ export const {
   removeFromSelectedExercises,
   setVisibleExerciseSelection,
   setVisibleAlert,
-  setAgreeToRemove,
   setCurrentSessionIndex,
   setRemovedExerciseIndex,
 } = programSlice.actions;
