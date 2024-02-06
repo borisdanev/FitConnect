@@ -16,16 +16,18 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
   const selectedDays = useSelector(
     (state: RootState) => state.program.selectedDays
   );
-  console.log(selectedDays);
   const currentSessionIndex = useSelector(
     (state: RootState) => state.program.currentSessionIndex
   );
-  const selectedExercises = useSelector(
-    (state: RootState) =>
-      state.program.trainingSessions[currentSessionIndex].exercises
+  const trainingSessions = useSelector(
+    (state: RootState) => state.program.trainingSessions
   );
-  const validationSchema = useDynamicSchema(selectedExercises.length * 3);
-  const initialValues = useDynamicInitialValues(selectedExercises.length * 3);
+  const validationSchema = useDynamicSchema(
+    trainingSessions.flatMap((item) => item.exercises).length * 3
+  );
+  const initialValues = useDynamicInitialValues(
+    trainingSessions.flatMap((item) => item.exercises).length * 3
+  );
   const handleSubmit = (values: any) => {};
   const formik = useFormik({
     initialValues,
@@ -43,7 +45,9 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
             <TrainingSessionDetails
               key={i}
               formik={formik}
-              selectedExercises={selectedExercises}
+              selectedExercises={
+                trainingSessions[currentSessionIndex].exercises
+              }
             />
           ))}
       </Box>

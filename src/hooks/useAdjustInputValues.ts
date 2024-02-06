@@ -11,6 +11,7 @@ const useAdjustInputValues = (
   );
   const dispatch = useDispatch();
   useEffect(() => {
+    console.log(initialValues);
     if (removedExerciseIndex === undefined) return;
     const adjustValues = async () => {
       if (Object.keys(initialValues).length === 0) {

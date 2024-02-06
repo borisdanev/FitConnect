@@ -19,7 +19,6 @@ interface Props {
   formik: FormikProps<FormValues>;
   index: number;
 }
-
 const ExerciseDetailsSelection: React.FC<Props> = ({
   name,
   gifUrl,
@@ -30,6 +29,7 @@ const ExerciseDetailsSelection: React.FC<Props> = ({
   const currentSessionIndex = useSelector(
     (state: RootState) => state.program.currentSessionIndex
   );
+  console.log(index);
   const handleRemoveExercise = () => {
     // dispatch(
     //   removeFromSelectedExercises({
