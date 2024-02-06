@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ExerciseModel } from "../../types/exercise.model";
 import { TrainingSessionModel } from "../../types/trainingSession.model";
 interface State {
-  selectedDays: string[];
+  selectedDays: number[];
   visibleExerciseSelection: boolean;
   visibleAlertMessage: boolean;
   agreeToRemove: boolean;
@@ -17,17 +17,20 @@ const initialState: State = {
   agreeToRemove: false,
   removedExerciseIndex: undefined,
   currentSessionIndex: 0,
-  trainingSessions: [{ name: "", exercises: [] }],
+  trainingSessions: Array(7).fill({ name: "", exercises: [] }),
 };
 export const programSlice = createSlice({
   name: "program",
   initialState,
   reducers: {
-    addToSelectedDays(state, action: PayloadAction<string>) {
+    addToSelectedDays(state, action: PayloadAction<number>) {
       state.selectedDays.push(action.payload);
     },
     removeFromSelectedDays(state, action: PayloadAction<number>) {
-      state.selectedDays.splice(action.payload, 1);
+      const index = state.selectedDays.findIndex(
+        (item) => item === action.payload
+      );
+      state.selectedDays.splice(index, 1);
     },
     addToTrainingSessions(state) {
       state.trainingSessions.push({

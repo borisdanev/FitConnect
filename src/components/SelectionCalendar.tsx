@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addToTrainingSessions } from "../store";
 import {
   RootState,
   addToSelectedDays,
@@ -20,26 +19,28 @@ const SelectionCalendar: React.FC = () => {
   const agreeToRemove = useSelector(
     (state: RootState) => state.program.agreeToRemove
   );
+  const currentSessionIndex = useSelector(
+    (state: RootState) => state.program.currentSessionIndex
+  );
   useEffect(() => {
     if (!agreeToRemove) return;
     dispatch(removeFromSelectedDays(indexToRemove));
     dispatch(setAgreeToRemove(false));
     dispatch(setVisibleAlert(false));
   }, [agreeToRemove]);
-  useEffect(() => {
-    if (selectedDays.length > 0)
-      dispatch(setCurrentSessionIndex(selectedDays.length - 1));
-  }, [selectedDays]);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const currentId = (event.target as HTMLButtonElement).id;
+    const currentId = parseFloat((event.target as HTMLButtonElement).id);
     if (selectedDays.includes(currentId)) {
-      const index = selectedDays.findIndex((item) => item === currentId);
-      setIndexToRemove(index);
-      dispatch(setVisibleAlert(true));
+      if (currentId === currentSessionIndex) {
+        setIndexToRemove(currentId);
+        dispatch(setVisibleAlert(true));
+        return;
+      }
+      dispatch(setCurrentSessionIndex(currentId));
       return;
     }
     dispatch(addToSelectedDays(currentId));
-    dispatch(addToTrainingSessions());
+    dispatch(setCurrentSessionIndex(currentId));
   };
   return (
     <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -47,7 +48,7 @@ const SelectionCalendar: React.FC = () => {
         <Button
           key={i}
           id={`${i}`}
-          variant={selectedDays.includes(`${i}`) ? "contained" : "text"}
+          variant={selectedDays.includes(i) ? "contained" : "text"}
           sx={{
             display: "flex",
             justifyContent: "center",
@@ -56,6 +57,7 @@ const SelectionCalendar: React.FC = () => {
             minWidth: "3rem",
             height: "3rem",
             borderRadius: "50%",
+            // bgcolor: `${currentSessionIndex === i ? "red" : "green"}`,
           }}
           onClick={(event) => handleClick(event)}
         >

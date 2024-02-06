@@ -16,6 +16,7 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
   const selectedDays = useSelector(
     (state: RootState) => state.program.selectedDays
   );
+  console.log(selectedDays);
   const currentSessionIndex = useSelector(
     (state: RootState) => state.program.currentSessionIndex
   );
@@ -37,7 +38,7 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
       <SelectionCalendar />
       <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
         {selectedDays
-          .filter((_, index) => index === currentSessionIndex)
+          .filter((item) => item === currentSessionIndex)
           .map((_, i) => (
             <TrainingSessionDetails
               key={i}
