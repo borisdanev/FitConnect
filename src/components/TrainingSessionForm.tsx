@@ -23,10 +23,10 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
     (state: RootState) => state.program.trainingSessions
   );
   const validationSchema = useDynamicSchema(
-    trainingSessions.flatMap((item) => item.exercises).length * 3
+    trainingSessions.map((item) => item.exercises.length * 3)
   );
   const initialValues = useDynamicInitialValues(
-    trainingSessions.flatMap((item) => item.exercises).length * 3
+    trainingSessions.map((item) => item.exercises.length * 3)
   );
   const handleSubmit = (values: any) => {};
   const formik = useFormik({

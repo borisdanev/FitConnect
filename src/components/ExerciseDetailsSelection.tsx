@@ -57,16 +57,23 @@ const ExerciseDetailsSelection: React.FC<Props> = ({
           {["sets", "reps", "rest"].map((item, i) => (
             <Box key={item} sx={{ mr: 1 }}>
               <Input
-                id={`input${index * 3 + i + 1}`}
-                name={`input${index * 3 + i + 1}`}
+                id={`input${currentSessionIndex}${index * 3 + i + 1}`}
                 sx={{ height: "1.5rem" }}
-                value={formik.values[`input${index * 3 + i + 1}`]}
+                value={
+                  formik.values[
+                    `input${currentSessionIndex}${index * 3 + i + 1}`
+                  ]
+                }
                 onChange={formik.handleChange}
                 placeholder={item}
               />
               <Box sx={{ color: "#59B386" }}>
-                {formik.touched[`input${index * 3 + i + 1}`] &&
-                  formik.errors[`input${index * 3 + i + 1}`]}
+                {formik.touched[
+                  `input${currentSessionIndex}${index * 3 + i + 1}`
+                ] &&
+                  formik.errors[
+                    `input${currentSessionIndex}${index * 3 + i + 1}`
+                  ]}
               </Box>
             </Box>
           ))}

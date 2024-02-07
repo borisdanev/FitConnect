@@ -41,6 +41,15 @@ const TrainingSessionDetails: React.FC<Props> = ({
     dispatch(removeFromSelectedDays());
     dispatch(setVisibleAlert(false));
   };
+  const trainingSessions = useSelector(
+    (state: RootState) => state.program.trainingSessions
+  );
+  console.log(
+    trainingSessions
+      .filter((item) => item.exercises.length > 0)
+      .map((item) => item.exercises)
+  );
+
   return (
     <Box
       sx={{
