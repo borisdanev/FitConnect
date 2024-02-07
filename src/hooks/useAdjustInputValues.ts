@@ -1,10 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  RootState,
-  setCurrentSessionIndex,
-  setRemovedExerciseIndex,
-} from "../store";
+import { RootState, setRemovedExerciseIndex } from "../store";
 import { FormikProps } from "formik";
 const useAdjustInputValues = (
   initialValues: Object,
@@ -25,35 +21,43 @@ const useAdjustInputValues = (
         return;
       }
       const dynamicValues: { [key: string]: string } = {};
-      let currentIndex: number = 0;
       const adjustedValues = Object.keys(formik.values)
         .map((key) => {
           const [input, index] = key.split("input");
-          currentIndex = parseInt(index.charAt(0));
-          // console.log(currentSessionIndex);
-          // console.log(currentIndex);
-          // console.log(removedExerciseIndex);
-          // console.log(parseInt(index.slice(1)));
-          return parseInt(index.slice(1));
+          return {
+            exerciseIndex: parseInt(index.slice(1)),
+            sessionIndex: parseInt(index.charAt(0)),
+          };
         })
         .filter(
           (item) =>
-            currentSessionIndex === currentIndex &&
-            !(item > removedExerciseIndex && item <= removedExerciseIndex + 3)
+            currentSessionIndex === item.sessionIndex &&
+            !(
+              item.exerciseIndex > removedExerciseIndex &&
+              item.exerciseIndex <= removedExerciseIndex + 3
+            )
         )
         .map((item) => {
-          console.log(item);
           return {
             key:
-              item > removedExerciseIndex + 3
-                ? `input${currentSessionIndex}${item - 3}`
-                : `input${currentSessionIndex}${item}`,
-            value: formik.values[`input${currentSessionIndex}${item}`],
+              item.exerciseIndex > removedExerciseIndex + 3
+                ? `input${currentSessionIndex}${item.exerciseIndex - 3}`
+                : `input${currentSessionIndex}${item.exerciseIndex}`,
+            value:
+              formik.values[`input${currentSessionIndex}${item.exerciseIndex}`],
           };
         });
       console.log(adjustedValues);
-      // console.log(formik.values);
+      console.log(initialValues);
       Object.keys(initialValues).forEach((key) => {
+        const [input, index] = key.split("input");
+        const currentIndex = parseInt(index.charAt(0));
+        if (currentIndex !== currentSessionIndex) {
+          if (Object.keys(formik.values).includes(key))
+            dynamicValues[key] = formik.values[key];
+          else dynamicValues[key] = "";
+          return;
+        }
         const presentValue = adjustedValues.find((item) => item.key === key);
         if (!presentValue) {
           dynamicValues[key] = "";
