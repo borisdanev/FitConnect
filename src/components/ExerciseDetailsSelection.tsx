@@ -31,12 +31,7 @@ const ExerciseDetailsSelection: React.FC<Props> = ({
   );
   console.log(index);
   const handleRemoveExercise = () => {
-    // dispatch(
-    //   removeFromSelectedExercises({
-    //     sessionIndex: currentSessionIndex,
-    //     exerciseIndex: index,
-    //   })
-    // );
+    dispatch(removeFromSelectedExercises(index));
     dispatch(setRemovedExerciseIndex(index * 3));
   };
   return (
