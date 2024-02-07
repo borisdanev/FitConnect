@@ -88,17 +88,18 @@ const TrainingSessionDetails: React.FC<Props> = ({
       {visibleExerciseSelection && <ExerciseSelection />}
       {visibleAlert[currentSessionIndex] && (
         <Alert
-          variant="outlined"
+          variant="filled"
           severity="error"
           action={
             <Button
-              variant="outlined"
+              variant="contained"
               sx={{ color: "white" }}
               onClick={() => handleRemoveSession()}
             >
               Yes
             </Button>
           }
+          sx={{ position: "absolute", top: "40%", right: "5%" }}
         >
           Are you sure you want to remove this training session
         </Alert>

@@ -23,7 +23,7 @@ const useAdjustInputValues = (
       const dynamicValues: { [key: string]: string } = {};
       const adjustedValues = Object.keys(formik.values)
         .map((key) => {
-          const [input, index] = key.split("input");
+          const [_, index] = key.split("input");
           return {
             exerciseIndex: parseInt(index.slice(1)),
             sessionIndex: parseInt(index.charAt(0)),
@@ -47,10 +47,8 @@ const useAdjustInputValues = (
               formik.values[`input${currentSessionIndex}${item.exerciseIndex}`],
           };
         });
-      console.log(adjustedValues);
-      console.log(initialValues);
       Object.keys(initialValues).forEach((key) => {
-        const [input, index] = key.split("input");
+        const [_, index] = key.split("input");
         const currentIndex = parseInt(index.charAt(0));
         if (currentIndex !== currentSessionIndex) {
           if (Object.keys(formik.values).includes(key))

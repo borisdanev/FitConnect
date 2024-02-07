@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 import { ExerciseModel } from "../../types/exercise.model";
 import { TrainingSessionModel } from "../../types/trainingSession.model";
 interface State {
@@ -28,8 +28,11 @@ export const programSlice = createSlice({
       const index = state.selectedDays.findIndex(
         (item) => item === state.currentSessionIndex
       );
-      console.log(index);
       state.selectedDays.splice(index, 1);
+      state.trainingSessions[state.currentSessionIndex] = {
+        name: "",
+        exercises: [],
+      };
     },
     addToTrainingSessions(state) {
       state.trainingSessions.push({
