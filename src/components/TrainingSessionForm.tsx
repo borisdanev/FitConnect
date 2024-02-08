@@ -29,7 +29,9 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
     trainingSessions.map((item) => item.exercises.length * 3)
   );
   console.log(initialValues);
-  const handleSubmit = (values: any) => {};
+  const handleSubmit = (values: any) => {
+    console.log("finished");
+  };
   const formik = useFormik({
     initialValues,
     validationSchema,

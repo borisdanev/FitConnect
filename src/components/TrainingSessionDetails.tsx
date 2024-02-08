@@ -41,15 +41,7 @@ const TrainingSessionDetails: React.FC<Props> = ({
     dispatch(removeFromSelectedDays());
     dispatch(setVisibleAlert(false));
   };
-  const trainingSessions = useSelector(
-    (state: RootState) => state.program.trainingSessions
-  );
-  console.log(
-    trainingSessions
-      .filter((item) => item.exercises.length > 0)
-      .map((item) => item.exercises)
-  );
-
+  console.log(formik.errors);
   return (
     <Box
       sx={{
@@ -61,7 +53,18 @@ const TrainingSessionDetails: React.FC<Props> = ({
         width: "25rem",
       }}
     >
-      <TextField label="Session Name" />
+      <TextField
+        id={`name${currentSessionIndex + 1}`}
+        name={`name${currentSessionIndex + 1}`}
+        value={
+          Object.keys(formik.values).includes(`name${currentSessionIndex + 1}`)
+            ? formik.values[`name${currentSessionIndex + 1}`]
+            : ""
+        }
+        label="Session Name"
+        helperText={formik.errors[`name${currentSessionIndex + 1}`]}
+        onChange={formik.handleChange}
+      />
       {selectedExercises.map((item, i) => (
         <ExerciseDetailsSelection
           key={i}

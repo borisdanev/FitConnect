@@ -74,7 +74,6 @@ const ActiveWorkout: React.FC<Props> = ({ trainingSession }) => {
         {currentExercise.sets.map((item, i) => (
           <ExerciseSet
             key={i}
-            weight={item.weight}
             reps={item.reps}
             index={i}
             handleChange={handleChange}

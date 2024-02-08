@@ -3,17 +3,11 @@ import Typography from "@mui/material/Typography";
 import Checkbox from "@mui/material/Checkbox";
 import { ChangeEvent } from "react";
 interface Props {
-  weight: number;
   reps: number;
   index: number;
   handleChange: (event: ChangeEvent) => void;
 }
-const ExerciseSet: React.FC<Props> = ({
-  weight,
-  reps,
-  index,
-  handleChange,
-}) => {
+const ExerciseSet: React.FC<Props> = ({ reps, index, handleChange }) => {
   return (
     <Box
       sx={{
@@ -23,9 +17,7 @@ const ExerciseSet: React.FC<Props> = ({
         alignItems: "center",
       }}
     >
-      <Typography>
-        {weight}kg x {reps}
-      </Typography>
+      <Typography>{reps} reps</Typography>
       <Checkbox id={`${index}`} onChange={(event) => handleChange(event)} />
     </Box>
   );
