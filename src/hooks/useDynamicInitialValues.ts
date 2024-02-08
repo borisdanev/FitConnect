@@ -7,7 +7,7 @@ const useDynamicInitialValues = (inputs: number[]) => {
       })
     )
   );
-  inputs.forEach((_, i) => (initialValues[`name${i + 1}`] = ""));
+  // inputs.forEach((_, i) => (initialValues[`name${i + 1}`] = ""));
   return initialValues;
 };
 export default useDynamicInitialValues;

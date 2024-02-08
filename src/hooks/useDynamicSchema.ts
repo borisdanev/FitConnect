@@ -6,7 +6,7 @@ const useDynamicSchema = (inputs: number[]) => {
       return [key, Yup.string().required("Required")];
     })
   );
-  let schemaObject = Object.fromEntries(schemaEntries);
+  const schemaObject = Object.fromEntries(schemaEntries);
   return Yup.object().shape(schemaObject);
 };
 export default useDynamicSchema;

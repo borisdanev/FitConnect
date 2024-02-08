@@ -28,6 +28,7 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
   const initialValues = useDynamicInitialValues(
     trainingSessions.map((item) => item.exercises.length * 3)
   );
+  console.log(initialValues);
   const handleSubmit = (values: any) => {};
   const formik = useFormik({
     initialValues,

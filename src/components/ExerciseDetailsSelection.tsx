@@ -29,7 +29,8 @@ const ExerciseDetailsSelection: React.FC<Props> = ({
   const currentSessionIndex = useSelector(
     (state: RootState) => state.program.currentSessionIndex
   );
-  console.log(index);
+  console.log(currentSessionIndex);
+  console.log(formik.values);
   const handleRemoveExercise = () => {
     dispatch(removeFromSelectedExercises(index));
     dispatch(setRemovedExerciseIndex(index * 3));
@@ -55,20 +56,26 @@ const ExerciseDetailsSelection: React.FC<Props> = ({
                 id={`input${currentSessionIndex}${index * 3 + i + 1}`}
                 sx={{ height: "1.5rem" }}
                 value={
-                  formik.values[
+                  Object.keys(formik.values).includes(
                     `input${currentSessionIndex}${index * 3 + i + 1}`
-                  ]
+                  )
+                    ? formik.values[
+                        `input${currentSessionIndex}${index * 3 + i + 1}`
+                      ]
+                    : ""
                 }
                 onChange={formik.handleChange}
                 placeholder={item}
               />
               <Box sx={{ color: "#59B386" }}>
-                {formik.touched[
-                  `input${currentSessionIndex}${index * 3 + i + 1}`
-                ] &&
+                {
+                  // formik.touched[
+                  //   `input${currentSessionIndex}${index * 3 + i + 1}`
+                  // ] &&
                   formik.errors[
                     `input${currentSessionIndex}${index * 3 + i + 1}`
-                  ]}
+                  ]
+                }
               </Box>
             </Box>
           ))}
