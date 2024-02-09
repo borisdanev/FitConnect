@@ -30,7 +30,21 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
   );
   console.log(initialValues);
   const handleSubmit = (values: any) => {
-    console.log("finished");
+    const filteredSessions = trainingSessions
+      .map((item, i) => ({ ...item, index: i }))
+      .filter((item) => item.exercises.length > 0);
+    const createdSessions = filteredSessions.map((item) => {
+      const exercises = item.exercises.map((exercise, i) => ({
+        ...exercise,
+        sets: values[`input${item.index}${i * 3 + 1}`],
+        reps: values[`input${item.index}${i * 3 + 2}`],
+        rest: values[`input${item.index}${i * 3 + 3}`],
+      }));
+      return {
+        exercises,
+        name: values[`name${item.index}`],
+      };
+    });
   };
   const formik = useFormik({
     initialValues,

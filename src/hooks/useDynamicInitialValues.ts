@@ -33,7 +33,7 @@ const useDynamicInitialValues = (inputs: number[]) => {
             const key = `input${i}${k + 1}`;
             return [key, ""];
           }),
-          [`name${i + 1}`, ""],
+          [`name${i}`, ""],
         ];
       } else {
         // Otherwise, return only the initial values for inputs
