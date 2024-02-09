@@ -2,7 +2,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 import { firebaseApi } from "./apis/firebaseApi";
 import { viewSlice } from "./slices/viewSlice";
 import { userSlice } from "./slices/userSlice";
-import { workoutSlice } from "./slices/wokoutSlice";
+import { workoutSlice } from "./slices/workoutSlice";
 import { formSlice } from "./slices/formSlice";
 import { activeWorkoutSlice } from "./slices/activeWorkoutSlice";
 import { programSlice } from "./slices/programSlice";

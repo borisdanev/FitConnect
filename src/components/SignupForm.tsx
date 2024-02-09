@@ -53,6 +53,7 @@ const SignupForm: React.FC = () => {
       email,
       password,
       workouts: [],
+      programs: [],
       id: uuidv4(),
     };
     createUser(user);

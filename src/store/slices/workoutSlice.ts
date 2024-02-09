@@ -10,7 +10,6 @@ const initialState: State = {
     title: "",
     description: "",
     creator: "",
-    imgUrl: "",
     rating: 0,
     participants: 0,
     rates: 0,

@@ -1,4 +1,4 @@
-import { useGetProfilePictureQuery } from "../store";
+import { useGetStoragePictureQuery } from "../store";
 import Box from "@mui/material/Box";
 import { FaUser } from "react-icons/fa";
 const photoStyle: React.CSSProperties = {
@@ -20,7 +20,7 @@ const ProfilePicture: React.FC<Props> = ({
   width,
   height,
 }) => {
-  const { data, isLoading } = useGetProfilePictureQuery(userId);
+  const { data, isLoading } = useGetStoragePictureQuery(userId);
   return (
     <Box
       sx={{

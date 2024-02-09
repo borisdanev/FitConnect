@@ -46,11 +46,7 @@ const WorkoutView: React.FC = () => {
                 flexDirection: "column",
               }}
             >
-              <img
-                src={workout.imgUrl}
-                style={{ maxWidth: "100%" }}
-                alt="workout program cover"
-              />
+              <img style={{ maxWidth: "100%" }} alt="workout program cover" />
               {!isMember ? (
                 <JoinButton refetch={refetch} workout={workout} user={user} />
               ) : (

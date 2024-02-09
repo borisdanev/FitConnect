@@ -28,7 +28,6 @@ const CreateProgramForm: React.FC = () => {
     title: "",
     description: "",
     creator: `${currentUser.firstName} ${currentUser.lastName}`,
-    imgUrl: "",
     rating: 0,
     participants: 0,
     rates: 0,
@@ -92,7 +91,11 @@ const CreateProgramForm: React.FC = () => {
                   createdProgram={createdProgram}
                   setCreatedProgram={setCreatedProgram}
                 />,
-                <TrainingSessionForm createdProgram={createdProgram} />,
+                <TrainingSessionForm
+                  createdProgram={createdProgram}
+                  setCreatedProgram={setCreatedProgram}
+                  sliderRef={sliderRef}
+                />,
               ].map((item, i) => (
                 <Box key={i} sx={{ height: "100%" }}>
                   {item}

@@ -8,17 +8,18 @@ import {
   useGetUserQuery,
   useGetUserWorkoutsQuery,
   useGetJoinedWorkoutQuery,
+  useCreateProgramMutation,
   useGetExercisesQuery,
   useJoinWorkoutMutation,
   useSetFinishedSessionMutation,
   useUploadImageMutation,
-  useGetProfilePictureQuery,
+  useGetStoragePictureQuery,
   useSendMessageMutation,
   useGetMembersChatQuery,
 } from "./apis/firebaseApi";
 import { selectView } from "./slices/viewSlice";
 import { setCurrentUser } from "./slices/userSlice";
-import { setWorkout } from "./slices/wokoutSlice";
+import { setWorkout } from "./slices/workoutSlice";
 import {
   addToSelectedDays,
   removeFromSelectedDays,
@@ -59,6 +60,7 @@ export {
   useGetUserQuery,
   useGetUserWorkoutsQuery,
   useGetJoinedWorkoutQuery,
+  useCreateProgramMutation,
   setWorkout,
   useGetExercisesQuery,
   setOpenedSignupForm,
@@ -67,7 +69,7 @@ export {
   useJoinWorkoutMutation,
   useSetFinishedSessionMutation,
   useUploadImageMutation,
-  useGetProfilePictureQuery,
+  useGetStoragePictureQuery,
   useSendMessageMutation,
   useGetMembersChatQuery,
   setIsActiveWorkout,

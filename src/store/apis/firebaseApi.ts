@@ -35,7 +35,6 @@ export const firebaseApi = createApi({
       queryFn: async () => {
         const snapshots = await getDocs(collection(db, "workouts"));
         const data = snapshots.docs.map((doc) => doc.data() as WorkoutModel);
-        data.splice(1, 0, ...Array(10).fill(data[0]));
         return { data };
       },
     }),
@@ -94,7 +93,7 @@ export const firebaseApi = createApi({
         return { data: messages };
       },
     }),
-    getProfilePicture: builder.query<string, string>({
+    getStoragePicture: builder.query<string, string>({
       queryFn: async (id) => {
         try {
           const storage = getStorage();
@@ -113,8 +112,23 @@ export const firebaseApi = createApi({
     }),
     createUser: builder.mutation<void, User>({
       queryFn: async (user) => {
-        const docRef = await setDoc(doc(db, "users", user.id), {
+        await setDoc(doc(db, "users", user.id), {
           ...user,
+        });
+        return { data: undefined };
+      },
+    }),
+    createProgram: builder.mutation<
+      void,
+      { id: string; program: WorkoutModel }
+    >({
+      queryFn: async (args) => {
+        const userPrograms = doc(db, "users", args.id);
+        await updateDoc(userPrograms, {
+          programs: arrayUnion(args.program),
+        });
+        await setDoc(doc(db, "workouts", args.program.id), {
+          ...args.program,
         });
         return { data: undefined };
       },
@@ -171,9 +185,10 @@ export const {
   useGetJoinedWorkoutQuery,
   useGetExercisesQuery,
   useJoinWorkoutMutation,
+  useCreateProgramMutation,
   useSetFinishedSessionMutation,
   useUploadImageMutation,
-  useGetProfilePictureQuery,
+  useGetStoragePictureQuery,
   useSendMessageMutation,
   useGetMembersChatQuery,
 } = firebaseApi;

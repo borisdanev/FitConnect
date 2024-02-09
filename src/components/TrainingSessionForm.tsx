@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useCreateProgramMutation } from "../store";
 import { RootState } from "../store";
 import { WorkoutModel } from "../types/workout.model";
 import { useFormik } from "formik";
@@ -9,10 +10,21 @@ import useDynamicInitialValues from "../hooks/useDynamicInitialValues";
 import useAdjustInputValues from "../hooks/useAdjustInputValues";
 import TrainingSessionDetails from "./TrainingSessionDetails";
 import Box from "@mui/material/Box";
+import Slider from "react-slick";
 interface Props {
   createdProgram: WorkoutModel;
+  setCreatedProgram: (program: WorkoutModel) => void;
+  sliderRef: React.RefObject<Slider>;
 }
-const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
+const TrainingSessionForm: React.FC<Props> = ({
+  createdProgram,
+  setCreatedProgram,
+  sliderRef,
+}) => {
+  const [createProgram] = useCreateProgramMutation();
+  const currentUser = useSelector(
+    (state: RootState) => state.currentUser.value
+  );
   const selectedDays = useSelector(
     (state: RootState) => state.program.selectedDays
   );
@@ -28,7 +40,6 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
   const initialValues = useDynamicInitialValues(
     trainingSessions.map((item) => item.exercises.length * 3)
   );
-  console.log(initialValues);
   const handleSubmit = (values: any) => {
     const filteredSessions = trainingSessions
       .map((item, i) => ({ ...item, index: i }))
@@ -45,6 +56,20 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
         name: values[`name${item.index}`],
       };
     });
+    createProgram({
+      id: currentUser.id,
+      program: {
+        ...createdProgram,
+        trainingSessions: createdSessions,
+        timesPerWeek: createdSessions.length,
+      },
+    });
+    // setCreatedProgram({
+    //   ...createdProgram,
+    //   trainingSessions: createdSessions,
+    //   timesPerWeek: createdSessions.length,
+    // });
+    // sliderRef?.current?.slickGoTo(3);
   };
   const formik = useFormik({
     initialValues,
@@ -69,7 +94,6 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
           ))}
       </Box>
     </FormContainer>
-    //
   );
 };
 export default TrainingSessionForm;

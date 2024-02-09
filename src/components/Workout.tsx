@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { selectView } from "../store";
+import { selectView, useGetStoragePictureQuery } from "../store";
 import { setWorkout } from "../store";
 import { ViewEnum } from "../enums/View";
 import { WorkoutModel } from "../types/workout.model";
@@ -13,6 +13,7 @@ interface Props {
 }
 const Workout: React.FC<Props> = ({ workout }) => {
   const dispatch = useDispatch();
+  // const workoutImg = useGetStoragePictureQuery(workout.id);
   const handleClick = () => {
     dispatch(setWorkout(workout));
     dispatch(selectView(ViewEnum.Workout));
@@ -20,7 +21,6 @@ const Workout: React.FC<Props> = ({ workout }) => {
   return (
     <Box onClick={handleClick}>
       <img
-        src={workout.imgUrl}
         style={{ maxWidth: "100%", height: "auto" }}
         alt="workout cover image"
       />
