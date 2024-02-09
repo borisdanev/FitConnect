@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import useIsMember from "../hooks/useIsMember";
-import { RootState, useGetUserQuery } from "../store";
+import {
+  RootState,
+  useGetUserQuery,
+  useGetStoragePictureQuery,
+} from "../store";
 import { TrainingSessionModel } from "../types/trainingSession.model";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -24,6 +28,7 @@ const WorkoutView: React.FC = () => {
     (state: RootState) => state.activeWorkout.isActive
   );
   const { data: user, refetch } = useGetUserQuery(currentUser.email);
+  const { data: workoutSrc } = useGetStoragePictureQuery(workout.id);
   const isMember = useIsMember(workout.id, user ? user.workouts : []);
   return (
     <Grid container>
@@ -46,7 +51,11 @@ const WorkoutView: React.FC = () => {
                 flexDirection: "column",
               }}
             >
-              <img style={{ maxWidth: "100%" }} alt="workout program cover" />
+              <img
+                src={workoutSrc}
+                style={{ maxWidth: "100%" }}
+                alt="workout program cover"
+              />
               {!isMember ? (
                 <JoinButton refetch={refetch} workout={workout} user={user} />
               ) : (

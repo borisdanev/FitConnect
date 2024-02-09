@@ -8,22 +8,28 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { HiUsers } from "react-icons/hi";
 import RatingStars from "./RatingStars";
+import Skeleton from "@mui/material/Skeleton";
 interface Props {
   workout: WorkoutModel;
 }
 const Workout: React.FC<Props> = ({ workout }) => {
   const dispatch = useDispatch();
-  // const workoutImg = useGetStoragePictureQuery(workout.id);
+  const { data: workoutSrc, isLoading } = useGetStoragePictureQuery(workout.id);
   const handleClick = () => {
     dispatch(setWorkout(workout));
     dispatch(selectView(ViewEnum.Workout));
   };
   return (
     <Box onClick={handleClick}>
-      <img
-        style={{ maxWidth: "100%", height: "auto" }}
-        alt="workout cover image"
-      />
+      {isLoading ? (
+        <Skeleton variant="rectangular" width="18.5rem" height="12.5rem" />
+      ) : (
+        <img
+          src={workoutSrc}
+          style={{ width: "18.5rem", height: "12.5rem", objectFit: "cover" }}
+          alt="workout cover image"
+        />
+      )}
       <Typography variant="h4" className="h3">
         {workout.title}
       </Typography>
