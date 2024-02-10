@@ -39,7 +39,7 @@ const ActiveWorkout: React.FC<Props> = ({ trainingSession }) => {
       setTimerOn(false);
     }
     const finished = added ? finishedSets.length + 1 : finishedSets.length;
-    if (finished === currentExercise.sets.length) {
+    if (finished === parseInt(currentExercise.sets)) {
       setFinishedSets([]);
       dispatch(setFinishedExercises(currentExercise.id));
     }
@@ -69,16 +69,20 @@ const ActiveWorkout: React.FC<Props> = ({ trainingSession }) => {
           alt="Exercise demonstration"
         />
         {timerOn && (
-          <RestTimer restBetweenSets={currentExercise.restBetweenSets} />
-        )}
-        {currentExercise.sets.map((item, i) => (
-          <ExerciseSet
-            key={i}
-            reps={item.reps}
-            index={i}
-            handleChange={handleChange}
+          <RestTimer
+            restBetweenSets={parseInt(currentExercise.restBetweenSets)}
           />
-        ))}
+        )}
+        {Array(parseInt(currentExercise.sets))
+          .fill(null)
+          .map((item, i) => (
+            <ExerciseSet
+              key={i}
+              reps={parseInt(item.reps)}
+              index={i}
+              handleChange={handleChange}
+            />
+          ))}
       </Box>
     </Box>
   );

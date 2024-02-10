@@ -48,6 +48,7 @@ const useAdjustInputValues = (
           };
         });
       Object.keys(initialValues).forEach((key) => {
+        if (!key.includes("input")) return;
         const [_, index] = key.split("input");
         const currentIndex = parseInt(index.charAt(0));
         if (currentIndex !== currentSessionIndex) {

@@ -53,6 +53,7 @@ const ExerciseDetailsSelection: React.FC<Props> = ({
               <Input
                 id={`input${currentSessionIndex}${index * 3 + i + 1}`}
                 sx={{ height: "1.5rem" }}
+                type="number"
                 value={
                   Object.keys(formik.values).includes(
                     `input${currentSessionIndex}${index * 3 + i + 1}`
