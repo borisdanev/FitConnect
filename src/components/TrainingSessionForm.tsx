@@ -64,12 +64,6 @@ const TrainingSessionForm: React.FC<Props> = ({
         timesPerWeek: createdSessions.length,
       },
     });
-    // setCreatedProgram({
-    //   ...createdProgram,
-    //   trainingSessions: createdSessions,
-    //   timesPerWeek: createdSessions.length,
-    // });
-    // sliderRef?.current?.slickGoTo(3);
   };
   const formik = useFormik({
     initialValues,
@@ -79,7 +73,7 @@ const TrainingSessionForm: React.FC<Props> = ({
   useAdjustInputValues(initialValues, formik);
   return (
     <FormContainer text="Sessions" handleSubmit={formik.handleSubmit}>
-      <SelectionCalendar />
+      <SelectionCalendar formik={formik} />
       <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
         {selectedDays
           .filter((item) => item === currentSessionIndex)
