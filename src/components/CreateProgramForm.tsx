@@ -29,7 +29,7 @@ const CreateProgramForm: React.FC = () => {
     description: "",
     creator: `${currentUser.firstName} ${currentUser.lastName}`,
     rating: 0,
-    participants: 0,
+    members: 0,
     rates: 0,
     type: WorkoutType.All,
     timesPerWeek: 0,

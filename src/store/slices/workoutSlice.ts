@@ -11,7 +11,7 @@ const initialState: State = {
     description: "",
     creator: "",
     rating: 0,
-    participants: 0,
+    members: 0,
     rates: 0,
     type: WorkoutType.All,
     timesPerWeek: 0,

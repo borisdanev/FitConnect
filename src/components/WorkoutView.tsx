@@ -40,7 +40,7 @@ const WorkoutView: React.FC = () => {
               desc={workout.description}
               rating={workout.rating}
               rates={workout.rates}
-              members={workout.participants}
+              members={workout.members}
               creator={workout.creator}
             />
           </Grid>

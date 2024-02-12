@@ -34,7 +34,7 @@ const Workout: React.FC<Props> = ({ workout }) => {
         {workout.title}
       </Typography>
       <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Typography sx={{ mr: 1 }}>{workout.participants}</Typography>
+        <Typography sx={{ mr: 1 }}>{workout.members}</Typography>
         <HiUsers />
       </Box>
       <RatingStars rating={workout.rating} rates={workout.rates} />

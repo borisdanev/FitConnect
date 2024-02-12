@@ -6,7 +6,7 @@ export interface WorkoutModel {
   description: string;
   creator: string;
   rating: number;
-  participants: number;
+  members: number;
   rates: number;
   type: WorkoutType;
   timesPerWeek: number;

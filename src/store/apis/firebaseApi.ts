@@ -136,6 +136,10 @@ export const firebaseApi = createApi({
     joinWorkout: builder.mutation<void, { workout: WorkoutModel; id: string }>({
       queryFn: async (args) => {
         const docRef = doc(db, "users", args.id);
+        const wokroutRef = doc(db, "workouts", args.workout.id);
+        await updateDoc(wokroutRef, {
+          members: args.workout.members + 1,
+        });
         await updateDoc(docRef, {
           workouts: arrayUnion({ workout: args.workout, finishedSessions: 0 }),
         });
