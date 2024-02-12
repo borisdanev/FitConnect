@@ -60,6 +60,7 @@ const TrainingSessionDetails: React.FC<Props> = ({
             ? formik.values[`name${currentSessionIndex}`]
             : ""
         }
+        FormHelperTextProps={{ sx: { color: "#59B386", fontSize: "0.9rem" } }}
         label="Session Name"
         helperText={formik.errors[`name${currentSessionIndex}`]}
         onChange={formik.handleChange}

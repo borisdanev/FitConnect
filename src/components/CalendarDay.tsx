@@ -9,7 +9,7 @@ import {
 } from "../store";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import { PiWarningCircleFill } from "react-icons/pi";
 interface Props {
   index: number;
   day: string;
@@ -43,7 +43,9 @@ const CalendarDay: React.FC<Props> = ({ index, day, errors }) => {
         ? key.split("input")[1].charAt(0)
         : key.split("name")[1]
     );
-    errorsIndexes.includes(`${index}`) && setErrorWarning(true);
+    errorsIndexes.includes(`${index}`)
+      ? setErrorWarning(true)
+      : setErrorWarning(false);
   }, [errors]);
   return (
     <Button
@@ -71,8 +73,21 @@ const CalendarDay: React.FC<Props> = ({ index, day, errors }) => {
     >
       {day}
       {errorWarning && (
-        <Box sx={{ position: "absolute", top: 0, right: 0 }}>
-          <Typography className="h6">Error</Typography>
+        <Box
+          sx={{
+            position: "absolute",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            top: 0,
+            right: 0,
+            borderRadius: "50%",
+            width: "1rem",
+            height: "1rem",
+            bgcolor: "#d32f2f",
+          }}
+        >
+          <PiWarningCircleFill className="h4" color="white" />
         </Box>
       )}
     </Button>

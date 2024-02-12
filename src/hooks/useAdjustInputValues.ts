@@ -21,7 +21,12 @@ const useAdjustInputValues = (
         return;
       }
       const dynamicValues: { [key: string]: string } = {};
-      const adjustedValues = Object.keys(formik.values)
+      const inputValues = Object.fromEntries(
+        Object.entries(formik.values).filter(([key, _]) =>
+          key.includes("input")
+        )
+      );
+      const adjustedValues = Object.keys(inputValues)
         .map((key) => {
           const [_, index] = key.split("input");
           return {
