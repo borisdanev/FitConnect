@@ -4,11 +4,12 @@ interface Props {
   restBetweenSets: number;
 }
 const RestTimer: React.FC<Props> = ({ restBetweenSets }) => {
+  console.log(restBetweenSets);
   return (
     <Box sx={{ display: "flex", justifyContent: "end" }}>
       <CountdownCircleTimer
         isPlaying
-        duration={restBetweenSets * 60}
+        duration={60}
         colors={["#00e676", "#00e676", "#00e676", "#00e676"]}
         colorsTime={[7, 5, 2, 0]}
         size={50}

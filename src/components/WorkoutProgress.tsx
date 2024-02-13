@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { RootState, useGetJoinedWorkoutQuery } from "../store";
 import { WorkoutModel } from "../types/workout.model";
 import { User } from "../types/user.model";
@@ -25,16 +24,26 @@ const WorkoutProgress: React.FC<Props> = ({
   // const finishedTrainingSessions = useSelector(
   //   (state: RootState) => state.activeWorkout.finishedTrainingSessions
   // );
-  const calculateValue = (finishedSessions: number) => {
-    return (finishedSessions / timesPerWeek) * 100;
-  };
   const { data, refetch } = useGetJoinedWorkoutQuery({
     userId: currentUser.id,
     workoutId: currentWorkout.id,
   });
-  useEffect(() => {
-    refetch();
-  }, [data]);
+  const [finishedSessions, setFinishedSessions] = useState<number>(
+    data ? data.finishedSessions : 0
+  );
+  const calculateValue = (finishedSessions: number) => {
+    return (finishedSessions / timesPerWeek) * 100;
+  };
+  // useEffect(() => {
+  //   if (!data) return;
+  //   console.log(finishedSessions);
+  //   if (data.finishedSessions !== finishedSessions) {
+  //     console.log("refetching");
+  //     setFinishedSessions(data.finishedSessions);
+  //     refetch();
+  //   }
+  //   console.log(data);
+  // }, [data]);
   return (
     <Box>
       <CircularProgressbarWithChildren

@@ -20,6 +20,7 @@ const ActiveWorkout: React.FC<Props> = ({ trainingSession }) => {
   const [currentExercise, setCurrentExercise] = useState<ExerciseModel>(
     trainingSession.exercises[exerciseIndex]
   );
+  console.log(currentExercise);
   const [timerOn, setTimerOn] = useState<boolean>(false);
   const [finishedSets, setFinishedSets] = useState<string[]>([]);
   useEffect(
@@ -75,11 +76,11 @@ const ActiveWorkout: React.FC<Props> = ({ trainingSession }) => {
         )}
         {Array(parseInt(currentExercise.sets))
           .fill(null)
-          .map((item, i) => (
+          .map((_, i) => (
             <ExerciseSet
               key={i}
-              reps={parseInt(item.reps)}
-              index={i}
+              reps={parseInt(currentExercise.reps)}
+              checkBoxId={`${currentExercise.id}${i}`}
               handleChange={handleChange}
             />
           ))}

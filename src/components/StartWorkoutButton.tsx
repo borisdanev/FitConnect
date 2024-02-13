@@ -7,7 +7,7 @@ const StartWorkoutButton = () => {
     (state: RootState) => state.activeWorkout.isActive
   );
   const handleClick = (isActive: boolean) => {
-    setVisibleOverlay(true);
+    dispatch(setVisibleOverlay(true));
     if (isActive) return;
     dispatch(setIsActiveWorkout(true));
   };

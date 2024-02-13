@@ -45,7 +45,7 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
         ...exercise,
         sets: values[`input${item.index}${i * 3 + 1}`],
         reps: values[`input${item.index}${i * 3 + 2}`],
-        rest: values[`input${item.index}${i * 3 + 3}`],
+        restBetweenSets: values[`input${item.index}${i * 3 + 3}`],
       }));
       return {
         exercises,
