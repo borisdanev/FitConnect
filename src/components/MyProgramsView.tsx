@@ -14,6 +14,7 @@ const MyProgramsView: React.FC = () => {
   const openedCreateProgramForm = useSelector(
     (state: RootState) => state.form.openedCreateProgramForm
   );
+  console.log(openedCreateProgramForm);
   const handleClick = () => {
     if (currentUser.id) dispatch(setOpenedCreateProgramForm(true));
     else dispatch(setOpenedSignupForm(true));

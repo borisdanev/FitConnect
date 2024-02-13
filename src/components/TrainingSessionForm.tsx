@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useCreateProgramMutation, setOpenedCreateProgramForm } from "../store";
 import { RootState } from "../store";
 import { WorkoutModel } from "../types/workout.model";
@@ -17,6 +17,7 @@ interface Props {
   sliderRef: React.RefObject<Slider>;
 }
 const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
+  const dispatch = useDispatch();
   const [createProgram] = useCreateProgramMutation();
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value
@@ -52,7 +53,7 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
         name: values[`name${item.index}`],
       };
     });
-    setOpenedCreateProgramForm(false);
+    dispatch(setOpenedCreateProgramForm(false));
     createProgram({
       id: currentUser.id,
       program: {

@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useUploadImageMutation } from "../store";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
@@ -24,6 +25,7 @@ const MediaForm: React.FC<Props> = ({
   createdProgram,
   setCreatedProgram,
 }) => {
+  const workoutImgSrc = useState<string>("");
   const [setWorkoutImage] = useUploadImageMutation();
   const initialValues: FormValues = {
     title: "",
@@ -53,6 +55,9 @@ const MediaForm: React.FC<Props> = ({
     validationSchema,
     onSubmit: handleSubmit,
   });
+  useEffect(() => {
+    console.log("here");
+  }, [formik.values.imgFile]);
   return (
     <FormContainer
       handleSubmit={formik.handleSubmit}
@@ -116,6 +121,7 @@ const MediaForm: React.FC<Props> = ({
                 )
               }
             />
+            {workoutImgSrc && <img />}
           </Box>
         </Box>
       </Box>

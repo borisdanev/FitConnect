@@ -13,7 +13,7 @@ const SelectionCalendar: React.FC<Props> = ({ formik }) => {
   return (
     <Box sx={{ display: "flex", justifyContent: "space-between" }}>
       {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((item, i) => (
-        <CalendarDay index={i} day={item} errors={formik.errors} />
+        <CalendarDay key={i} index={i} day={item} errors={formik.errors} />
       ))}
     </Box>
   );
