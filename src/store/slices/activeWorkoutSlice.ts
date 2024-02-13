@@ -29,6 +29,9 @@ export const activeWorkoutSlice = createSlice({
     setCurrentExerciseIndex(state, action: PayloadAction<number>) {
       state.currentExerciseIndex = action.payload;
     },
+    setFinishedTrainingSessions(state, action: PayloadAction<number>) {
+      state.finishedTrainingSessions = action.payload;
+    },
     finishTrainingSession(state) {
       state.finishedTrainingSessions = state.finishedTrainingSessions + 1;
       state.visibleOverlay = false;
@@ -43,5 +46,6 @@ export const {
   setVisibleOverlay,
   setFinishedExercises,
   setCurrentExerciseIndex,
+  setFinishedTrainingSessions,
   finishTrainingSession,
 } = activeWorkoutSlice.actions;

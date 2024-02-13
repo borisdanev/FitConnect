@@ -36,6 +36,7 @@ import {
   setVisibleOverlay,
   setFinishedExercises,
   setCurrentExerciseIndex,
+  setFinishedTrainingSessions,
   finishTrainingSession,
 } from "./slices/activeWorkoutSlice";
 import {
@@ -76,6 +77,7 @@ export {
   setVisibleOverlay,
   setFinishedExercises,
   setCurrentExerciseIndex,
+  setFinishedTrainingSessions,
   finishTrainingSession,
   addToSelectedDays,
   removeFromSelectedDays,

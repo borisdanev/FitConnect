@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { RootState, useGetJoinedWorkoutQuery } from "../store";
+import { useSelector } from "react-redux";
+import {
+  RootState,
+  useGetJoinedWorkoutQuery,
+  setFinishedTrainingSessions,
+} from "../store";
 import { WorkoutModel } from "../types/workout.model";
 import { User } from "../types/user.model";
 import Box from "@mui/material/Box";
@@ -21,35 +26,26 @@ const WorkoutProgress: React.FC<Props> = ({
   currentUser,
   currentWorkout,
 }) => {
-  // const finishedTrainingSessions = useSelector(
-  //   (state: RootState) => state.activeWorkout.finishedTrainingSessions
-  // );
-  const { data, refetch } = useGetJoinedWorkoutQuery({
+  const finishedTrainingSessions = useSelector(
+    (state: RootState) => state.activeWorkout.finishedTrainingSessions
+  );
+  const { data } = useGetJoinedWorkoutQuery({
     userId: currentUser.id,
     workoutId: currentWorkout.id,
   });
-  const [finishedSessions, setFinishedSessions] = useState<number>(
-    data ? data.finishedSessions : 0
-  );
   const calculateValue = (finishedSessions: number) => {
     return (finishedSessions / timesPerWeek) * 100;
   };
-  // useEffect(() => {
-  //   if (!data) return;
-  //   console.log(finishedSessions);
-  //   if (data.finishedSessions !== finishedSessions) {
-  //     console.log("refetching");
-  //     setFinishedSessions(data.finishedSessions);
-  //     refetch();
-  //   }
-  //   console.log(data);
-  // }, [data]);
+  useEffect(() => {
+    if (!data) return;
+    setFinishedTrainingSessions(data.finishedSessions);
+  }, [data]);
   return (
     <Box>
       <CircularProgressbarWithChildren
         value={
           variant === "current"
-            ? calculateValue(data ? data.finishedSessions : 1)
+            ? calculateValue(finishedTrainingSessions)
             : calculateValue(data ? data.previousWeekProgress : 1)
         }
         strokeWidth={10}

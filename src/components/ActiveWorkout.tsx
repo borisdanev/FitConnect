@@ -20,30 +20,29 @@ const ActiveWorkout: React.FC<Props> = ({ trainingSession }) => {
   const [currentExercise, setCurrentExercise] = useState<ExerciseModel>(
     trainingSession.exercises[exerciseIndex]
   );
-  console.log(currentExercise);
   const [timerOn, setTimerOn] = useState<boolean>(false);
   const [finishedSets, setFinishedSets] = useState<string[]>([]);
   useEffect(
     () => setCurrentExercise(trainingSession.exercises[exerciseIndex]),
     [exerciseIndex]
   );
+
+  useEffect(() => {
+    if (finishedSets.length !== parseInt(currentExercise.sets)) return;
+    setFinishedSets([]);
+    dispatch(setFinishedExercises(currentExercise.id));
+  }, [finishedSets]);
+
   const handleChange = (event: ChangeEvent) => {
     const currentId = event.target.id;
-    let added = false;
     if (!finishedSets.includes(currentId)) {
       setFinishedSets([...finishedSets, currentId]);
       setTimerOn(true);
-      added = true;
-    } else {
-      const sets = finishedSets.filter((id) => currentId !== id);
-      setFinishedSets(sets);
-      setTimerOn(false);
+      return;
     }
-    const finished = added ? finishedSets.length + 1 : finishedSets.length;
-    if (finished === parseInt(currentExercise.sets)) {
-      setFinishedSets([]);
-      dispatch(setFinishedExercises(currentExercise.id));
-    }
+    const updatedFinishedSets = finishedSets.filter((id) => currentId !== id);
+    setFinishedSets(updatedFinishedSets);
+    setTimerOn(false);
   };
   return (
     <Box

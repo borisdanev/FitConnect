@@ -19,6 +19,7 @@ import ActiveWorkout from "./ActiveWorkout";
 import WorkoutProgress from "./WorkoutProgress";
 const WorkoutView: React.FC = () => {
   const workout = useSelector((state: RootState) => state.currentWorkout.value);
+  console.log(workout);
   const [selectedTrainingSession, setSelectedTrainingSession] =
     useState<TrainingSessionModel>(workout.trainingSessions[0]);
   const currentUser = useSelector(
