@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   RootState,
   useGetJoinedWorkoutQuery,
@@ -26,6 +26,7 @@ const WorkoutProgress: React.FC<Props> = ({
   currentUser,
   currentWorkout,
 }) => {
+  const dispatch = useDispatch();
   const finishedTrainingSessions = useSelector(
     (state: RootState) => state.activeWorkout.finishedTrainingSessions
   );
@@ -38,7 +39,8 @@ const WorkoutProgress: React.FC<Props> = ({
   };
   useEffect(() => {
     if (!data) return;
-    setFinishedTrainingSessions(data.finishedSessions);
+    console.log(new Date(1707935571 * 1000).getDay(), new Date().getDay());
+    dispatch(setFinishedTrainingSessions(data.finishedSessions));
   }, [data]);
   return (
     <Box>

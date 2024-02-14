@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { WorkoutType } from "../enums/WorkoutType";
+import { SortType } from "../enums/SortType";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { WorkoutModel } from "../types/workout.model";
@@ -10,8 +11,8 @@ import Filters from "./Filters";
 import WorkoutSorting from "./WorkoutSorting";
 const WorkoutList: React.FC = () => {
   const { data, isLoading } = useGetWorkoutsQuery();
-  const [type, setType] = useState<string>(WorkoutType.All);
-  const [sortBy, setSortBy] = useState<string>("rating");
+  const [type, setType] = useState<WorkoutType>(WorkoutType.All);
+  const [sortBy, setSortBy] = useState<SortType>(SortType.rating);
   return (
     <Box>
       <Box sx={{ display: "flex", mb: 4 }}>

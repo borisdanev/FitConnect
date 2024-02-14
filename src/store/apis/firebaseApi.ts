@@ -16,6 +16,7 @@ import { User } from "../../types/user.model";
 import { ExerciseModel } from "../../types/exercise.model";
 import { Message } from "../../types/message.model";
 import { JoinedWorkout } from "../../types/joinedWorkout.model";
+import { RatingModel } from "../../types/rating.model";
 const config = {
   apiKey: "AIzaSyC3SF-qqer9CuVN_TdSu5WolN-68sB7-dM",
   authDomain: "fitconnect-7de1b.firebaseapp.com",
@@ -171,10 +172,21 @@ export const firebaseApi = createApi({
     }),
     uploadImage: builder.mutation<void, { file: File; id: string }>({
       queryFn: async (args) => {
-        console.log(args);
         const storage = getStorage();
         const storageRef = ref(storage, args.id);
         await uploadBytes(storageRef, args.file);
+        return { data: undefined };
+      },
+    }),
+    rateWorkout: builder.mutation<void, { id: string; rating: RatingModel }>({
+      queryFn: async (args) => {
+        const { currentRating, newRating, totalRates } = args.rating;
+        const docRef = doc(db, "workouts", args.id);
+        const totalRating = currentRating + newRating;
+        await updateDoc(docRef, {
+          rates: totalRates + 1,
+          rating: totalRating / (totalRates + 1),
+        });
         return { data: undefined };
       },
     }),
@@ -195,4 +207,5 @@ export const {
   useGetStoragePictureQuery,
   useSendMessageMutation,
   useGetMembersChatQuery,
+  useRateWorkoutMutation,
 } = firebaseApi;

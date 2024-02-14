@@ -1,13 +1,11 @@
-import { useState } from "react";
-import Box from "@mui/material/Box";
+import { WorkoutType } from "../enums/WorkoutType";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
-import { WorkoutType } from "../enums/WorkoutType";
 interface Props {
-  type: string;
-  setType: Function;
+  type: WorkoutType;
+  setType: (type: WorkoutType) => void;
 }
 const Filters: React.FC<Props> = ({ type, setType }) => {
   return (
@@ -15,7 +13,9 @@ const Filters: React.FC<Props> = ({ type, setType }) => {
       <InputLabel>Type</InputLabel>
       <Select
         value={type}
-        onChange={(e: SelectChangeEvent) => setType(e.target.value)}
+        onChange={(e: SelectChangeEvent) =>
+          setType(e.target.value as WorkoutType)
+        }
         label="Type"
       >
         {Object.values(WorkoutType).map((type) => (

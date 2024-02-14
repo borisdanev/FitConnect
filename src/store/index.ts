@@ -16,6 +16,7 @@ import {
   useGetStoragePictureQuery,
   useSendMessageMutation,
   useGetMembersChatQuery,
+  useRateWorkoutMutation,
 } from "./apis/firebaseApi";
 import { selectView } from "./slices/viewSlice";
 import { setCurrentUser } from "./slices/userSlice";
@@ -74,6 +75,7 @@ export {
   useGetStoragePictureQuery,
   useSendMessageMutation,
   useGetMembersChatQuery,
+  useRateWorkoutMutation,
   setIsActiveWorkout,
   setVisibleOverlay,
   setFinishedExercises,

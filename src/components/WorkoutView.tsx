@@ -10,6 +10,7 @@ import { TrainingSessionModel } from "../types/trainingSession.model";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import WorkoutDetails from "./WorkoutDetails";
+import WorkoutRating from "./WorkoutRating";
 import TrainingSessionList from "./TrainingSessionList";
 import MembersChat from "./MembersChat";
 import MembershipBenefits from "./MembershipBenefits";
@@ -19,7 +20,6 @@ import ActiveWorkout from "./ActiveWorkout";
 import WorkoutProgress from "./WorkoutProgress";
 const WorkoutView: React.FC = () => {
   const workout = useSelector((state: RootState) => state.currentWorkout.value);
-  console.log(workout);
   const [selectedTrainingSession, setSelectedTrainingSession] =
     useState<TrainingSessionModel>(workout.trainingSessions[0]);
   const currentUser = useSelector(
@@ -44,6 +44,7 @@ const WorkoutView: React.FC = () => {
               members={workout.members}
               creator={workout.creator}
             />
+            {isMember && <WorkoutRating />}
           </Grid>
           <Grid item xs={4}>
             <Box
