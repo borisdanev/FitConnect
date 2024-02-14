@@ -57,12 +57,14 @@ export const programSlice = createSlice({
     setVisibleAlert(state, action: PayloadAction<boolean>) {
       state.visibleAlertMessage[state.currentSessionIndex] = action.payload;
     },
-
     setCurrentSessionIndex(state, action: PayloadAction<number>) {
       state.currentSessionIndex = action.payload;
     },
     setRemovedExerciseIndex(state, action: PayloadAction<number | undefined>) {
       state.removedExerciseIndex = action.payload;
+    },
+    clearForm() {
+      return initialState;
     },
   },
 });
@@ -76,4 +78,5 @@ export const {
   setVisibleAlert,
   setCurrentSessionIndex,
   setRemovedExerciseIndex,
+  clearForm,
 } = programSlice.actions;

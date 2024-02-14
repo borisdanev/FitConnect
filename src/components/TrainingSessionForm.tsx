@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useCreateProgramMutation, setOpenedCreateProgramForm } from "../store";
-import { RootState } from "../store";
+import { RootState, clearForm } from "../store";
 import { WorkoutModel } from "../types/workout.model";
 import { useFormik } from "formik";
 import useDynamicSchema from "../hooks/useDynamicSchema";
@@ -53,6 +53,7 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
         name: values[`name${item.index}`],
       };
     });
+    dispatch(clearForm());
     dispatch(setOpenedCreateProgramForm(false));
     createProgram({
       id: currentUser.id,

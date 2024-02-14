@@ -25,7 +25,7 @@ const MediaForm: React.FC<Props> = ({
   createdProgram,
   setCreatedProgram,
 }) => {
-  const workoutImgSrc = useState<string>("");
+  const [workoutImgSrc, setWorkoutImgSrc] = useState<string>("");
   const [setWorkoutImage] = useUploadImageMutation();
   const initialValues: FormValues = {
     title: "",
@@ -56,7 +56,12 @@ const MediaForm: React.FC<Props> = ({
     onSubmit: handleSubmit,
   });
   useEffect(() => {
-    console.log("here");
+    if (!formik.values.imgFile) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setWorkoutImgSrc(reader.result as string);
+    };
+    reader.readAsDataURL(formik.values.imgFile);
   }, [formik.values.imgFile]);
   return (
     <FormContainer
@@ -96,7 +101,9 @@ const MediaForm: React.FC<Props> = ({
               border: "1px solid #00e676",
               p: 7,
               borderRadius: "5px",
-              textAlign: "center",
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
               position: "relative",
             }}
           >
@@ -112,7 +119,7 @@ const MediaForm: React.FC<Props> = ({
               accept="image/*"
               id="imgFile"
               name="imgFile"
-              style={{ position: "absolute", opacity: 0 }}
+              style={{ position: "absolute", opacity: 0, zIndex: 2 }}
               className="position-fill"
               onChange={(event) =>
                 formik.setFieldValue(
@@ -121,7 +128,19 @@ const MediaForm: React.FC<Props> = ({
                 )
               }
             />
-            {workoutImgSrc && <img />}
+            {workoutImgSrc && (
+              <img
+                style={{
+                  position: "absolute",
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  zIndex: 1,
+                }}
+                src={workoutImgSrc}
+                className="position-fill"
+              />
+            )}
           </Box>
         </Box>
       </Box>

@@ -30,6 +30,7 @@ import {
   setVisibleAlert,
   setCurrentSessionIndex,
   setRemovedExerciseIndex,
+  clearForm,
 } from "./slices/programSlice";
 import {
   setIsActiveWorkout,
@@ -88,5 +89,6 @@ export {
   setVisibleAlert,
   setCurrentSessionIndex,
   setRemovedExerciseIndex,
+  clearForm,
 };
 export default store;
