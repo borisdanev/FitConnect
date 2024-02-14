@@ -10,35 +10,21 @@ interface Props {
   setType: Function;
 }
 const Filters: React.FC<Props> = ({ type, setType }) => {
-  const [sorting, setSorting] = useState<string>("R");
   return (
-    <Box sx={{ display: "flex", mb: 4 }}>
-      <FormControl>
-        <InputLabel>Type</InputLabel>
-        <Select
-          value={type}
-          onChange={(e: SelectChangeEvent) => setType(e.target.value)}
-          label="Type"
-        >
-          {Object.values(WorkoutType).map((type) => (
-            <MenuItem key={type} value={type}>
-              {type}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl sx={{ ml: 3 }}>
-        <InputLabel>Sort by</InputLabel>
-        <Select
-          value={sorting}
-          onChange={(e: SelectChangeEvent) => setSorting(e.target.value)}
-          label="Type"
-        >
-          <MenuItem value="R">Rating</MenuItem>
-          <MenuItem value="Participants">Participants</MenuItem>
-        </Select>
-      </FormControl>
-    </Box>
+    <FormControl>
+      <InputLabel>Type</InputLabel>
+      <Select
+        value={type}
+        onChange={(e: SelectChangeEvent) => setType(e.target.value)}
+        label="Type"
+      >
+        {Object.values(WorkoutType).map((type) => (
+          <MenuItem key={type} value={type}>
+            {type}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 };
 export default Filters;

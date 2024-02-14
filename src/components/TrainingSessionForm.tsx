@@ -44,9 +44,9 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
     const createdSessions = filteredSessions.map((item) => {
       const exercises = item.exercises.map((exercise, i) => ({
         ...exercise,
-        sets: values[`input${item.index}${i * 3 + 1}`],
-        reps: values[`input${item.index}${i * 3 + 2}`],
-        restBetweenSets: values[`input${item.index}${i * 3 + 3}`],
+        sets: parseInt(values[`input${item.index}${i * 3 + 1}`]),
+        reps: parseInt(values[`input${item.index}${i * 3 + 2}`]),
+        restBetweenSets: parseInt(values[`input${item.index}${i * 3 + 3}`]),
       }));
       return {
         exercises,

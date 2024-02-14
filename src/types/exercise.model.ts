@@ -1,8 +1,8 @@
 export interface ExerciseModel {
   name: string;
   gifUrl: string;
-  sets: string;
-  reps: string;
-  restBetweenSets: string;
+  sets: number;
+  reps: number;
+  restBetweenSets: number;
   id: string;
 }

@@ -28,7 +28,7 @@ const ActiveWorkout: React.FC<Props> = ({ trainingSession }) => {
   );
 
   useEffect(() => {
-    if (finishedSets.length !== parseInt(currentExercise.sets)) return;
+    if (finishedSets.length !== currentExercise.sets) return;
     setFinishedSets([]);
     dispatch(setFinishedExercises(currentExercise.id));
   }, [finishedSets]);
@@ -69,16 +69,14 @@ const ActiveWorkout: React.FC<Props> = ({ trainingSession }) => {
           alt="Exercise demonstration"
         />
         {timerOn && (
-          <RestTimer
-            restBetweenSets={parseInt(currentExercise.restBetweenSets)}
-          />
+          <RestTimer restBetweenSets={currentExercise.restBetweenSets} />
         )}
-        {Array(parseInt(currentExercise.sets))
+        {Array(currentExercise.sets)
           .fill(null)
           .map((_, i) => (
             <ExerciseSet
               key={i}
-              reps={parseInt(currentExercise.reps)}
+              reps={currentExercise.reps}
               checkBoxId={`${currentExercise.id}${i}`}
               handleChange={handleChange}
             />

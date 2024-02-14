@@ -7,12 +7,17 @@ import { useGetWorkoutsQuery } from "../store";
 import Skeleton from "@mui/material/Skeleton";
 import Workout from "./Workout";
 import Filters from "./Filters";
+import WorkoutSorting from "./WorkoutSorting";
 const WorkoutList: React.FC = () => {
-  const { data, isLoading, error } = useGetWorkoutsQuery();
+  const { data, isLoading } = useGetWorkoutsQuery();
   const [type, setType] = useState<string>(WorkoutType.All);
+  const [sortBy, setSortBy] = useState<string>("rating");
   return (
     <Box>
-      <Filters type={type} setType={setType} />
+      <Box sx={{ display: "flex", mb: 4 }}>
+        <Filters type={type} setType={setType} />
+        <WorkoutSorting sortBy={sortBy} setSortBy={setSortBy} />
+      </Box>
       <Grid container rowSpacing={3} columnSpacing={2}>
         {isLoading
           ? Array(8)
@@ -43,8 +48,14 @@ const WorkoutList: React.FC = () => {
                   />
                 </Grid>
               ))
-          : data
-              ?.filter(
+          : data &&
+            [...data]
+              .sort(
+                (a, b) =>
+                  (b[sortBy as keyof WorkoutModel] as number) -
+                  (a[sortBy as keyof WorkoutModel] as number)
+              )
+              .filter(
                 (workout) => workout.type === type || type === WorkoutType.All
               )
               .map((workout: WorkoutModel, i) => (
