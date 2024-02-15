@@ -185,7 +185,7 @@ export const firebaseApi = createApi({
         const totalRating = currentRating + newRating;
         await updateDoc(docRef, {
           rates: totalRates + 1,
-          rating: totalRating / (totalRates + 1),
+          rating: (totalRating / (totalRates + 1)).toFixed(1),
         });
         return { data: undefined };
       },
