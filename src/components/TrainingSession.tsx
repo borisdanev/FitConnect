@@ -1,14 +1,10 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ExerciseModel } from "../types/exercise.model";
-import {
-  useSetFinishedSessionMutation,
-  finishTrainingSession,
-  useGetJoinedWorkoutQuery,
-} from "../store";
+import { useSetFinishedSessionMutation, finishTrainingSession } from "../store";
 import Box from "@mui/material/Box";
 import Exercise from "./Exercise";
-import { RootState, useGetUserWorkoutsQuery } from "../store";
+import { RootState } from "../store";
 interface Props {
   exercises: ExerciseModel[];
 }
@@ -20,11 +16,6 @@ const TrainingSession: React.FC<Props> = ({ exercises }) => {
   const currentWorkout = useSelector(
     (state: RootState) => state.currentWorkout.value
   );
-  const { data: userWorkouts } = useGetUserWorkoutsQuery(currentUser.id);
-  const { data: joinedWorkout } = useGetJoinedWorkoutQuery({
-    userId: currentUser.id,
-    workoutId: currentWorkout.id,
-  });
   const [setFinishedSession] = useSetFinishedSessionMutation();
   const finishedExercises = useSelector(
     (state: RootState) => state.activeWorkout.finishedExercises
@@ -33,19 +24,7 @@ const TrainingSession: React.FC<Props> = ({ exercises }) => {
     if (exercises.length === finishedExercises.length) {
       setFinishedSession({
         userId: currentUser.id,
-        workouts: userWorkouts && [
-          ...userWorkouts.filter(
-            (item) => item.workout.id !== currentWorkout.id
-          ),
-          {
-            workout: currentWorkout,
-            finishedSessions: joinedWorkout
-              ? joinedWorkout.finishedSessions + 1
-              : 1,
-            previousWeekProgress: 0,
-            lastSessionFinishDate: new Date(),
-          },
-        ],
+        workoutId: currentWorkout.id,
       });
       dispatch(finishTrainingSession());
     }

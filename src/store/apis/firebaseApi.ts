@@ -17,6 +17,8 @@ import { ExerciseModel } from "../../types/exercise.model";
 import { Message } from "../../types/message.model";
 import { JoinedWorkout } from "../../types/joinedWorkout.model";
 import { RatingModel } from "../../types/rating.model";
+import WorkoutDetails from "../../components/WorkoutDetails";
+import { workoutSlice } from "../slices/workoutSlice";
 const config = {
   apiKey: "AIzaSyC3SF-qqer9CuVN_TdSu5WolN-68sB7-dM",
   authDomain: "fitconnect-7de1b.firebaseapp.com",
@@ -142,20 +144,40 @@ export const firebaseApi = createApi({
           members: args.workout.members + 1,
         });
         await updateDoc(docRef, {
-          workouts: arrayUnion({ workout: args.workout, finishedSessions: 0 }),
+          workouts: arrayUnion({
+            workout: args.workout,
+            finishedSessions: 0,
+            isRated: false,
+          }),
         });
         return { data: undefined };
       },
     }),
     setFinishedSession: builder.mutation<
       void,
-      { userId: string; workouts: JoinedWorkout[] | undefined }
+      { userId: string; workoutId: string }
     >({
       queryFn: async (args) => {
         const docRef = doc(db, "users", args.userId);
-        if (args.workouts) {
+        const userSnapshot = await getDoc(docRef);
+        const user = userSnapshot.data() as User;
+        const workout = user.workouts.find(
+          (workout) => workout.workout.id === args.workoutId
+        );
+        const otherWorkouts = user.workouts.filter(
+          (workout) => workout.workout.id !== args.workoutId
+        );
+        if (workout) {
           await updateDoc(docRef, {
-            workouts: args.workouts,
+            workouts: [
+              ...otherWorkouts,
+              {
+                ...workout,
+                finishedSessions: workout.finishedSessions + 1,
+                previousWeekProgress: 0,
+                lastSessionFinishDate: new Date(),
+              },
+            ],
           });
         }
         return { data: undefined };
@@ -178,12 +200,27 @@ export const firebaseApi = createApi({
         return { data: undefined };
       },
     }),
-    rateWorkout: builder.mutation<void, { id: string; rating: RatingModel }>({
+    rateWorkout: builder.mutation<
+      void,
+      { id: string; uid: string; rating: RatingModel }
+    >({
       queryFn: async (args) => {
         const { currentRating, newRating, totalRates } = args.rating;
-        const docRef = doc(db, "workouts", args.id);
+        const workoutRef = doc(db, "workouts", args.id);
+        const userRef = doc(db, "users", args.uid);
+        const userSnapshot = await getDoc(userRef);
+        const user = userSnapshot.data() as User;
+        const workout = user.workouts.find(
+          (workout) => workout.workout.id === args.id
+        );
+        const otherWorkouts = user.workouts.filter(
+          (workout) => workout.workout.id !== args.id
+        );
+        await updateDoc(userRef, {
+          workouts: [...otherWorkouts, { ...workout, isRated: true }],
+        });
         const totalRating = currentRating + newRating;
-        await updateDoc(docRef, {
+        await updateDoc(workoutRef, {
           rates: totalRates + 1,
           rating: (totalRating / (totalRates + 1)).toFixed(1),
         });

@@ -4,4 +4,5 @@ export interface JoinedWorkout {
   finishedSessions: number;
   previousWeekProgress: number;
   lastSessionFinishDate: Date;
+  isRated: boolean;
 }
