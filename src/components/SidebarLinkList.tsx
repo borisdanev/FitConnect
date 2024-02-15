@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { selectView } from "../store";
+import { logOut } from "../store/slices/userSlice";
 import { ViewEnum } from "../enums/View";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -42,7 +43,9 @@ const SidebarLinkList = () => {
           </ListItem>
         ))}
       </List>
-      <SideBarLink text={"Log out"} Icon={IoLogOut} />
+      <Box onClick={() => dispatch(logOut())}>
+        <SideBarLink text={"Log out"} Icon={IoLogOut} />
+      </Box>
     </Box>
   );
 };

@@ -19,7 +19,7 @@ import {
   useRateWorkoutMutation,
 } from "./apis/firebaseApi";
 import { selectView } from "./slices/viewSlice";
-import { setCurrentUser } from "./slices/userSlice";
+import { setCurrentUser, logOut } from "./slices/userSlice";
 import { setWorkout } from "./slices/workoutSlice";
 import {
   addToSelectedDays,

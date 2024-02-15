@@ -23,6 +23,9 @@ export const userSlice = createSlice({
       console.log("setting user");
       state.value = action.payload;
     },
+    logOut() {
+      return initialState;
+    },
   },
 });
-export const { setCurrentUser } = userSlice.actions;
+export const { setCurrentUser, logOut } = userSlice.actions;
