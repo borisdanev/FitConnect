@@ -17,6 +17,7 @@ import {
   useSendMessageMutation,
   useGetMembersChatQuery,
   useRateWorkoutMutation,
+  useAddNotificationMutation,
 } from "./apis/firebaseApi";
 import { selectView } from "./slices/viewSlice";
 import { setCurrentUser, logOut } from "./slices/userSlice";
@@ -76,6 +77,7 @@ export {
   useSendMessageMutation,
   useGetMembersChatQuery,
   useRateWorkoutMutation,
+  useAddNotificationMutation,
   setIsActiveWorkout,
   setVisibleOverlay,
   setFinishedExercises,

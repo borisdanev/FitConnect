@@ -1,8 +1,10 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   useJoinWorkoutMutation,
+  useAddNotificationMutation,
   setOpenedSignupForm,
   setCurrentUser,
+  RootState,
 } from "../store";
 import { WorkoutModel } from "../types/workout.model";
 import { User } from "../types/user.model";
@@ -14,15 +16,26 @@ interface Props {
 }
 const JoinButton: React.FC<Props> = ({ refetch, workout, user }) => {
   const dispatch = useDispatch();
+  const currentUser = useSelector(
+    (state: RootState) => state.currentUser.value
+  );
+  const currentWorkout = useSelector(
+    (state: RootState) => state.currentWorkout.value
+  );
   const [joinWorkout] = useJoinWorkoutMutation();
+  const [addNotification] = useAddNotificationMutation();
   const handleJoin = () => {
     if (!user) {
       dispatch(setOpenedSignupForm(true));
       return;
     }
     joinWorkout({ workout, id: user.id });
-    refetch();
+    addNotification({
+      notification: `${currentUser.firstName} ${currentUser.lastName} joined ${currentWorkout.title}`,
+      workoutId: currentWorkout.id,
+    });
     dispatch(setCurrentUser(user));
+    refetch();
   };
   return (
     <Button

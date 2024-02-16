@@ -22,6 +22,7 @@ const initialState: State = {
       },
     ],
     membersChat: [],
+    notifications: [],
     id: "",
   },
 };

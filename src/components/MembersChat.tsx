@@ -26,6 +26,7 @@ const MembersChat: React.FC<Props> = ({ isMember }) => {
   useEffect(() => {
     scrollToBottom();
   }, [chatMessages]);
+  console.log("here");
   return (
     <Box
       sx={{
@@ -52,7 +53,7 @@ const MembersChat: React.FC<Props> = ({ isMember }) => {
         >
           <IoIosLock style={{ fontSize: "4rem" }} />
           <Typography className="h4" textAlign="center" width="80%">
-            Join this workout to see workout discussion
+            Join this workout to see the workout discussion
           </Typography>
         </Box>
       ) : (

@@ -12,5 +12,6 @@ export interface WorkoutModel {
   timesPerWeek: number;
   trainingSessions: TrainingSessionModel[];
   membersChat: Message[];
+  notifications: string[];
   id: string;
 }

@@ -162,25 +162,23 @@ export const firebaseApi = createApi({
         const docRef = doc(db, "users", args.userId);
         const userSnapshot = await getDoc(docRef);
         const user = userSnapshot.data() as User;
-        const workout = user.workouts.find(
+        const [workout] = user.workouts.filter(
           (workout) => workout.workout.id === args.workoutId
         );
         const otherWorkouts = user.workouts.filter(
           (workout) => workout.workout.id !== args.workoutId
         );
-        if (workout) {
-          await updateDoc(docRef, {
-            workouts: [
-              ...otherWorkouts,
-              {
-                ...workout,
-                finishedSessions: workout.finishedSessions + 1,
-                previousWeekProgress: 0,
-                lastSessionFinishDate: new Date(),
-              },
-            ],
-          });
-        }
+        await updateDoc(docRef, {
+          workouts: [
+            ...otherWorkouts,
+            {
+              ...workout,
+              finishedSessions: workout.finishedSessions + 1,
+              previousWeekProgress: 0,
+              lastSessionFinishDate: new Date(),
+            },
+          ],
+        });
         return { data: undefined };
       },
     }),
@@ -229,6 +227,20 @@ export const firebaseApi = createApi({
       },
       invalidatesTags: ["Rating"],
     }),
+    addNotification: builder.mutation<
+      void,
+      { notification: string; workoutId: string }
+    >({
+      queryFn: async (args) => {
+        const workoutRef = doc(db, "workouts", args.workoutId);
+        const workoutSnapshot = await getDoc(workoutRef);
+        const workout = workoutSnapshot.data() as WorkoutModel;
+        await updateDoc(workoutRef, {
+          notifications: [...workout.notifications, args.notification],
+        });
+        return { data: undefined };
+      },
+    }),
   }),
 });
 export const {
@@ -247,4 +259,5 @@ export const {
   useSendMessageMutation,
   useGetMembersChatQuery,
   useRateWorkoutMutation,
+  useAddNotificationMutation,
 } = firebaseApi;

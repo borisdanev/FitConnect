@@ -26,6 +26,7 @@ const ChatInput: React.FC<Props> = ({ refetch }) => {
     refetch();
     setMessage("");
   };
+  console.log("here in input");
   return (
     <form
       onSubmit={(e) => handleSubmit(e)}

@@ -38,6 +38,7 @@ const CreateProgramForm: React.FC<Props> = ({ setShowMessage }) => {
     timesPerWeek: 0,
     trainingSessions: [],
     membersChat: [],
+    notifications: [],
     id: uuidv4(),
   };
   const [createdProgram, setCreatedProgram] = useState<WorkoutModel>(model);
