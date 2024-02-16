@@ -17,8 +17,6 @@ import { ExerciseModel } from "../../types/exercise.model";
 import { Message } from "../../types/message.model";
 import { JoinedWorkout } from "../../types/joinedWorkout.model";
 import { RatingModel } from "../../types/rating.model";
-import WorkoutDetails from "../../components/WorkoutDetails";
-import { workoutSlice } from "../slices/workoutSlice";
 const config = {
   apiKey: "AIzaSyC3SF-qqer9CuVN_TdSu5WolN-68sB7-dM",
   authDomain: "fitconnect-7de1b.firebaseapp.com",
@@ -33,6 +31,7 @@ const db = getFirestore(app);
 export const firebaseApi = createApi({
   reducerPath: "firebaseApi",
   baseQuery: fakeBaseQuery(),
+  tagTypes: ["Rating"],
   endpoints: (builder) => ({
     getWorkouts: builder.query<WorkoutModel[], void>({
       queryFn: async () => {
@@ -69,8 +68,10 @@ export const firebaseApi = createApi({
         const [workout] = data.workouts.filter(
           (item) => item.workout.id === args.workoutId
         );
+        console.log(workout);
         return { data: workout };
       },
+      providesTags: ["Rating"],
     }),
     getEmails: builder.query<string[], void>({
       queryFn: async () => {
@@ -222,10 +223,11 @@ export const firebaseApi = createApi({
         const totalRating = currentRating + newRating;
         await updateDoc(workoutRef, {
           rates: totalRates + 1,
-          rating: (totalRating / (totalRates + 1)).toFixed(1),
+          rating: parseFloat((totalRating / (totalRates + 1)).toFixed(1)),
         });
         return { data: undefined };
       },
+      invalidatesTags: ["Rating"],
     }),
   }),
 });
