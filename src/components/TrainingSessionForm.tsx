@@ -13,10 +13,12 @@ import Box from "@mui/material/Box";
 import Slider from "react-slick";
 interface Props {
   createdProgram: WorkoutModel;
-  setCreatedProgram: (program: WorkoutModel) => void;
-  sliderRef: React.RefObject<Slider>;
+  setShowMessage: (show: boolean) => void;
 }
-const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
+const TrainingSessionForm: React.FC<Props> = ({
+  createdProgram,
+  setShowMessage,
+}) => {
   const dispatch = useDispatch();
   const [createProgram] = useCreateProgramMutation();
   const currentUser = useSelector(
@@ -55,6 +57,7 @@ const TrainingSessionForm: React.FC<Props> = ({ createdProgram }) => {
     });
     dispatch(clearForm());
     dispatch(setOpenedCreateProgramForm(false));
+    setShowMessage(true);
     createProgram({
       id: currentUser.id,
       program: {

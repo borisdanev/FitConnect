@@ -14,7 +14,10 @@ import WorkoutTypeForm from "./WorkoutTypeForm";
 import TrainingSessionForm from "./TrainingSessionForm";
 import { WorkoutModel } from "../types/workout.model";
 import { v4 as uuidv4 } from "uuid";
-const CreateProgramForm: React.FC = () => {
+interface Props {
+  setShowMessage: (show: boolean) => void;
+}
+const CreateProgramForm: React.FC<Props> = ({ setShowMessage }) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value
@@ -93,8 +96,7 @@ const CreateProgramForm: React.FC = () => {
                 />,
                 <TrainingSessionForm
                   createdProgram={createdProgram}
-                  setCreatedProgram={setCreatedProgram}
-                  sliderRef={sliderRef}
+                  setShowMessage={setShowMessage}
                 />,
               ].map((item, i) => (
                 <Box key={i} sx={{ height: "100%" }}>

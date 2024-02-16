@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import { FaRegStar } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { FaRegFaceSmileBeam } from "react-icons/fa6";
+import SuccessMessage from "./SuccessMessage";
 const WorkoutRating: React.FC = () => {
   const [filledStars, setFilledStars] = useState<number>(0);
   const [rateWorkout] = useRateWorkoutMutation();
@@ -73,29 +74,11 @@ const WorkoutRating: React.FC = () => {
         </Box>
       )}
       {showMessage && (
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            bgcolor: "hsl(151, 100%, 85%)",
-            border: "2.5px solid #00e676",
-            borderLeftWidth: "6px",
-            borderRadius: "0.2rem",
-            width: "17rem",
-            color: "#29332e",
-            px: 1,
-            py: 2,
-          }}
-          className="showAndFade"
-        >
-          <FaRegFaceSmileBeam style={{ color: "#00e676" }} className="h3" />
-          <Typography
-            sx={{ ml: 1, fontWeight: "550 !important" }}
-            className="h5"
-          >
-            Thank you for your rating!
-          </Typography>
-        </Box>
+        <SuccessMessage
+          message="Thank you for your rating!"
+          Icon={FaRegFaceSmileBeam}
+          width="17rem"
+        />
       )}
     </>
   );
