@@ -32,7 +32,9 @@ const JoinButton: React.FC<Props> = ({ workout, user }) => {
     addNotification({
       notification: {
         message: `${currentUser.firstName} ${currentUser.lastName} joined ${currentWorkout.title}`,
-        dateAdded: +new Date() * 1,
+        timestamp: +new Date() * 1,
+        dateAdded: new Date(),
+        userId: currentUser.id,
       },
       workoutId: currentWorkout.id,
     });

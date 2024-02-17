@@ -1,4 +1,6 @@
-export interface Notification {
+export interface NotificationModel {
   message: string;
-  dateAdded: number;
+  timestamp: number;
+  dateAdded: Date;
+  userId: string;
 }

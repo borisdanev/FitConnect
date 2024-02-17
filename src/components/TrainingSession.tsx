@@ -35,7 +35,9 @@ const TrainingSession: React.FC<Props> = ({ exercises, name }) => {
       addNotification({
         notification: {
           message: `${currentUser.firstName} ${currentUser.lastName} finished ${name} session`,
-          dateAdded: +new Date() * 1,
+          timestamp: +new Date() * 1,
+          dateAdded: new Date(),
+          userId: currentUser.id,
         },
         workoutId: currentWorkout.id,
       });

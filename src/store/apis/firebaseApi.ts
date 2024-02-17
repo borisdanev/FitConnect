@@ -17,9 +17,7 @@ import { ExerciseModel } from "../../types/exercise.model";
 import { Message } from "../../types/message.model";
 import { JoinedWorkout } from "../../types/joinedWorkout.model";
 import { RatingModel } from "../../types/rating.model";
-import { Notification } from "../../types/notification.model";
-import { workoutSlice } from "../slices/workoutSlice";
-import { FaDochub } from "react-icons/fa6";
+import { NotificationModel } from "../../types/notification.model";
 const config = {
   apiKey: "AIzaSyC3SF-qqer9CuVN_TdSu5WolN-68sB7-dM",
   authDomain: "fitconnect-7de1b.firebaseapp.com",
@@ -234,7 +232,7 @@ export const firebaseApi = createApi({
     }),
     addNotification: builder.mutation<
       void,
-      { notification: Notification; workoutId: string }
+      { notification: NotificationModel; workoutId: string }
     >({
       queryFn: async (args) => {
         const usersSnaphots = await getDocs(collection(db, "users"));

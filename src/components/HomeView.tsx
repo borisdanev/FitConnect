@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import FitMan from "../images/fit_man.webp";
 import Typography from "@mui/material/Typography";
 import WorkoutList from "./WorkoutsList";
+import SuggestedWorkouts from "./SuggestedWorkouts";
 const HomeView: React.FC = () => {
   return (
     <>
@@ -29,7 +30,7 @@ const HomeView: React.FC = () => {
           alt="Fit man posing"
         />
       </Box>
-      <WorkoutList />
+      <SuggestedWorkouts />
       <Box
         sx={{
           mt: 5,

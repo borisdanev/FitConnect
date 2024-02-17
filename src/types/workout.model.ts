@@ -1,7 +1,7 @@
 import { WorkoutType } from "../enums/WorkoutType";
 import { TrainingSessionModel } from "./trainingSession.model";
 import { Message } from "./message.model";
-import { Notification } from "./notification.model";
+import { NotificationModel } from "./notification.model";
 export interface WorkoutModel {
   title: string;
   description: string;
@@ -13,6 +13,6 @@ export interface WorkoutModel {
   timesPerWeek: number;
   trainingSessions: TrainingSessionModel[];
   membersChat: Message[];
-  notifications: Notification[];
+  notifications: NotificationModel[];
   id: string;
 }
