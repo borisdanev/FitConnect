@@ -7,12 +7,13 @@ const MyWorkoutsView: React.FC = () => {
     (state: RootState) => state.currentUser.value
   );
   const { data: userWorkouts } = useGetUserWorkoutsQuery(currentUser.id);
+  console.log(userWorkouts);
   return (
     <>
       {userWorkouts &&
-        [...userWorkouts.flatMap((item) => item.workout.notifications)].map(
-          (item) => <Box>Something</Box>
-        )}
+        [...userWorkouts.flatMap((item) => item.workout.notifications)]
+          .sort((a, b) => b.dateAdded - a.dateAdded)
+          .map((workout) => <Box>{JSON.stringify(item)}</Box>)}
     </>
   );
 };

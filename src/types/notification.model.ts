@@ -1,4 +1,4 @@
 export interface Notification {
   message: string;
-  dateAdded: Date;
+  dateAdded: number;
 }
