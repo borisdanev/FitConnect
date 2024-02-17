@@ -6,6 +6,7 @@ import HomeView from "./HomeView";
 import WorkoutView from "./WorkoutView";
 import ProfileView from "./ProfileView";
 import MyProgramsView from "./MyProgramsView";
+import MyWorkoutsView from "./MyWorkoutsView";
 const SelectedView = () => {
   const selectedView = useSelector((state: RootState) => state.view.value);
   const currentUser = useSelector(
@@ -18,6 +19,9 @@ const SelectedView = () => {
           <HomeView />
         </Box>
       );
+    }
+    case ViewEnum.MyWorkouts: {
+      return <Box sx={{ mt: 5 }}>{currentUser.id && <MyWorkoutsView />}</Box>;
     }
     case ViewEnum.Workout: {
       return (
@@ -34,7 +38,7 @@ const SelectedView = () => {
       );
     }
     case ViewEnum.Profile: {
-      return <Box sx={{ mt: 5 }}>{currentUser.id && <ProfileView />}</Box>;
+      return <Box sx={{ mt: 5 }}>{<ProfileView />}</Box>;
     }
   }
   return <></>;

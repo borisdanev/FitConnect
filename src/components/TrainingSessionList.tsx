@@ -65,7 +65,11 @@ const TrainingSessionList: React.FC<Props> = ({
       {trainingSessions
         .filter((item) => item.name === value)
         .map((item, i) => (
-          <TrainingSession key={i} exercises={item.exercises} />
+          <TrainingSession
+            key={i}
+            exercises={item.exercises}
+            name={item.name}
+          />
         ))}
     </Box>
   );

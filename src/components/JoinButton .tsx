@@ -10,11 +10,10 @@ import { WorkoutModel } from "../types/workout.model";
 import { User } from "../types/user.model";
 import Button from "@mui/material/Button";
 interface Props {
-  refetch: Function;
   workout: WorkoutModel;
   user: User | undefined;
 }
-const JoinButton: React.FC<Props> = ({ refetch, workout, user }) => {
+const JoinButton: React.FC<Props> = ({ workout, user }) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value
@@ -31,11 +30,13 @@ const JoinButton: React.FC<Props> = ({ refetch, workout, user }) => {
     }
     joinWorkout({ workout, id: user.id });
     addNotification({
-      notification: `${currentUser.firstName} ${currentUser.lastName} joined ${currentWorkout.title}`,
+      notification: {
+        message: `${currentUser.firstName} ${currentUser.lastName} joined ${currentWorkout.title}`,
+        dateAdded: new Date(),
+      },
       workoutId: currentWorkout.id,
     });
     dispatch(setCurrentUser(user));
-    refetch();
   };
   return (
     <Button

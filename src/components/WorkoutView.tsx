@@ -28,7 +28,7 @@ const WorkoutView: React.FC = () => {
   const isActiveWorkout = useSelector(
     (state: RootState) => state.activeWorkout.isActive
   );
-  const { data: user, refetch } = useGetUserQuery(currentUser.email);
+  const { data: user } = useGetUserQuery(currentUser.email);
   const { data: workoutSrc } = useGetStoragePictureQuery(workout.id);
   const isMember = useIsMember(workout.id, user ? user.workouts : []);
   return (
@@ -59,7 +59,7 @@ const WorkoutView: React.FC = () => {
                 alt="workout program cover"
               />
               {!isMember ? (
-                <JoinButton refetch={refetch} workout={workout} user={user} />
+                <JoinButton workout={workout} user={user} />
               ) : (
                 <StartWorkoutButton />
               )}

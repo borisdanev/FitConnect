@@ -17,6 +17,9 @@ import { ExerciseModel } from "../../types/exercise.model";
 import { Message } from "../../types/message.model";
 import { JoinedWorkout } from "../../types/joinedWorkout.model";
 import { RatingModel } from "../../types/rating.model";
+import { Notification } from "../../types/notification.model";
+import { workoutSlice } from "../slices/workoutSlice";
+import { FaDochub } from "react-icons/fa6";
 const config = {
   apiKey: "AIzaSyC3SF-qqer9CuVN_TdSu5WolN-68sB7-dM",
   authDomain: "fitconnect-7de1b.firebaseapp.com",
@@ -31,7 +34,7 @@ const db = getFirestore(app);
 export const firebaseApi = createApi({
   reducerPath: "firebaseApi",
   baseQuery: fakeBaseQuery(),
-  tagTypes: ["Rating"],
+  tagTypes: ["Rating", "Join"],
   endpoints: (builder) => ({
     getWorkouts: builder.query<WorkoutModel[], void>({
       queryFn: async () => {
@@ -47,6 +50,7 @@ export const firebaseApi = createApi({
         const [data] = users.filter((user) => user.email === email);
         return { data };
       },
+      providesTags: ["Join"],
     }),
     getUserWorkouts: builder.query<JoinedWorkout[], string>({
       queryFn: async (userId) => {
@@ -153,6 +157,7 @@ export const firebaseApi = createApi({
         });
         return { data: undefined };
       },
+      invalidatesTags: ["Join"],
     }),
     setFinishedSession: builder.mutation<
       void,
@@ -229,15 +234,44 @@ export const firebaseApi = createApi({
     }),
     addNotification: builder.mutation<
       void,
-      { notification: string; workoutId: string }
+      { notification: Notification; workoutId: string }
     >({
       queryFn: async (args) => {
-        const workoutRef = doc(db, "workouts", args.workoutId);
-        const workoutSnapshot = await getDoc(workoutRef);
-        const workout = workoutSnapshot.data() as WorkoutModel;
-        await updateDoc(workoutRef, {
-          notifications: [...workout.notifications, args.notification],
-        });
+        const usersSnaphots = await getDocs(collection(db, "users"));
+        const users = usersSnaphots.docs.map((doc) => doc.data() as User);
+        const filteredUsers = users.filter((user) =>
+          user.workouts.some((workout) => workout.workout.id === args.workoutId)
+        );
+        const usersRef = filteredUsers.map((user) => ({
+          ref: doc(db, "users", user.id),
+          notifications: user.workouts.filter(
+            (workout) => workout.workout.id === args.workoutId
+          )[0].workout.notifications,
+          outerWorkout: user.workouts.find(
+            (workout) => workout.workout.id === args.workoutId
+          ),
+          innerWorkout: user.workouts.find(
+            (workout) => workout.workout.id === args.workoutId
+          )?.workout,
+          otherWorkouts: user.workouts.filter(
+            (workout) => workout.workout.id !== args.workoutId
+          ),
+        }));
+        usersRef.forEach(
+          async (doc) =>
+            await updateDoc(doc.ref, {
+              workouts: [
+                ...doc.otherWorkouts,
+                {
+                  ...doc.outerWorkout,
+                  workout: {
+                    ...doc.innerWorkout,
+                    notifications: [...doc.notifications, args.notification],
+                  },
+                },
+              ],
+            })
+        );
         return { data: undefined };
       },
     }),
