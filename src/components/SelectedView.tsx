@@ -38,7 +38,7 @@ const SelectedView = () => {
       );
     }
     case ViewEnum.Profile: {
-      return <Box sx={{ mt: 5 }}>{<ProfileView />}</Box>;
+      return <Box sx={{ mt: 5 }}>{currentUser.id && <ProfileView />}</Box>;
     }
   }
   return <></>;

@@ -56,8 +56,8 @@ const Notifications: React.FC = () => {
           }}
         >
           <FaBell className="h2" />
-          <Typography className="h4" textAlign="center">
-            Join workout and get notifications here
+          <Typography sx={{ mt: 1 }} className="h4" textAlign="center">
+            Workout Notifications
           </Typography>
         </Box>
       )}

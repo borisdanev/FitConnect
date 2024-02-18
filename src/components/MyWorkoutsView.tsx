@@ -34,14 +34,22 @@ const MyWorkoutsView: React.FC = () => {
                 flexDirection: "column",
               }}
             >
-              <img src={WorkoutIllustration} style={{ maxWidth: "20rem" }} />
-              <Typography className="h2">No Workouts Yet</Typography>
+              <img
+                src={WorkoutIllustration}
+                draggable={false}
+                style={{ maxWidth: "20rem" }}
+              />
+              <Typography className="h3 heading-color">
+                No Workouts Yet
+              </Typography>
             </Box>
           )}
-          <Typography className="h2" color="hsl(153, 9%, 80%)">
-            Find More Workouts
-          </Typography>
-          <SuggestedWorkouts />
+          <Box sx={{ mt: 5 }}>
+            <Typography className="h2 heading-color" sx={{ mb: 3 }}>
+              Find {data && data.length > 0 ? "More" : ""} Workouts
+            </Typography>
+            <SuggestedWorkouts />
+          </Box>
         </Grid>
         <Grid item xs={3}>
           <Notifications />
