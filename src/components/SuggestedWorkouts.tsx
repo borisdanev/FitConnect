@@ -6,7 +6,10 @@ import Box from "@mui/material/Box";
 import WorkoutSorting from "./WorkoutSorting";
 import Filters from "./Filters";
 import WorkoutList from "./WorkoutsList";
-const SuggestedWorkouts: React.FC = () => {
+interface Props {
+  gridSpace: number;
+}
+const SuggestedWorkouts: React.FC<Props> = ({ gridSpace }) => {
   const [type, setType] = useState<WorkoutType>(WorkoutType.All);
   const [sortBy, setSortBy] = useState<SortType>(SortType.rating);
   const { data, isLoading } = useGetWorkoutsQuery();
@@ -21,7 +24,7 @@ const SuggestedWorkouts: React.FC = () => {
         type={type}
         workouts={data}
         isLoading={isLoading}
-        gridSpace={3}
+        gridSpace={gridSpace}
       />
     </Box>
   );

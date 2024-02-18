@@ -6,6 +6,7 @@ import { TrainingSessionModel } from "../types/trainingSession.model";
 import { ExerciseModel } from "../types/exercise.model";
 import ExerciseSet from "./ExerciseSet";
 import RestTimer from "./RestTimer";
+import { FaClock } from "react-icons/fa6";
 interface Props {
   trainingSession: TrainingSessionModel;
 }
@@ -26,13 +27,11 @@ const ActiveWorkout: React.FC<Props> = ({ trainingSession }) => {
     () => setCurrentExercise(trainingSession.exercises[exerciseIndex]),
     [exerciseIndex]
   );
-
   useEffect(() => {
     if (finishedSets.length !== currentExercise.sets) return;
     setFinishedSets([]);
     dispatch(setFinishedExercises(currentExercise.id));
   }, [finishedSets]);
-
   const handleChange = (event: ChangeEvent) => {
     const currentId = event.target.id;
     if (!finishedSets.includes(currentId)) {
@@ -48,37 +47,55 @@ const ActiveWorkout: React.FC<Props> = ({ trainingSession }) => {
     <Box
       sx={{
         position: "fixed",
-        top: "0",
-        left: "0",
-        bottom: "0",
-        right: "0",
         display: visibleOverlay ? "flex" : "none",
         justifyContent: "center",
         alignItems: "center",
         background: "rgba(0, 0, 0, 0.5)",
         zIndex: 1201,
       }}
+      className="position-fill"
       onClick={(e) =>
         e.target === e.currentTarget && dispatch(setVisibleOverlay(false))
       }
     >
-      <Box sx={{ p: 5 }}>
+      <Box sx={{ p: 5, bgcolor: "#29332e", borderRadius: "0.5rem" }}>
         <img
           src={currentExercise.gifUrl}
           style={{ width: "14rem" }}
+          draggable={false}
           alt="Exercise demonstration"
         />
-        {timerOn && (
-          <RestTimer restBetweenSets={currentExercise.restBetweenSets} />
-        )}
+        <Box sx={{ display: "flex", justifyContent: "end" }}>
+          {timerOn ? (
+            <RestTimer
+              restBetweenSets={currentExercise.restBetweenSets}
+              setTimerOn={setTimerOn}
+            />
+          ) : (
+            <Box
+              sx={{
+                width: "3.1rem",
+                height: "3.1rem",
+                borderRadius: "50%",
+                border: "1px solid #37423d",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <FaClock />
+            </Box>
+          )}
+        </Box>
         {Array(currentExercise.sets)
           .fill(null)
           .map((_, i) => (
             <ExerciseSet
               key={i}
               reps={currentExercise.reps}
-              checkBoxId={`${currentExercise.id}${i}`}
+              checkboxId={`${currentExercise.id}${i}`}
               handleChange={handleChange}
+              finishedSets={finishedSets}
             />
           ))}
       </Box>

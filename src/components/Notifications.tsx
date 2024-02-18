@@ -12,7 +12,10 @@ const Notifications: React.FC = () => {
   );
   const { data: userWorkouts } = useGetUserWorkoutsQuery(currentUser.id);
   return (
-    <List sx={{ height: "10rem" }}>
+    <List
+      sx={{ height: "30rem", overflow: "auto", pt: 0 }}
+      className="chat-scrollbar"
+    >
       {userWorkouts && userWorkouts.length > 0 ? (
         [
           ...userWorkouts.flatMap((workout) =>

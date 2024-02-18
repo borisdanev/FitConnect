@@ -48,10 +48,11 @@ const MyWorkoutsView: React.FC = () => {
             <Typography className="h2 heading-color" sx={{ mb: 3 }}>
               Find {data && data.length > 0 ? "More" : ""} Workouts
             </Typography>
-            <SuggestedWorkouts />
+            <SuggestedWorkouts gridSpace={4} />
           </Box>
         </Grid>
         <Grid item xs={3}>
+          <Box sx={{ bgcolor: "#00e676", p: 1 }}>Notifications</Box>
           <Notifications />
         </Grid>
       </Grid>

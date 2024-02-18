@@ -1,7 +1,7 @@
 import React from "react";
 import { RootState } from "../store";
 import { useSelector } from "react-redux";
-import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 import { IconType } from "react-icons";
 import Typography from "@mui/material/Typography";
 interface Props {
@@ -11,20 +11,26 @@ interface Props {
 const SideBarLink: React.FC<Props> = ({ text, Icon }) => {
   const selectedView = useSelector((state: RootState) => state.view.value);
   return (
-    <Button
-      className="h5"
-      variant={selectedView !== text ? "text" : "contained"}
+    <Box
+      className="h5 "
+      // variant={selectedView !== text ? "text" : "contained"}
       sx={{
-        color: "white",
+        bgcolor: `${
+          selectedView === text ? "hsl(151, 100%, 84%)" : "transparent"
+        }`,
         width: "100%",
+        color: `${selectedView === text ? "#00e676" : "white"}`,
         display: "flex",
         justifyContent: "start",
+        alignItems: "center",
+        borderLeft: `${selectedView === text ? "6px solid #00e676" : "none"}`,
         pl: 2,
+        py: 1,
       }}
     >
       <Icon style={{ marginRight: "0.5rem" }} />
-      <Typography className="h5">{text}</Typography>
-    </Button>
+      <Typography className="h5">{text.toLocaleUpperCase()}</Typography>
+    </Box>
   );
 };
 export default SideBarLink;

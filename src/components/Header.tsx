@@ -12,6 +12,8 @@ import SignupForm from "./SignupForm";
 import LoginForm from "./LoginForm";
 import Typography from "@mui/material/Typography";
 import ProfilePicture from "./ProfilePicture";
+import Tooltip from "@mui/material/Tooltip";
+import Notifications from "./Notifications";
 const Header = () => {
   const dispatch = useDispatch();
 
@@ -44,12 +46,14 @@ const Header = () => {
     >
       <SearchBar />
       <Box className="h3">
-        <IconButton
-          aria-label="notifications"
-          style={{ marginRight: "0.5rem" }}
-        >
-          <IoNotifications />
-        </IconButton>
+        <Tooltip title={<Notifications />} arrow>
+          <IconButton
+            aria-label="notifications"
+            style={{ marginRight: "0.5rem" }}
+          >
+            <IoNotifications />
+          </IconButton>
+        </Tooltip>
         <IconButton aria-label="mail">
           <IoMail />
         </IconButton>

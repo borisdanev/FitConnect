@@ -1,23 +1,23 @@
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import Box from "@mui/material/Box";
 interface Props {
   restBetweenSets: number;
+  setTimerOn: (on: boolean) => void;
 }
-const RestTimer: React.FC<Props> = ({ restBetweenSets }) => {
-  console.log(restBetweenSets);
+const RestTimer: React.FC<Props> = ({ restBetweenSets, setTimerOn }) => {
   return (
-    <Box sx={{ display: "flex", justifyContent: "end" }}>
-      <CountdownCircleTimer
-        isPlaying
-        duration={60}
-        colors={["#00e676", "#00e676", "#00e676", "#00e676"]}
-        colorsTime={[7, 5, 2, 0]}
-        size={50}
-        strokeWidth={2}
-      >
-        {({ remainingTime }) => `${remainingTime}s`}
-      </CountdownCircleTimer>
-    </Box>
+    <CountdownCircleTimer
+      isPlaying
+      duration={restBetweenSets * 60}
+      colors={["#00e676", "#00e676", "#00e676", "#00e676"]}
+      colorsTime={[7, 5, 2, 0]}
+      size={50}
+      strokeWidth={2}
+    >
+      {({ remainingTime }) => {
+        if (remainingTime > 0) return `${remainingTime}s`;
+        setTimerOn(false);
+      }}
+    </CountdownCircleTimer>
   );
 };
 export default RestTimer;

@@ -36,7 +36,7 @@ const SidebarLinkList = () => {
         {links.map((link, i) => (
           <ListItem
             key={i}
-            sx={{ px: 0 }}
+            sx={{ p: 0 }}
             onClick={() => dispatch(selectView(link.text))}
           >
             <SideBarLink text={link.text} Icon={link.icon} />

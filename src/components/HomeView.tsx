@@ -30,7 +30,7 @@ const HomeView: React.FC = () => {
           alt="Fit man posing"
         />
       </Box>
-      <SuggestedWorkouts />
+      <SuggestedWorkouts gridSpace={3} />
       <Box
         sx={{
           mt: 5,
