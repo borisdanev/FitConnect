@@ -1,12 +1,16 @@
 import { useState } from "react";
+import { setSearchKeyword, selectView } from "../store";
+import { useDispatch } from "react-redux";
+import { ViewEnum } from "../enums/View";
 import { FormEvent } from "react";
 import { IoIosSearch } from "react-icons/io";
 const SearchBar = () => {
+  const dispatch = useDispatch();
   const [value, setValue] = useState<string>("");
   const handleSubmit = (e: FormEvent): void => {
     e.preventDefault();
-    console.log(value);
-    setValue("");
+    dispatch(setSearchKeyword(value));
+    dispatch(selectView(ViewEnum.Home));
   };
   return (
     <form

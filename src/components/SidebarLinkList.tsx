@@ -30,6 +30,7 @@ const SidebarLinkList = () => {
         justifyContent: "space-between",
         flexDirection: "column",
         height: "80%",
+        overflow: "hidden",
       }}
     >
       <List>

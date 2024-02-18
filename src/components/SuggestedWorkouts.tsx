@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useGetWorkoutsQuery } from "../store";
+import { useSelector } from "react-redux";
+import { RootState, useGetWorkoutsQuery } from "../store";
 import { WorkoutType } from "../enums/WorkoutType";
 import { SortType } from "../enums/SortType";
 import Box from "@mui/material/Box";
@@ -12,6 +13,9 @@ interface Props {
 const SuggestedWorkouts: React.FC<Props> = ({ gridSpace }) => {
   const [type, setType] = useState<WorkoutType>(WorkoutType.All);
   const [sortBy, setSortBy] = useState<SortType>(SortType.rating);
+  const searchKeyword = useSelector(
+    (state: RootState) => state.searchSlice.keyword
+  );
   const { data, isLoading } = useGetWorkoutsQuery();
   return (
     <Box>
@@ -22,7 +26,9 @@ const SuggestedWorkouts: React.FC<Props> = ({ gridSpace }) => {
       <WorkoutList
         sortBy={sortBy}
         type={type}
-        workouts={data}
+        workouts={data?.filter((workout) =>
+          workout.title.toLowerCase().includes(searchKeyword.toLowerCase())
+        )}
         isLoading={isLoading}
         gridSpace={gridSpace}
       />
