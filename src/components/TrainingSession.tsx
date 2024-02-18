@@ -5,10 +5,11 @@ import {
   useSetFinishedSessionMutation,
   finishTrainingSession,
   useAddNotificationMutation,
+  RootState,
 } from "../store";
 import Box from "@mui/material/Box";
 import Exercise from "./Exercise";
-import { RootState } from "../store";
+import { Timestamp } from "firebase/firestore";
 interface Props {
   exercises: ExerciseModel[];
   name: string;
@@ -36,7 +37,7 @@ const TrainingSession: React.FC<Props> = ({ exercises, name }) => {
         notification: {
           message: `${currentUser.firstName} ${currentUser.lastName} finished ${name} session`,
           timestamp: +new Date() * 1,
-          dateAdded: new Date(),
+          dateAdded: Timestamp.fromDate(new Date()),
           userId: currentUser.id,
         },
         workoutId: currentWorkout.id,

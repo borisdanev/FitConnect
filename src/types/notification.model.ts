@@ -1,6 +1,7 @@
+import { Timestamp } from "firebase/firestore";
 export interface NotificationModel {
   message: string;
   timestamp: number;
-  dateAdded: Date;
+  dateAdded: Timestamp;
   userId: string;
 }

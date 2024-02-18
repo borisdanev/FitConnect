@@ -9,6 +9,7 @@ import {
 import { WorkoutModel } from "../types/workout.model";
 import { User } from "../types/user.model";
 import Button from "@mui/material/Button";
+import { Timestamp } from "firebase/firestore";
 interface Props {
   workout: WorkoutModel;
   user: User | undefined;
@@ -33,7 +34,7 @@ const JoinButton: React.FC<Props> = ({ workout, user }) => {
       notification: {
         message: `${currentUser.firstName} ${currentUser.lastName} joined ${currentWorkout.title}`,
         timestamp: +new Date() * 1,
-        dateAdded: new Date(),
+        dateAdded: Timestamp.fromDate(new Date()),
         userId: currentUser.id,
       },
       workoutId: currentWorkout.id,

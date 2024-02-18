@@ -3,10 +3,12 @@ import { FaUser } from "react-icons/fa6";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import { Timestamp } from "firebase/firestore";
+import useNotificationTime from "../hooks/useNotificationTime";
 interface Props {
   title: string;
   message: string;
-  dateAdded: Date;
+  dateAdded: Timestamp;
   userId: string;
   roundedTop: boolean;
   roundedBottom: boolean;
@@ -20,6 +22,7 @@ const Notification: React.FC<Props> = ({
   roundedBottom,
 }) => {
   const { data: imgSrc } = useGetStoragePictureQuery(userId);
+  const notificationTime = useNotificationTime(dateAdded.seconds * 1000);
   return (
     <Grid
       container
@@ -63,7 +66,7 @@ const Notification: React.FC<Props> = ({
       </Grid>
       <Grid item xs={3}>
         <Typography sx={{ opacity: "0.8" }} className="h6">
-          1 day ago
+          {notificationTime}
         </Typography>
       </Grid>
     </Grid>

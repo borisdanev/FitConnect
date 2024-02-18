@@ -40,7 +40,7 @@ const SearchBar = () => {
           border: "none",
         }}
         onChange={(e) => setValue(e.target.value)}
-        placeholder="Search"
+        placeholder="Search Workout"
       />
     </form>
   );

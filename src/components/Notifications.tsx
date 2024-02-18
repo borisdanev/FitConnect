@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Notification from "./Notification";
 import { FaBell } from "react-icons/fa";
+import { Timestamp } from "firebase/firestore";
 const Notifications: React.FC = () => {
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value

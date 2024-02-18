@@ -18,7 +18,7 @@ const HomeView: React.FC = () => {
           mb: 5,
         }}
       >
-        <Typography className="h2" sx={{ pl: 3, width: "50%" }}>
+        <Typography className="h2 heading-color" sx={{ pl: 3, width: "50%" }}>
           Find Workout That Aligns With Your Goals The Best
         </Typography>
         <img
@@ -43,7 +43,7 @@ const HomeView: React.FC = () => {
         }}
         className="reverse-gradient"
       >
-        <Typography className="h3" sx={{ width: "60%" }}>
+        <Typography className="h3 heading-color" sx={{ width: "60%" }}>
           Empower the community with your unique workout program - inspire
           others to reach their goals!
         </Typography>
