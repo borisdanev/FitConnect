@@ -21,6 +21,7 @@ const SuggestedWorkouts: React.FC = () => {
         type={type}
         workouts={data}
         isLoading={isLoading}
+        gridSpace={3}
       />
     </Box>
   );

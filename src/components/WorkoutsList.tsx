@@ -9,12 +9,14 @@ interface Props {
   type: WorkoutType;
   workouts: WorkoutModel[] | undefined;
   isLoading: boolean;
+  gridSpace: number;
 }
 const WorkoutList: React.FC<Props> = ({
   sortBy,
   type,
   workouts,
   isLoading,
+  gridSpace,
 }) => {
   return (
     <Grid container rowSpacing={3} columnSpacing={2}>
@@ -22,7 +24,7 @@ const WorkoutList: React.FC<Props> = ({
         ? Array(8)
             .fill(null)
             .map((_, i) => (
-              <Grid item key={i} xs={3}>
+              <Grid item key={i} xs={gridSpace}>
                 <Skeleton
                   variant="rectangular"
                   width="18.5rem"
@@ -54,7 +56,7 @@ const WorkoutList: React.FC<Props> = ({
               (workout) => workout.type === type || type === WorkoutType.All
             )
             .map((workout: WorkoutModel, i) => (
-              <Grid key={i} item xs={3}>
+              <Grid key={i} item xs={gridSpace}>
                 <Workout workout={workout} />
               </Grid>
             ))}
