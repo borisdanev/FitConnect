@@ -6,6 +6,7 @@ import {
   RootState,
   useGetUserQuery,
   useGetStoragePictureQuery,
+  useUpdateWeekProgressMutation,
 } from "../store";
 import { TrainingSessionModel } from "../types/trainingSession.model";
 import Box from "@mui/material/Box";

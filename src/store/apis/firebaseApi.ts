@@ -70,7 +70,6 @@ export const firebaseApi = createApi({
         const [workout] = data.workouts.filter(
           (item) => item.workout.id === args.workoutId
         );
-        console.log(workout);
         return { data: workout };
       },
       providesTags: ["Rating"],
@@ -185,6 +184,34 @@ export const firebaseApi = createApi({
         return { data: undefined };
       },
     }),
+    updateWeekProgress: builder.mutation<
+      void,
+      { userId: string; workoutId: string; finishedSessions: number }
+    >({
+      queryFn: async (args) => {
+        const { userId, workoutId, finishedSessions } = args;
+        const userRef = doc(db, "users", userId);
+        const userSnapshot = await getDoc(userRef);
+        const user = userSnapshot.data() as User;
+        const [currentWorkout] = user.workouts.filter(
+          (workout) => workout.workout.id === workoutId
+        );
+        const otherWorkouts = user.workouts.filter(
+          (workout) => workout.workout.id !== workoutId
+        );
+        await updateDoc(userRef, {
+          workouts: [
+            ...otherWorkouts,
+            {
+              ...currentWorkout,
+              finishedSessions: 0,
+              previousWeekProgress: finishedSessions,
+            },
+          ],
+        });
+        return { data: undefined };
+      },
+    }),
     sendMessage: builder.mutation<void, Message>({
       queryFn: async (message) => {
         const docRef = doc(db, "workouts", message.workoutId);
@@ -286,6 +313,7 @@ export const {
   useJoinWorkoutMutation,
   useCreateProgramMutation,
   useSetFinishedSessionMutation,
+  useUpdateWeekProgressMutation,
   useUploadImageMutation,
   useGetStoragePictureQuery,
   useSendMessageMutation,
