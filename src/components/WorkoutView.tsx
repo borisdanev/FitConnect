@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import useIsMember from "../hooks/useIsMember";
+import useHandleNewWeek from "../hooks/useHandleNewWeek";
 import {
   RootState,
   useGetUserQuery,
@@ -31,6 +32,7 @@ const WorkoutView: React.FC = () => {
   const { data: user } = useGetUserQuery(currentUser.email);
   const { data: workoutSrc } = useGetStoragePictureQuery(workout.id);
   const isMember = useIsMember(workout.id, user ? user.workouts : []);
+  useHandleNewWeek(currentUser.id, workout.id, isMember);
   return (
     <Grid container>
       <Grid item xs={8}>

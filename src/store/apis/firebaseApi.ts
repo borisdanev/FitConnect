@@ -177,7 +177,7 @@ export const firebaseApi = createApi({
             {
               ...workout,
               finishedSessions: workout.finishedSessions + 1,
-              previousWeekProgress: 0,
+              previousWeekProgress: workout.previousWeekProgress,
               lastSessionFinishDate: new Date(),
             },
           ],
