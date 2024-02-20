@@ -39,7 +39,6 @@ const WorkoutProgress: React.FC<Props> = ({
   };
   useEffect(() => {
     if (!data) return;
-    console.log(new Date(1707935571 * 1000).getDay(), new Date().getDay());
     dispatch(setFinishedTrainingSessions(data.finishedSessions));
   }, [data]);
   return (
@@ -48,7 +47,7 @@ const WorkoutProgress: React.FC<Props> = ({
         value={
           variant === "current"
             ? calculateValue(finishedTrainingSessions)
-            : calculateValue(data ? data.previousWeekProgress : 1)
+            : calculateValue(data ? data.previousWeekProgress : 0)
         }
         strokeWidth={10}
         styles={buildStyles({

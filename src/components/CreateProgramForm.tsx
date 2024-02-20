@@ -31,6 +31,7 @@ const CreateProgramForm: React.FC<Props> = ({ setShowMessage }) => {
     title: "",
     description: "",
     creator: `${currentUser.firstName} ${currentUser.lastName}`,
+    creatorId: `${currentUser.id}`,
     rating: 0,
     members: 0,
     rates: 0,

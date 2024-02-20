@@ -14,8 +14,7 @@ const useHandleNewWeek = (
   });
   const [updateWeekProgress] = useUpdateWeekProgressMutation();
   useEffect(() => {
-    if (!isMember || !joinedWorkout || !joinedWorkout?.lastSessionFinishDate)
-      return;
+    if (!isMember || !joinedWorkout) return;
     const lastSessionFinishDate = new Date(
       joinedWorkout.lastSessionFinishDate.seconds * 1000
     );

@@ -6,6 +6,7 @@ export interface WorkoutModel {
   title: string;
   description: string;
   creator: string;
+  creatorId: string;
   rating: number;
   members: number;
   rates: number;

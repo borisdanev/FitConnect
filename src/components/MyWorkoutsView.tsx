@@ -52,7 +52,16 @@ const MyWorkoutsView: React.FC = () => {
           </Box>
         </Grid>
         <Grid item xs={3}>
-          <Box sx={{ bgcolor: "#00e676", p: 1 }}>Notifications</Box>
+          <Box
+            sx={{
+              bgcolor: "#00e676",
+              p: 1,
+              borderTopLeftRadius: "0.5rem",
+              borderTopRightRadius: "0.5rem",
+            }}
+          >
+            Notifications
+          </Box>
           <Notifications />
         </Grid>
       </Grid>

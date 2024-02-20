@@ -149,6 +149,7 @@ export const firebaseApi = createApi({
           workouts: arrayUnion({
             workout: args.workout,
             finishedSessions: 0,
+            previousWeekProgress: 0,
             isRated: false,
           }),
         });

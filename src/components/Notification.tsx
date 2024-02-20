@@ -10,16 +10,12 @@ interface Props {
   message: string;
   dateAdded: Timestamp;
   userId: string;
-  roundedTop: boolean;
-  roundedBottom: boolean;
 }
 const Notification: React.FC<Props> = ({
   title,
   message,
   dateAdded,
   userId,
-  roundedTop,
-  roundedBottom,
 }) => {
   const { data: imgSrc } = useGetStoragePictureQuery(userId);
   const notificationTime = useNotificationTime(dateAdded.seconds * 1000);
@@ -28,10 +24,6 @@ const Notification: React.FC<Props> = ({
       container
       sx={{
         bgcolor: "#37423d",
-        borderTopRightRadius: `${roundedTop ? "0.5rem" : 0}`,
-        borderTopLeftRadius: `${roundedTop ? "0.5rem" : 0}`,
-        borderBottomLeftRadius: `${roundedBottom ? "0.5rem" : 0}`,
-        borderBottomRightRadius: `${roundedBottom ? "0.5rem" : 0}`,
         p: 2,
       }}
     >

@@ -14,7 +14,14 @@ const Notifications: React.FC = () => {
   const { data: userWorkouts } = useGetUserWorkoutsQuery(currentUser.id);
   return (
     <List
-      sx={{ height: "30rem", overflow: "auto", pt: 0 }}
+      sx={{
+        height: "30rem",
+        overflow: "auto",
+        pt: 0,
+        topBottomRadius: "0.5rem",
+        borderBottomLeftRadius: "0.5rem",
+        borderBottomRightRadius: "0.5rem",
+      }}
       className="chat-scrollbar"
     >
       {userWorkouts && userWorkouts.length > 0 ? (
@@ -42,8 +49,6 @@ const Notifications: React.FC = () => {
                 userId={notification.userId}
                 message={notification.message}
                 dateAdded={notification.dateAdded}
-                roundedTop={i === 0}
-                roundedBottom={i === arr.length - 1}
               />
             </ListItem>
           ))
