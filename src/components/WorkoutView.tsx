@@ -20,6 +20,7 @@ import JoinButton from "./JoinButton ";
 import StartWorkoutButton from "./StartWorkoutButton";
 import ActiveWorkout from "./ActiveWorkout";
 import WorkoutProgress from "./WorkoutProgress";
+import useIsWorkoutCreator from "../hooks/useIsWorkoutCreator";
 const WorkoutView: React.FC = () => {
   const workout = useSelector((state: RootState) => state.currentWorkout.value);
   const [selectedTrainingSession, setSelectedTrainingSession] =
@@ -33,6 +34,7 @@ const WorkoutView: React.FC = () => {
   const { data: user } = useGetUserQuery(currentUser.email);
   const { data: workoutSrc } = useGetStoragePictureQuery(workout.id);
   const isMember = useIsMember(workout.id, user ? user.workouts : []);
+  const isCreator = useIsWorkoutCreator(workout, currentUser.id);
   useHandleNewWeek(currentUser.id, workout.id, isMember);
   return (
     <Grid container>

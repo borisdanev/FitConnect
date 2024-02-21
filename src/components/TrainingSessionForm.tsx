@@ -1,5 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useCreateProgramMutation, setOpenedCreateProgramForm } from "../store";
+import {
+  useCreateProgramMutation,
+  setOpenedCreateProgramForm,
+  useJoinWorkoutMutation,
+} from "../store";
 import { RootState, clearForm } from "../store";
 import { WorkoutModel } from "../types/workout.model";
 import { useFormik } from "formik";
@@ -10,7 +14,6 @@ import useDynamicInitialValues from "../hooks/useDynamicInitialValues";
 import useAdjustInputValues from "../hooks/useAdjustInputValues";
 import TrainingSessionDetails from "./TrainingSessionDetails";
 import Box from "@mui/material/Box";
-import Slider from "react-slick";
 interface Props {
   createdProgram: WorkoutModel;
   setShowMessage: (show: boolean) => void;
@@ -21,6 +24,7 @@ const TrainingSessionForm: React.FC<Props> = ({
 }) => {
   const dispatch = useDispatch();
   const [createProgram] = useCreateProgramMutation();
+  const [joinWorkout] = useJoinWorkoutMutation();
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value
   );
@@ -59,12 +63,25 @@ const TrainingSessionForm: React.FC<Props> = ({
     dispatch(setOpenedCreateProgramForm(false));
     setShowMessage(true);
     createProgram({
-      id: currentUser.id,
+      userId: currentUser.id,
       program: {
         ...createdProgram,
         trainingSessions: createdSessions,
         timesPerWeek: createdSessions.length,
       },
+    });
+    console.log({
+      ...createdProgram,
+      trainingSessions: createdSessions,
+      timesPerWeek: createdSessions.length,
+    });
+    joinWorkout({
+      workout: {
+        ...createdProgram,
+        trainingSessions: createdSessions,
+        timesPerWeek: createdSessions.length,
+      },
+      id: currentUser.id,
     });
   };
   const formik = useFormik({

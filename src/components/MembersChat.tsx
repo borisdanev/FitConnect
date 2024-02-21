@@ -8,6 +8,7 @@ import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 interface Props {
   isMember: boolean;
+  // isCreator: boolean;
 }
 const MembersChat: React.FC<Props> = ({ isMember }) => {
   const currentWorkout = useSelector(
@@ -26,7 +27,6 @@ const MembersChat: React.FC<Props> = ({ isMember }) => {
   useEffect(() => {
     scrollToBottom();
   }, [chatMessages]);
-  console.log("here");
   return (
     <Box
       sx={{
