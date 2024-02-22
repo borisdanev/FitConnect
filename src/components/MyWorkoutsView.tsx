@@ -22,7 +22,9 @@ const MyWorkoutsView: React.FC = () => {
             <WorkoutList
               sortBy={SortType.members}
               type={WorkoutType.All}
-              workouts={data?.map((workout) => workout.workout)}
+              workouts={data
+                ?.map((workout) => workout.workout)
+                .filter((workout) => workout.creatorId !== currentUser.id)}
               isLoading={isLoading}
               gridSpace={4}
             />

@@ -14,6 +14,7 @@ import WorkoutTypeForm from "./WorkoutTypeForm";
 import TrainingSessionForm from "./TrainingSessionForm";
 import { WorkoutModel } from "../types/workout.model";
 import { v4 as uuidv4 } from "uuid";
+import { escape } from "querystring";
 interface Props {
   setShowMessage: (show: boolean) => void;
 }

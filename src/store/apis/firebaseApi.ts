@@ -50,6 +50,14 @@ export const firebaseApi = createApi({
       },
       providesTags: ["Join"],
     }),
+    getWorkoutPrograms: builder.query<WorkoutModel[], string>({
+      queryFn: async (userId) => {
+        const docRef = doc(db, "users", userId);
+        const userSnapshot = await getDoc(docRef);
+        const user = userSnapshot.data() as User;
+        return { data: user.programs };
+      },
+    }),
     getUserWorkouts: builder.query<JoinedWorkout[], string>({
       queryFn: async (userId) => {
         const docRef = doc(db, "users", userId);
@@ -318,6 +326,7 @@ export const {
   useCreateUserMutation,
   useGetEmailsQuery,
   useGetUserQuery,
+  useGetWorkoutProgramsQuery,
   useGetUserWorkoutsQuery,
   useGetJoinedWorkoutQuery,
   useGetExercisesQuery,

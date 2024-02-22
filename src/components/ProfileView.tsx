@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { FaCamera } from "react-icons/fa";
 import ProfilePicture from "./ProfilePicture";
 const ProfileView = () => {
   const currentUser = useSelector(
@@ -26,32 +27,78 @@ const ProfileView = () => {
       <Box
         sx={{
           display: "flex",
+          mt: 3,
           flexDirection: "column",
           alignItems: "center",
         }}
       >
-        <ProfilePicture
-          selectedImage={selectedImage}
-          userId={currentUser.id}
-          width="7rem"
-          height="7rem"
-        />
-        <Typography
-          className="h4"
-          sx={{ borderBottom: "2px solid #00e676", position: "relative" }}
+        <Box
+          sx={{
+            position: "relative",
+            width: "7rem",
+            height: "7rem",
+          }}
         >
-          Choose new photo
+          <Box
+            sx={{
+              position: "absolute",
+              right: "0",
+              bottom: "0",
+              bgcolor: "#00e676",
+              p: 1,
+              borderRadius: "50%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              zIndex: 9,
+            }}
+          >
+            <FaCamera className="h5" />
+          </Box>
+          <ProfilePicture
+            selectedImage={selectedImage}
+            userId={currentUser.id}
+            width="7rem"
+            height="7rem"
+          />
           <input
             type="file"
             accept="image/*"
             style={{
               opacity: 0,
               position: "absolute",
+              zIndex: 99,
             }}
             className="position-fill"
             onChange={(e) => handleImageChange(e)}
           />
+        </Box>
+        <Typography className="h2">
+          {currentUser.firstName} {currentUser.lastName}
         </Typography>
+        <Typography>{currentUser.email}</Typography>
+        <Box sx={{ display: "flex" }}>
+          {[
+            {
+              label: "Created Workout Programs",
+              data: currentUser.programs.length,
+            },
+            { label: "Joined Workouts", data: currentUser.workouts.length },
+            {
+              label: "Workout Program Members",
+              data: currentUser.programs.reduce((acc, current) => {
+                return acc + current.members;
+              }, 0),
+            },
+          ].map((item, i) => (
+            <Box key={i} sx={{ mr: 2 }}>
+              <Typography textAlign="center" className="h3">
+                {item.data}
+              </Typography>
+              <Typography>{item.label}</Typography>
+            </Box>
+          ))}
+        </Box>
       </Box>
     </>
   );

@@ -16,6 +16,9 @@ const SuggestedWorkouts: React.FC<Props> = ({ gridSpace }) => {
   const searchKeyword = useSelector(
     (state: RootState) => state.searchSlice.keyword
   );
+  const currentUser = useSelector(
+    (state: RootState) => state.currentUser.value
+  );
   const { data, isLoading } = useGetWorkoutsQuery();
   return (
     <Box>
@@ -27,7 +30,9 @@ const SuggestedWorkouts: React.FC<Props> = ({ gridSpace }) => {
         sortBy={sortBy}
         type={type}
         workouts={data?.filter((workout) =>
-          workout.title.toLowerCase().includes(searchKeyword.toLowerCase())
+          searchKeyword
+            ? workout.title.toLowerCase().includes(searchKeyword.toLowerCase())
+            : workout.creatorId !== currentUser.id
         )}
         isLoading={isLoading}
         gridSpace={gridSpace}
