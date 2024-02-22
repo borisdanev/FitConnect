@@ -10,6 +10,7 @@ interface Props {
   workouts: WorkoutModel[] | undefined;
   isLoading: boolean;
   gridSpace: number;
+  programList?: boolean;
 }
 const WorkoutList: React.FC<Props> = ({
   sortBy,
@@ -17,6 +18,7 @@ const WorkoutList: React.FC<Props> = ({
   workouts,
   isLoading,
   gridSpace,
+  programList,
 }) => {
   return (
     <Grid container rowSpacing={3} columnSpacing={2}>
@@ -60,6 +62,7 @@ const WorkoutList: React.FC<Props> = ({
                 <Workout workout={workout} />
               </Grid>
             ))}
+      <Grid item xs={gridSpace}></Grid>
     </Grid>
   );
 };

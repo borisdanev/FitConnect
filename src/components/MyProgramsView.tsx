@@ -8,7 +8,7 @@ import {
 } from "../store";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import CreateProgramForm from "./CreateProgramForm";
 import SuccessMessage from "./SuccessMessage";
 import { IoMdCheckmark } from "react-icons/io";
@@ -16,6 +16,7 @@ import WorkoutList from "./WorkoutsList";
 import { SortType } from "../enums/SortType";
 import { WorkoutType } from "../enums/WorkoutType";
 import { IoMdAdd } from "react-icons/io";
+import ProgramIllustration from "../images/program_illustration.webp";
 const MyProgramsView: React.FC = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector(
@@ -39,26 +40,46 @@ const MyProgramsView: React.FC = () => {
     <>
       <Grid container>
         <Grid item xs={9}>
-          <WorkoutList
-            sortBy={SortType.members}
-            type={WorkoutType.All}
-            workouts={programs}
-            isLoading={isLoading}
-            gridSpace={4}
-          />
+          {programs && programs.length > 0 ? (
+            <WorkoutList
+              sortBy={SortType.members}
+              type={WorkoutType.All}
+              workouts={programs}
+              isLoading={isLoading}
+              gridSpace={4}
+            />
+          ) : (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <img src={ProgramIllustration} />
+              <Typography className="h2 heading-color">
+                No Programs Yet
+              </Typography>
+            </Box>
+          )}
           {/* <Button onClick={handleClick} variant="contained">
             Create Program
           </Button> */}
           <Box
             sx={{
               display: "flex",
-              justifyContent: "center",
+              flexDirection: "column",
               alignItems: "center",
+              alignSelf: "center",
+              justifyContent: "center",
               border: "1px solid white",
+              width: "7rem",
+              height: "7rem",
             }}
             onClick={handleClick}
           >
             <IoMdAdd className="h3" color="white" />
+            <Typography textAlign="center">Create</Typography>
           </Box>
           {openedCreateProgramForm && (
             <CreateProgramForm setShowMessage={setShowMessage} />
