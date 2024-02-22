@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 import { FaCamera } from "react-icons/fa";
 import ProfilePicture from "./ProfilePicture";
 const ProfileView = () => {
@@ -77,7 +78,7 @@ const ProfileView = () => {
           {currentUser.firstName} {currentUser.lastName}
         </Typography>
         <Typography>{currentUser.email}</Typography>
-        <Box sx={{ display: "flex" }}>
+        <Grid container sx={{ width: "50%", mt: 3 }}>
           {[
             {
               label: "Created Workout Programs",
@@ -91,14 +92,26 @@ const ProfileView = () => {
               }, 0),
             },
           ].map((item, i) => (
-            <Box key={i} sx={{ mr: 2 }}>
-              <Typography textAlign="center" className="h3">
-                {item.data}
-              </Typography>
-              <Typography>{item.label}</Typography>
-            </Box>
+            <Grid xs={4}>
+              <Box
+                key={i}
+                sx={{
+                  mr: 2,
+                  bgcolor: "#37423d",
+                  borderBottom: "5px solid #00e676",
+                  height: "10rem",
+                  textAlign: "center",
+                  borderRadius: "0.5rem",
+                }}
+              >
+                <Typography className="h3" sx={{ pt: 2 }} color="#00e676">
+                  {item.data}
+                </Typography>
+                <Typography className="h4">{item.label}</Typography>
+              </Box>
+            </Grid>
           ))}
-        </Box>
+        </Grid>
       </Box>
     </>
   );
