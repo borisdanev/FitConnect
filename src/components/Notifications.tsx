@@ -11,7 +11,7 @@ import { JoinedWorkout } from "../types/joinedWorkout.model";
 interface Props {
   list: WorkoutModel[] | JoinedWorkout[] | undefined;
 }
-const isJoinedWorkout = (obj: any): obj is JoinedWorkout => {
+const isJoinedWorkoutType = (obj: any): obj is JoinedWorkout => {
   return obj.hasOwnProperty("workout");
 };
 const Notifications: React.FC<Props> = ({ list }) => {
@@ -31,7 +31,7 @@ const Notifications: React.FC<Props> = ({ list }) => {
       [...list].reduce((acc, current) => {
         return (
           acc +
-          (isJoinedWorkout(current)
+          (isJoinedWorkoutType(current)
             ? current.workout.notifications.length
             : current.notifications.length)
         );
@@ -39,12 +39,12 @@ const Notifications: React.FC<Props> = ({ list }) => {
         [
           ...list.flatMap((workout) =>
             [
-              ...(isJoinedWorkout(workout)
+              ...(isJoinedWorkoutType(workout)
                 ? workout.workout.notifications
                 : workout.notifications),
             ].map((item) => ({
               ...item,
-              title: isJoinedWorkout(workout)
+              title: isJoinedWorkoutType(workout)
                 ? workout.workout.title
                 : workout.title,
             }))

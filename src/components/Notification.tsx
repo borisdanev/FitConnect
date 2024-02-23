@@ -22,6 +22,7 @@ const Notification: React.FC<Props> = ({
   return (
     <Grid
       container
+      columnSpacing={3}
       sx={{
         bgcolor: "#37423d",
         p: 2,
@@ -50,16 +51,20 @@ const Notification: React.FC<Props> = ({
           </Box>
         )}
       </Grid>
-      <Grid item xs={7}>
-        <Typography className="h5" sx={{ opacity: "0.7" }}>
-          {title}
-        </Typography>
-        <Typography className="h6">{message}</Typography>
-      </Grid>
-      <Grid item xs={3}>
-        <Typography sx={{ opacity: "0.8" }} className="h6">
-          {notificationTime}
-        </Typography>
+      <Grid item xs={10}>
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography className="h5" sx={{ opacity: "0.7" }}>
+              {title}
+            </Typography>
+            <Typography className="h6">{message}</Typography>
+          </Grid>
+          <Grid>
+            <Typography sx={{ opacity: "0.8" }} className="h6">
+              {notificationTime}
+            </Typography>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );

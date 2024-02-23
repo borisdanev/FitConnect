@@ -160,6 +160,7 @@ body {
 }
 .active-type-field .overlay {
   opacity: 0.5;
+  box-sizing: border-box;
 }
 .active-type-field .text-container {
   opacity: 1;

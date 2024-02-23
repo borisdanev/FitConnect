@@ -12,6 +12,7 @@ import { SortType } from "../enums/SortType";
 import { WorkoutType } from "../enums/WorkoutType";
 import ProgramIllustration from "../images/program_illustration.webp";
 import CreateProgramAction from "./CreateProgramAction";
+import Notifications from "./Notifications";
 const MyProgramsView: React.FC = () => {
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value
@@ -62,6 +63,19 @@ const MyProgramsView: React.FC = () => {
               Icon={IoMdCheckmark}
             />
           )}
+        </Grid>
+        <Grid item xs={3} sx={{ pl: 1 }}>
+          <Box
+            sx={{
+              bgcolor: "#00e676",
+              p: 1,
+              borderTopLeftRadius: "0.5rem",
+              borderTopRightRadius: "0.5rem",
+            }}
+          >
+            Notifications
+          </Box>
+          <Notifications list={programs} />
         </Grid>
       </Grid>
     </>
