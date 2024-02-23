@@ -1,17 +1,20 @@
 import { useSelector } from "react-redux";
-import { RootState, useGetUserWorkoutsQuery } from "../store";
+import { RootState, useGetJoinedWorkoutQuery } from "../store";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Notification from "./Notification";
 import { FaBell } from "react-icons/fa";
-import { Timestamp } from "firebase/firestore";
-const Notifications: React.FC = () => {
-  const currentUser = useSelector(
-    (state: RootState) => state.currentUser.value
-  );
-  const { data: userWorkouts } = useGetUserWorkoutsQuery(currentUser.id);
+import { WorkoutModel } from "../types/workout.model";
+import { JoinedWorkout } from "../types/joinedWorkout.model";
+interface Props {
+  list: WorkoutModel[] | JoinedWorkout[] | undefined;
+}
+const isJoinedWorkout = (obj: any): obj is JoinedWorkout => {
+  return obj.hasOwnProperty("workout");
+};
+const Notifications: React.FC<Props> = ({ list }) => {
   return (
     <List
       sx={{
@@ -24,12 +27,26 @@ const Notifications: React.FC = () => {
       }}
       className="chat-scrollbar"
     >
-      {userWorkouts && userWorkouts.length > 0 ? (
+      {list &&
+      [...list].reduce((acc, current) => {
+        return (
+          acc +
+          (isJoinedWorkout(current)
+            ? current.workout.notifications.length
+            : current.notifications.length)
+        );
+      }, 0) > 0 ? (
         [
-          ...userWorkouts.flatMap((workout) =>
-            workout.workout.notifications.map((item) => ({
+          ...list.flatMap((workout) =>
+            [
+              ...(isJoinedWorkout(workout)
+                ? workout.workout.notifications
+                : workout.notifications),
+            ].map((item) => ({
               ...item,
-              title: workout.workout.title,
+              title: isJoinedWorkout(workout)
+                ? workout.workout.title
+                : workout.title,
             }))
           ),
         ]

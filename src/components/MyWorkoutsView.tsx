@@ -64,7 +64,7 @@ const MyWorkoutsView: React.FC = () => {
           >
             Notifications
           </Box>
-          <Notifications />
+          <Notifications list={data} />
         </Grid>
       </Grid>
     </>

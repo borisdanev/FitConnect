@@ -1,9 +1,10 @@
+import { WorkoutModel } from "../types/workout.model";
 import { WorkoutType } from "../enums/WorkoutType";
 import { SortType } from "../enums/SortType";
 import Grid from "@mui/material/Grid";
-import { WorkoutModel } from "../types/workout.model";
 import Skeleton from "@mui/material/Skeleton";
 import Workout from "./Workout";
+import CreateProgramAction from "./CreateProgramAction";
 interface Props {
   sortBy: SortType;
   type: WorkoutType;
@@ -62,7 +63,11 @@ const WorkoutList: React.FC<Props> = ({
                 <Workout workout={workout} />
               </Grid>
             ))}
-      <Grid item xs={gridSpace}></Grid>
+      {programList && (
+        <Grid item xs={gridSpace}>
+          <CreateProgramAction width="100%" height="100%" />
+        </Grid>
+      )}
     </Grid>
   );
 };

@@ -1,6 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState, setOpenedLoginForm, setOpenedSignupForm } from "../store";
+import {
+  RootState,
+  setOpenedLoginForm,
+  setOpenedSignupForm,
+  useGetUserWorkoutsQuery,
+} from "../store";
 import { selectView } from "../store";
 import { ViewEnum } from "../enums/View";
 import Box from "@mui/material/Box";
@@ -16,15 +21,15 @@ import Tooltip from "@mui/material/Tooltip";
 import Notifications from "./Notifications";
 const Header = () => {
   const dispatch = useDispatch();
-
+  const currentUser = useSelector(
+    (state: RootState) => state.currentUser.value
+  );
+  const { data: joinedWorkouts } = useGetUserWorkoutsQuery(currentUser.id);
   const openedSignupForm = useSelector(
     (state: RootState) => state.form.openedSignupForm
   );
   const openedLoginForm = useSelector(
     (state: RootState) => state.form.openedLoginForm
-  );
-  const currentUser = useSelector(
-    (state: RootState) => state.currentUser.value
   );
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -46,7 +51,7 @@ const Header = () => {
     >
       <SearchBar />
       <Box className="h3">
-        <Tooltip title={<Notifications />} arrow>
+        <Tooltip title={<Notifications list={joinedWorkouts} />} arrow>
           <IconButton
             aria-label="notifications"
             style={{ marginRight: "0.5rem" }}

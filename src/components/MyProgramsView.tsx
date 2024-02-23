@@ -1,11 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  RootState,
-  setOpenedSignupForm,
-  setOpenedCreateProgramForm,
-  useGetWorkoutProgramsQuery,
-} from "../store";
+import { RootState, useGetWorkoutProgramsQuery } from "../store";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -15,10 +10,9 @@ import { IoMdCheckmark } from "react-icons/io";
 import WorkoutList from "./WorkoutsList";
 import { SortType } from "../enums/SortType";
 import { WorkoutType } from "../enums/WorkoutType";
-import { IoMdAdd } from "react-icons/io";
 import ProgramIllustration from "../images/program_illustration.webp";
+import CreateProgramAction from "./CreateProgramAction";
 const MyProgramsView: React.FC = () => {
-  const dispatch = useDispatch();
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value
   );
@@ -29,13 +23,7 @@ const MyProgramsView: React.FC = () => {
     (state: RootState) => state.form.openedCreateProgramForm
   );
   const [showMessage, setShowMessage] = useState<boolean>(false);
-  const handleClick = () => {
-    if (currentUser.id) {
-      dispatch(setOpenedCreateProgramForm(true));
-      return;
-    }
-    dispatch(setOpenedSignupForm(true));
-  };
+
   return (
     <>
       <Grid container>
@@ -47,6 +35,7 @@ const MyProgramsView: React.FC = () => {
               workouts={programs}
               isLoading={isLoading}
               gridSpace={4}
+              programList={true}
             />
           ) : (
             <Box
@@ -60,27 +49,9 @@ const MyProgramsView: React.FC = () => {
               <Typography className="h2 heading-color">
                 No Programs Yet
               </Typography>
+              <CreateProgramAction width="7rem" height="7rem" />
             </Box>
           )}
-          {/* <Button onClick={handleClick} variant="contained">
-            Create Program
-          </Button> */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              alignSelf: "center",
-              justifyContent: "center",
-              border: "1px solid white",
-              width: "7rem",
-              height: "7rem",
-            }}
-            onClick={handleClick}
-          >
-            <IoMdAdd className="h3" color="white" />
-            <Typography textAlign="center">Create</Typography>
-          </Box>
           {openedCreateProgramForm && (
             <CreateProgramForm setShowMessage={setShowMessage} />
           )}
