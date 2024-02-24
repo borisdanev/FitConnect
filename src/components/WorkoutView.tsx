@@ -44,6 +44,7 @@ const WorkoutView: React.FC = () => {
             <WorkoutDetails
               title={workout.title}
               desc={workout.description}
+              type={workout.type}
               rating={workout.rating}
               rates={workout.rates}
               members={workout.members}

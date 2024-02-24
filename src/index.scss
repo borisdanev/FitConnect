@@ -138,6 +138,9 @@ body {
 }
 .slick-dots {
   pointer-events: none;
+  // right: -40rem !important;
+  // display: flex !important;
+  // flex-direction: column !important;
 }
 .slick-dots li button:before {
   color: white !important;

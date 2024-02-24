@@ -15,6 +15,8 @@ import Alert from "@mui/material/Alert";
 import { CiSquarePlus } from "react-icons/ci";
 import ExerciseSelection from "./ExerciseSelection";
 import ExerciseDetailsSelection from "./ExerciseDetailsSelection";
+import red from "@mui/material/colors/red";
+import grey from "@mui/material/colors/grey";
 interface Props {
   formik: FormikProps<{ [key: string]: string }>;
   selectedExercises: ExerciseModel[];
@@ -91,20 +93,49 @@ const TrainingSessionDetails: React.FC<Props> = ({
       {visibleExerciseSelection && <ExerciseSelection />}
       {visibleAlert[currentSessionIndex] && (
         <Alert
-          variant="filled"
           severity="error"
-          action={
+          color="error"
+          sx={{
+            position: "absolute",
+            top: "4rem",
+            right: "0.5rem",
+            left: "0.5rem",
+            bgcolor: "#FDEDED",
+          }}
+        >
+          <Typography color="black">
+            Are you sure you want to remove this training session
+          </Typography>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Button
               variant="contained"
-              sx={{ color: "white" }}
+              sx={{
+                bgcolor: grey[300],
+                color: grey[700],
+                mr: 2,
+                "&:hover": {
+                  backgroundColor: grey[400],
+                },
+              }}
+              onClick={() => dispatch(setVisibleAlert(false))}
+            >
+              Cancle
+            </Button>
+            <Button
+              variant="outlined"
+              sx={{
+                color: red[400],
+                borderColor: red[200],
+                "&:hover": {
+                  backgroundColor: red[100],
+                  borderColor: red[200],
+                },
+              }}
               onClick={() => handleRemoveSession()}
             >
               Yes
             </Button>
-          }
-          sx={{ position: "absolute", top: "40%", right: "5%" }}
-        >
-          Are you sure you want to remove this training session
+          </Box>
         </Alert>
       )}
     </Box>

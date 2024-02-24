@@ -18,7 +18,6 @@ const SidebarLinkList = () => {
       text: ViewEnum.MyWorkouts,
       icon: FaDumbbell,
     },
-    { text: ViewEnum.Settings, icon: IoMdSettings },
     { text: ViewEnum.Profile, icon: FaUser },
     { text: ViewEnum.MyPrograms, icon: FaClipboard },
   ];

@@ -70,11 +70,6 @@ const TrainingSessionForm: React.FC<Props> = ({
         timesPerWeek: createdSessions.length,
       },
     });
-    console.log({
-      ...createdProgram,
-      trainingSessions: createdSessions,
-      timesPerWeek: createdSessions.length,
-    });
     joinWorkout({
       workout: {
         ...createdProgram,

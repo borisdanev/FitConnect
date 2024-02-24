@@ -18,16 +18,13 @@ const AuthOverlay: React.FC<Props> = ({ children, setOpenedForm }) => {
       sx={{
         position: "fixed",
         zIndex: 1201,
-        top: 0,
-        bottom: 0,
-        right: 0,
-        left: 0,
         bgcolor: "#29332e",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
       }}
+      className="position-fill"
       id="1"
       onClick={(e) => handleClick(e)}
     >
