@@ -21,7 +21,7 @@ const SelectedView = () => {
       );
     }
     case ViewEnum.MyWorkouts: {
-      return <Box sx={{ mt: 5 }}>{currentUser.id && <MyWorkoutsView />}</Box>;
+      return <Box sx={{ mt: 5 }}>{<MyWorkoutsView />}</Box>;
     }
     case ViewEnum.Workout: {
       return (
@@ -38,7 +38,7 @@ const SelectedView = () => {
       );
     }
     case ViewEnum.Profile: {
-      return <Box sx={{ mt: 5 }}>{currentUser.id && <ProfileView />}</Box>;
+      return <Box sx={{ mt: 5 }}>{<ProfileView />}</Box>;
     }
   }
   return <></>;

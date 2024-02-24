@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import WorkoutList from "./WorkoutsList";
 import SuggestedWorkouts from "./SuggestedWorkouts";
 import WorkoutIllustration from "../images/workout_illustation.webp";
+import EmptyState from "./EmptyState";
 const MyWorkoutsView: React.FC = () => {
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value
@@ -29,22 +30,10 @@ const MyWorkoutsView: React.FC = () => {
               gridSpace={4}
             />
           ) : (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                flexDirection: "column",
-              }}
-            >
-              <img
-                src={WorkoutIllustration}
-                draggable={false}
-                style={{ maxWidth: "20rem" }}
-              />
-              <Typography className="h3 heading-color">
-                No Workouts Yet
-              </Typography>
-            </Box>
+            <EmptyState
+              illustrationSrc={WorkoutIllustration}
+              text="No Workouts Yet"
+            />
           )}
           <Box sx={{ mt: 5 }}>
             <Typography className="h2 heading-color" sx={{ mb: 3 }}>

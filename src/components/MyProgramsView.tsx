@@ -13,6 +13,7 @@ import { WorkoutType } from "../enums/WorkoutType";
 import ProgramIllustration from "../images/program_illustration.webp";
 import CreateProgramAction from "./CreateProgramAction";
 import Notifications from "./Notifications";
+import EmptyState from "./EmptyState";
 const MyProgramsView: React.FC = () => {
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value
@@ -39,19 +40,10 @@ const MyProgramsView: React.FC = () => {
               programList={true}
             />
           ) : (
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <img src={ProgramIllustration} />
-              <Typography className="h2 heading-color">
-                No Programs Yet
-              </Typography>
-              <CreateProgramAction width="7rem" height="7rem" />
-            </Box>
+            <EmptyState
+              illustrationSrc={ProgramIllustration}
+              text="No Workout Programs Created Yet"
+            />
           )}
           {openedCreateProgramForm && (
             <CreateProgramForm setShowMessage={setShowMessage} />
