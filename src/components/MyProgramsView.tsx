@@ -40,10 +40,15 @@ const MyProgramsView: React.FC = () => {
               programList={true}
             />
           ) : (
-            <EmptyState
-              illustrationSrc={ProgramIllustration}
-              text="No Workout Programs Created Yet"
-            />
+            <Box>
+              <EmptyState
+                illustrationSrc={ProgramIllustration}
+                text="No Workout Programs Created Yet"
+              />
+              <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+                <CreateProgramAction width="7rem" height="7rem" />
+              </Box>
+            </Box>
           )}
           {openedCreateProgramForm && (
             <CreateProgramForm setShowMessage={setShowMessage} />

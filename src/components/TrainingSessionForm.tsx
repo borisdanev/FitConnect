@@ -44,6 +44,9 @@ const TrainingSessionForm: React.FC<Props> = ({
     trainingSessions.map((item) => item.exercises.length * 3)
   );
   const handleSubmit = (values: any) => {
+    if (trainingSessions.length === 0) {
+      return;
+    }
     const filteredSessions = trainingSessions
       .map((item, i) => ({ ...item, index: i }))
       .filter((item) => item.exercises.length > 0);

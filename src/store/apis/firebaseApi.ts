@@ -32,7 +32,7 @@ const db = getFirestore(app);
 export const firebaseApi = createApi({
   reducerPath: "firebaseApi",
   baseQuery: fakeBaseQuery(),
-  tagTypes: ["Rating", "Join"],
+  tagTypes: ["Rating", "Join", "Create"],
   endpoints: (builder) => ({
     getWorkouts: builder.query<WorkoutModel[], void>({
       queryFn: async () => {
@@ -40,6 +40,7 @@ export const firebaseApi = createApi({
         const data = snapshots.docs.map((doc) => doc.data() as WorkoutModel);
         return { data };
       },
+      providesTags: ["Create"],
     }),
     getUser: builder.query<User, string>({
       queryFn: async (email) => {
@@ -57,6 +58,7 @@ export const firebaseApi = createApi({
         const user = userSnapshot.data() as User;
         return { data: user.programs };
       },
+      providesTags: ["Create"],
     }),
     getUserWorkouts: builder.query<JoinedWorkout[], string>({
       queryFn: async (userId) => {
@@ -66,6 +68,7 @@ export const firebaseApi = createApi({
         const workouts = data.workouts;
         return { data: workouts };
       },
+      providesTags: ["Create"],
     }),
     getJoinedWorkout: builder.query<
       JoinedWorkout,
@@ -146,6 +149,7 @@ export const firebaseApi = createApi({
         console.log("workout is created");
         return { data: undefined };
       },
+      invalidatesTags: ["Create"],
     }),
     joinWorkout: builder.mutation<void, { workout: WorkoutModel; id: string }>({
       queryFn: async (args) => {
