@@ -30,16 +30,9 @@ const ProfileView = () => {
   };
   return (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          mt: 3,
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        {currentUser.id ? (
-          <>
+      <Grid container columnSpacing={3}>
+        <Grid item xs={4}>
+          <Box sx={{ bgcolor: "#37423d", pl: 2, py: 2 }}>
             <Box
               sx={{
                 position: "relative",
@@ -81,61 +74,29 @@ const ProfileView = () => {
                 onChange={(e) => handleImageChange(e)}
               />
             </Box>
-            <Typography className="h2" sx={{ mt: 2 }}>
+            <Typography>
               {currentUser.firstName} {currentUser.lastName}
             </Typography>
-            <Typography>{currentUser.email}</Typography>
-            <Grid container sx={{ width: "50%", mt: 3 }}>
-              {[
-                {
-                  label: "Created Workout Programs",
-                  data: currentUser.programs.length,
-                  icon: <FaClipboard />,
-                },
-                {
-                  label: "Joined Workouts",
-                  data: currentUser.workouts.length,
-                  icon: <FaLink />,
-                },
-                {
-                  label: "Workout Program Members",
-                  data: currentUser.programs.reduce((acc, current) => {
-                    return acc + current.members;
-                  }, 0),
-                  icon: <FaUsers />,
-                },
-              ].map((item, i) => (
-                <Grid xs={4}>
-                  <Box
-                    key={i}
-                    sx={{
-                      mr: 2,
-                      bgcolor: "#37423d",
-                      borderBottom: "5px solid #00e676",
-                      height: "10rem",
-                      textAlign: "center",
-                      borderRadius: "0.5rem",
-                    }}
-                  >
-                    <Typography className="h3" sx={{ pt: 2 }} color="#00e676">
-                      {item.data}
-                    </Typography>
-                    <Typography className="h4">{item.label}</Typography>
-                    <Typography className="h3" color="#00e676">
-                      {item.icon}
-                    </Typography>
-                  </Box>
-                </Grid>
-              ))}
-            </Grid>
-          </>
-        ) : (
-          <EmptyState
-            illustrationSrc={UserIllustation}
-            text="You Are Signed Out"
-          />
-        )}
-      </Box>
+            {[
+              { text: "Created Workout", data: currentUser.programs.length },
+              { text: "Joined Workout", data: currentUser.workouts.length },
+              {
+                text: "Total Members",
+                data: currentUser.workouts.reduce((acc, current) => {
+                  return acc + current.workout.members;
+                }, 0),
+              },
+            ].map((item) => (
+              <Typography sx={{ mr: 1 }}>
+                {item.data} {item.text}
+              </Typography>
+            ))}
+          </Box>
+        </Grid>
+        <Grid item xs={8}>
+          <Box sx={{ bgcolor: "#37423d", width: "100%", height: "5rem" }}></Box>
+        </Grid>
+      </Grid>
     </>
   );
 };
