@@ -33,7 +33,7 @@ const CreateProgramForm: React.FC<Props> = ({ setShowMessage }) => {
     creator: `${currentUser.firstName} ${currentUser.lastName}`,
     creatorId: `${currentUser.id}`,
     rating: 0,
-    members: 0,
+    members: 1,
     rates: 0,
     type: WorkoutType.All,
     timesPerWeek: 0,

@@ -19,7 +19,9 @@ const MyWorkoutsView: React.FC = () => {
     <>
       <Grid container>
         <Grid item xs={9}>
-          {data && data?.length > 0 ? (
+          {data &&
+          data.filter((workout) => workout.workout.creatorId !== currentUser.id)
+            .length > 0 ? (
             <WorkoutList
               sortBy={SortType.members}
               type={WorkoutType.All}
@@ -37,7 +39,14 @@ const MyWorkoutsView: React.FC = () => {
           )}
           <Box sx={{ mt: 5 }}>
             <Typography className="h2 heading-color" sx={{ mb: 3 }}>
-              Find {data && data.length > 0 ? "More" : ""} Workouts
+              Find{" "}
+              {data &&
+              data.filter(
+                (workout) => workout.workout.creatorId !== currentUser.id
+              ).length > 0
+                ? "More"
+                : ""}{" "}
+              Workouts
             </Typography>
             <SuggestedWorkouts gridSpace={4} />
           </Box>

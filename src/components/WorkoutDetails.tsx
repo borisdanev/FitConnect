@@ -32,18 +32,23 @@ const WorkoutDetails: React.FC<Props> = ({
   return (
     <>
       <Typography className="h1">{title}</Typography>
-      <Typography className="h4" sx={{ mb: 1 }}>
+      <Typography className="h4" sx={{ mb: 1, opacity: "0.8" }}>
         {desc}
       </Typography>
-      <Typography>
-        {Icon}
-        {type}
+      <Typography sx={{ display: "flex", mb: 1 }}>
+        <Typography sx={{ opacity: "0.8", mr: 1 }}>Type:</Typography>
+        <Typography sx={{ borderBottom: "1px solid #00e676" }}>
+          {type}
+        </Typography>
       </Typography>
       <RatingStars rating={rating} rates={rates} />
       <Typography sx={{ display: "flex", alignItems: "center", mt: 1 }}>
         <HiUsers style={{ marginRight: "0.9rem" }} /> {members} members
       </Typography>
-      <Typography sx={{ mt: 1 }}>Created by {creator}</Typography>
+      <Typography sx={{ mt: 1, display: "flex" }}>
+        <Typography sx={{ opacity: "0.8", mr: 1 }}>Created by</Typography>{" "}
+        {creator}
+      </Typography>
     </>
   );
 };

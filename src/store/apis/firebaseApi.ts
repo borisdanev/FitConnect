@@ -235,6 +235,36 @@ export const firebaseApi = createApi({
         return { data: undefined };
       },
     }),
+    updateJoinedWorkout: builder.mutation<void, string>({
+      queryFn: async (workoutId) => {
+        const userSnapshots = await getDocs(collection(db, "users"));
+        const users = userSnapshots.docs.map((doc) => doc.data() as User);
+        const workoutSnapshot = doc(db, "workouts", workoutId);
+        const workout = await getDoc(workoutSnapshot);
+        const filteredUsers = users.filter((user) =>
+          user.workouts.some((workout) => workout.workout.id === workoutId)
+        );
+        const usersRef = filteredUsers.map((user) => ({
+          ref: doc(db, "users", user.id),
+          outerWorkout: user.workouts.find(
+            (workout) => workout.workout.id === workoutId
+          ),
+          otherWorkouts: user.workouts.filter(
+            (workout) => workout.workout.id !== workoutId
+          ),
+        }));
+        usersRef.forEach(
+          async (doc) =>
+            await updateDoc(doc.ref, {
+              workouts: [
+                ...doc.otherWorkouts,
+                { ...doc.outerWorkout, workout },
+              ],
+            })
+        );
+        return { data: undefined };
+      },
+    }),
     sendMessage: builder.mutation<void, Message>({
       queryFn: async (message) => {
         const docRef = doc(db, "workouts", message.workoutId);
@@ -338,6 +368,7 @@ export const {
   useCreateProgramMutation,
   useSetFinishedSessionMutation,
   useUpdateWeekProgressMutation,
+  useUpdateJoinedWorkoutMutation,
   useUploadImageMutation,
   useGetStoragePictureQuery,
   useSendMessageMutation,

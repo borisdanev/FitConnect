@@ -28,7 +28,7 @@ const Notification: React.FC<Props> = ({
         p: 2,
       }}
     >
-      <Grid item xs={2} sx={{ display: "flex", alignItems: "center" }}>
+      <Grid item xs={3} sx={{ display: "flex", alignItems: "center" }}>
         {imgSrc ? (
           <img
             src={imgSrc}
@@ -51,7 +51,7 @@ const Notification: React.FC<Props> = ({
           </Box>
         )}
       </Grid>
-      <Grid item xs={10}>
+      <Grid item xs={9}>
         <Grid container>
           <Grid item xs={12}>
             <Typography className="h5" sx={{ opacity: "0.7" }}>
