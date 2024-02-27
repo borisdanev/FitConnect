@@ -1,8 +1,11 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { User } from "../types/user.model";
-import { BiCurrentLocation } from "react-icons/bi";
+import { MdEmail } from "react-icons/md";
+// import { FaLock } from "react-icons/fa";
+import { RiLockPasswordFill } from "react-icons/ri";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 interface Props {
@@ -11,15 +14,24 @@ interface Props {
 const EditProfile: React.FC<Props> = ({ currentUser }) => {
   return (
     <Box sx={{ bgcolor: "#37423d", p: 2 }}>
+      <Typography className="h4" sx={{ mb: 3, color: "#00e676" }}>
+        Personal Info
+      </Typography>
       <Grid container columnSpacing={2} rowSpacing={2}>
         {[
           { label: "First Name", value: currentUser.firstName },
           { label: "Last Name", value: currentUser.lastName },
-          { label: "Email", value: currentUser.email },
-          { label: "Location", value: "None", icon: <BiCurrentLocation /> },
+          { label: "Email", value: currentUser.email, icon: <MdEmail /> },
+          {
+            label: "Password",
+            value: currentUser.password,
+            password: true,
+            icon: <RiLockPasswordFill />,
+          },
         ].map((item) => (
           <Grid item xs={6}>
             <TextField
+              type={item.password ? "password" : "text"}
               value={item.value}
               label={item.label}
               variant="outlined"
