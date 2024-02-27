@@ -11,9 +11,11 @@ import { FaRegStar } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { FaRegFaceSmileBeam } from "react-icons/fa6";
 import SuccessMessage from "./SuccessMessage";
+import { useUpdateJoinedWorkoutMutation } from "../store";
 const WorkoutRating: React.FC = () => {
   const [filledStars, setFilledStars] = useState<number>(0);
   const [rateWorkout] = useRateWorkoutMutation();
+  const [updateJoinedWorkout] = useUpdateJoinedWorkoutMutation();
   const currentWorkout = useSelector(
     (state: RootState) => state.currentWorkout.value
   );
@@ -45,6 +47,7 @@ const WorkoutRating: React.FC = () => {
         totalRates: currentWorkout.rates,
       },
     });
+    updateJoinedWorkout(currentWorkout.id);
   };
   return (
     <>

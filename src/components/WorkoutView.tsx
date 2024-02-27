@@ -34,7 +34,6 @@ const WorkoutView: React.FC = () => {
   const { data: user } = useGetUserQuery(currentUser.email);
   const { data: workoutSrc } = useGetStoragePictureQuery(workout.id);
   const isMember = useIsMember(workout.id, user ? user.workouts : []);
-  const isCreator = useIsWorkoutCreator(workout, currentUser.id);
   useHandleNewWeek(currentUser.id, workout.id, isMember);
   return (
     <Grid container>

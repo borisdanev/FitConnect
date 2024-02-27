@@ -239,8 +239,9 @@ export const firebaseApi = createApi({
       queryFn: async (workoutId) => {
         const userSnapshots = await getDocs(collection(db, "users"));
         const users = userSnapshots.docs.map((doc) => doc.data() as User);
-        const workoutSnapshot = doc(db, "workouts", workoutId);
-        const workout = await getDoc(workoutSnapshot);
+        const workoutRef = doc(db, "workouts", workoutId);
+        const workoutSnapshot = await getDoc(workoutRef);
+        const workout = workoutSnapshot.data() as WorkoutModel;
         const filteredUsers = users.filter((user) =>
           user.workouts.some((workout) => workout.workout.id === workoutId)
         );
@@ -253,15 +254,20 @@ export const firebaseApi = createApi({
             (workout) => workout.workout.id !== workoutId
           ),
         }));
-        usersRef.forEach(
-          async (doc) =>
-            await updateDoc(doc.ref, {
-              workouts: [
-                ...doc.otherWorkouts,
-                { ...doc.outerWorkout, workout },
-              ],
-            })
-        );
+        const updateData = async () => {
+          if (!workout) return;
+          console.log(workout);
+          usersRef.forEach(
+            async (doc) =>
+              await updateDoc(doc.ref, {
+                workouts: [
+                  ...doc.otherWorkouts,
+                  { ...doc.outerWorkout, workout },
+                ],
+              })
+          );
+        };
+        updateData();
         return { data: undefined };
       },
     }),
