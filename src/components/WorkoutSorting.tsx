@@ -18,8 +18,8 @@ const WorkoutSorting: React.FC<Props> = ({ sortBy, setSortBy }) => {
         }
         label="Type"
       >
-        <MenuItem value={SortType.rating}>Rating</MenuItem>
-        <MenuItem value={SortType.members}>Members</MenuItem>
+        <MenuItem value={SortType.Rating}>Rating</MenuItem>
+        <MenuItem value={SortType.Members}>Members</MenuItem>
       </Select>
     </FormControl>
   );

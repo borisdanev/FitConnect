@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import Grid from "@mui/material/Grid";
@@ -11,10 +12,18 @@ import EmptyState from "./EmptyState";
 import ProfileDetails from "./ProfileDetails";
 import EditProfile from "./EditProfile";
 import grey from "@mui/material/colors/grey";
+import { FormikErrors, FormikValues } from "formik";
+import { EditableUserData } from "../enums/EditableUserData";
 const ProfileView = () => {
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value
   );
+  const [dataToChange, setDataToChange] = useState<EditableUserData[]>([]);
+  const [errors, setErrors] = useState<FormikErrors<FormikValues>>({});
+  const handleSaveChanges = () => {
+    if (Object.keys(errors).length > 0) return;
+    console.log("here");
+  };
   return (
     <>
       {currentUser.id ? (
@@ -49,13 +58,18 @@ const ProfileView = () => {
                   },
                 }}
                 variant="contained"
+                onClick={handleSaveChanges}
               >
                 Save Changes
               </Button>
             </Box>
           </Grid>
           <Grid item xs={8}>
-            <EditProfile currentUser={currentUser} />
+            <EditProfile
+              currentUser={currentUser}
+              setDataToChange={setDataToChange}
+              setErrors={setErrors}
+            />
           </Grid>
         </Grid>
       ) : (

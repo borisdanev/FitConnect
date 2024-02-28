@@ -23,7 +23,7 @@ const MyWorkoutsView: React.FC = () => {
           data.filter((workout) => workout.workout.creatorId !== currentUser.id)
             .length > 0 ? (
             <WorkoutList
-              sortBy={SortType.members}
+              sortBy={SortType.Members}
               type={WorkoutType.All}
               workouts={data
                 ?.map((workout) => workout.workout)

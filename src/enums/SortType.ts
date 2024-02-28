@@ -1,4 +1,4 @@
 export enum SortType {
-  rating = "rating",
-  members = "members",
+  Rating = "rating",
+  Members = "members",
 }

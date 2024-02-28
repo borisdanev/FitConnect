@@ -19,6 +19,7 @@ import { Message } from "../../types/message.model";
 import { JoinedWorkout } from "../../types/joinedWorkout.model";
 import { RatingModel } from "../../types/rating.model";
 import { NotificationModel } from "../../types/notification.model";
+import { EditableUserData } from "../../enums/EditableUserData";
 const config = {
   apiKey: "AIzaSyC3SF-qqer9CuVN_TdSu5WolN-68sB7-dM",
   authDomain: "fitconnect-7de1b.firebaseapp.com",
@@ -52,15 +53,6 @@ export const firebaseApi = createApi({
       },
       providesTags: ["Join"],
     }),
-    // getWorkoutPrograms: builder.query<WorkoutModel[], string>({
-    //   queryFn: async (userId) => {
-    //     const docRef = doc(db, "users", userId);
-    //     const userSnapshot = await getDoc(docRef);
-    //     const user = userSnapshot.data() as User;
-    //     return { data: user.programs };
-    //   },
-    //   providesTags: ["Create"],
-    // }),
     getUserWorkouts: builder.query<JoinedWorkout[], string>({
       queryFn: async (userId) => {
         const docRef = doc(db, "users", userId);
@@ -236,6 +228,21 @@ export const firebaseApi = createApi({
         return { data: undefined };
       },
     }),
+    updateUser: builder.mutation<
+      void,
+      { userId: string; property: EditableUserData; value: string }
+    >({
+      queryFn: async (args) => {
+        const { userId, property, value } = args;
+        const userRef = doc(db, "users", userId);
+        const userSnapshot = await getDoc(userRef);
+        const user = userSnapshot.data() as User;
+        await updateDoc(userRef, {
+          [property]: value,
+        });
+        return { data: undefined };
+      },
+    }),
     updateJoinedWorkout: builder.mutation<void, string>({
       queryFn: async (workoutId) => {
         const userSnapshots = await getDocs(collection(db, "users"));
@@ -267,26 +274,6 @@ export const firebaseApi = createApi({
         return { data: undefined };
       },
     }),
-    // updateWorkoutProgram: builder.mutation<
-    //   void,
-    //   { creatorId: string; programId: string }
-    // >({
-    //   queryFn: async (args) => {
-    //     const { creatorId, programId } = args;
-    //     const creatorRef = doc(db, "users", creatorId);
-    //     const creatorSnapshot = await getDoc(creatorRef);
-    //     const creator = creatorSnapshot.data() as User;
-    //     const programSnapshot = await getDoc(doc(db, "workouts", programId));
-    //     const program = programSnapshot.data() as WorkoutModel;
-    //     const otherPrograms = creator.programs.filter(
-    //       (program) => program.id !== programId
-    //     );
-    //     await updateDoc(creatorRef, {
-    //       programs: [...otherPrograms, program],
-    //     });
-    //     return { data: undefined };
-    //   },
-    // }),
     sendMessage: builder.mutation<void, Message>({
       queryFn: async (message) => {
         const docRef = doc(db, "workouts", message.workoutId);
@@ -389,6 +376,7 @@ export const {
   useCreateProgramMutation,
   useSetFinishedSessionMutation,
   useUpdateWeekProgressMutation,
+  useUpdateUserMutation,
   useUpdateJoinedWorkoutMutation,
   useUploadImageMutation,
   useGetStoragePictureQuery,

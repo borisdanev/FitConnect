@@ -12,7 +12,7 @@ interface Props {
 }
 const SuggestedWorkouts: React.FC<Props> = ({ gridSpace }) => {
   const [type, setType] = useState<WorkoutType>(WorkoutType.All);
-  const [sortBy, setSortBy] = useState<SortType>(SortType.rating);
+  const [sortBy, setSortBy] = useState<SortType>(SortType.Rating);
   const searchKeyword = useSelector(
     (state: RootState) => state.searchSlice.keyword
   );

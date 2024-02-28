@@ -37,7 +37,7 @@ const MyProgramsView: React.FC = () => {
         <Grid item xs={9}>
           {programs && programs.length > 0 ? (
             <WorkoutList
-              sortBy={SortType.members}
+              sortBy={SortType.Members}
               type={WorkoutType.All}
               workouts={programs}
               isLoading={isLoading}
