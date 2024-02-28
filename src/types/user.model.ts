@@ -6,6 +6,5 @@ export interface User {
   email: string;
   password: string;
   workouts: JoinedWorkout[];
-  programs: WorkoutModel[];
   id: string;
 }

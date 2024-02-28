@@ -11,7 +11,6 @@ const initialState: State = {
     email: "",
     password: "",
     workouts: [],
-    programs: [],
     id: "",
   },
 };

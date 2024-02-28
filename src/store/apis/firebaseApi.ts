@@ -9,6 +9,7 @@ import {
   arrayUnion,
   updateDoc,
   getDoc,
+  getCountFromServer,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { WorkoutModel } from "../../types/workout.model";
@@ -51,15 +52,15 @@ export const firebaseApi = createApi({
       },
       providesTags: ["Join"],
     }),
-    getWorkoutPrograms: builder.query<WorkoutModel[], string>({
-      queryFn: async (userId) => {
-        const docRef = doc(db, "users", userId);
-        const userSnapshot = await getDoc(docRef);
-        const user = userSnapshot.data() as User;
-        return { data: user.programs };
-      },
-      providesTags: ["Create"],
-    }),
+    // getWorkoutPrograms: builder.query<WorkoutModel[], string>({
+    //   queryFn: async (userId) => {
+    //     const docRef = doc(db, "users", userId);
+    //     const userSnapshot = await getDoc(docRef);
+    //     const user = userSnapshot.data() as User;
+    //     return { data: user.programs };
+    //   },
+    //   providesTags: ["Create"],
+    // }),
     getUserWorkouts: builder.query<JoinedWorkout[], string>({
       queryFn: async (userId) => {
         const docRef = doc(db, "users", userId);
@@ -254,23 +255,38 @@ export const firebaseApi = createApi({
             (workout) => workout.workout.id !== workoutId
           ),
         }));
-        const updateData = async () => {
-          if (!workout) return;
-          console.log(workout);
-          usersRef.forEach(
-            async (doc) =>
-              await updateDoc(doc.ref, {
-                workouts: [
-                  ...doc.otherWorkouts,
-                  { ...doc.outerWorkout, workout },
-                ],
-              })
-          );
-        };
-        updateData();
+        usersRef.forEach(
+          async (doc) =>
+            await updateDoc(doc.ref, {
+              workouts: [
+                ...doc.otherWorkouts,
+                { ...doc.outerWorkout, workout },
+              ],
+            })
+        );
         return { data: undefined };
       },
     }),
+    // updateWorkoutProgram: builder.mutation<
+    //   void,
+    //   { creatorId: string; programId: string }
+    // >({
+    //   queryFn: async (args) => {
+    //     const { creatorId, programId } = args;
+    //     const creatorRef = doc(db, "users", creatorId);
+    //     const creatorSnapshot = await getDoc(creatorRef);
+    //     const creator = creatorSnapshot.data() as User;
+    //     const programSnapshot = await getDoc(doc(db, "workouts", programId));
+    //     const program = programSnapshot.data() as WorkoutModel;
+    //     const otherPrograms = creator.programs.filter(
+    //       (program) => program.id !== programId
+    //     );
+    //     await updateDoc(creatorRef, {
+    //       programs: [...otherPrograms, program],
+    //     });
+    //     return { data: undefined };
+    //   },
+    // }),
     sendMessage: builder.mutation<void, Message>({
       queryFn: async (message) => {
         const docRef = doc(db, "workouts", message.workoutId);
@@ -366,7 +382,6 @@ export const {
   useCreateUserMutation,
   useGetEmailsQuery,
   useGetUserQuery,
-  useGetWorkoutProgramsQuery,
   useGetUserWorkoutsQuery,
   useGetJoinedWorkoutQuery,
   useGetExercisesQuery,

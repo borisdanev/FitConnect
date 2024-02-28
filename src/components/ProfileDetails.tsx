@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { useUploadImageMutation } from "../store";
+import { useSelector } from "react-redux";
+import {
+  RootState,
+  useUploadImageMutation,
+  useGetUserWorkoutsQuery,
+} from "../store";
+import useGetWorkoutPrograms from "../hooks/useGetWorkoutPrograms";
 import { User } from "../types/user.model";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -12,6 +18,11 @@ interface Props {
 const ProfileDetails: React.FC<Props> = ({ currentUser }) => {
   const [setUserProfilePicture] = useUploadImageMutation();
   const [selectedImage, setSelectedImage] = useState<string>("");
+  // const { data: workouts } = useGetUserWorkoutsQuery(currentUser.id);
+  const programs = useGetWorkoutPrograms(
+    currentUser.id,
+    currentUser.workouts?.map((workout) => workout.workout)
+  );
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -79,7 +90,7 @@ const ProfileDetails: React.FC<Props> = ({ currentUser }) => {
       </Typography>
       <Grid container>
         {[
-          { text: "Created Workout", data: currentUser.programs.length },
+          { text: "Created Workout", data: programs?.length },
           { text: "Joined Workout", data: currentUser.workouts.length },
           {
             text: "Total Members",

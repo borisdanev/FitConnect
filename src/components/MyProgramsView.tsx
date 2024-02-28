@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, useGetWorkoutProgramsQuery } from "../store";
+import { useSelector } from "react-redux";
+import { RootState, useGetUserWorkoutsQuery } from "../store";
+import useGetWorkoutPrograms from "../hooks/useGetWorkoutPrograms";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 import CreateProgramForm from "./CreateProgramForm";
 import SuccessMessage from "./SuccessMessage";
 import { IoMdCheckmark } from "react-icons/io";
@@ -18,14 +18,19 @@ const MyProgramsView: React.FC = () => {
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value
   );
-  const { data: programs, isLoading } = useGetWorkoutProgramsQuery(
-    currentUser.id
+  // const { data: programs, isLoading } = useGetWorkoutProgramsQuery(
+  //   currentUser.id
+  // );
+  const { data: workouts, isLoading } = useGetUserWorkoutsQuery(currentUser.id);
+  const programs = useGetWorkoutPrograms(
+    currentUser.id,
+    workouts?.map((workout) => workout.workout)
   );
   const openedCreateProgramForm = useSelector(
     (state: RootState) => state.form.openedCreateProgramForm
   );
   const [showMessage, setShowMessage] = useState<boolean>(false);
-
+  console.log(programs);
   return (
     <>
       <Grid container>

@@ -5,6 +5,7 @@ import {
   setOpenedSignupForm,
   setCurrentUser,
   RootState,
+  useUpdateJoinedWorkoutMutation,
 } from "../store";
 import { WorkoutModel } from "../types/workout.model";
 import { User } from "../types/user.model";
@@ -24,6 +25,7 @@ const JoinButton: React.FC<Props> = ({ workout, user }) => {
   );
   const [joinWorkout] = useJoinWorkoutMutation();
   const [addNotification] = useAddNotificationMutation();
+  const [updateJoinedWorkout] = useUpdateJoinedWorkoutMutation();
   const handleJoin = () => {
     if (!user) {
       dispatch(setOpenedSignupForm(true));
@@ -39,6 +41,7 @@ const JoinButton: React.FC<Props> = ({ workout, user }) => {
       },
       workoutId: currentWorkout.id,
     });
+    updateJoinedWorkout(currentWorkout.id);
     dispatch(setCurrentUser(user));
   };
   return (
