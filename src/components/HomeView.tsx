@@ -1,54 +1,50 @@
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import FitMan from "../images/fit_man.webp";
 import Typography from "@mui/material/Typography";
 import SuggestedWorkouts from "./SuggestedWorkouts";
 import WorkoutTypesList from "./WorkoutTypesList";
+import CoverImage from "./CoverImage";
 const HomeView: React.FC = () => {
   return (
     <>
-      <Box
-        className="gradient"
-        sx={{
-          height: "15rem",
-          borderRadius: "10px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 5,
-        }}
-      >
-        <Typography className="h2 heading-color" sx={{ pl: 3, width: "50%" }}>
-          Find Workout That Aligns With Your Goals The Best
+      <CoverImage />
+      <Box sx={{ paddingTop: `32rem` }}>
+        <Typography className="h2 heading-color" sx={{ mb: 2 }}>
+          Find Workout
         </Typography>
-        <img
-          src={FitMan}
-          style={{
-            maxHeight: "100%",
+        <SuggestedWorkouts gridSpace={3} />
+        <WorkoutTypesList />
+        <Box
+          className="gradient"
+          sx={{
+            height: "15rem",
+            borderRadius: "10px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 5,
           }}
-          draggable="false"
-          alt="Fit man posing"
-        />
-      </Box>
-      <SuggestedWorkouts gridSpace={3} />
-      <WorkoutTypesList />
-      <Box
-        sx={{
-          mt: 5,
-          display: "flex",
-          justifyContent: "space-between",
-          height: "8rem",
-          alignItems: "center",
-          borderRadius: "10px",
-          px: 5,
-        }}
-        className="reverse-gradient"
-      >
-        <Typography className="h3 heading-color" sx={{ width: "60%" }}>
-          Empower the community with your unique workout program - inspire
-          others to reach their goals!
-        </Typography>
-        <Button variant="contained">Create Program</Button>
+        >
+          <Box>
+            <Typography
+              className="h3 heading-color"
+              sx={{ pl: 3, width: "50%" }}
+            >
+              Empower the community with your unique workout program
+            </Typography>
+            <Button variant="contained">Create Program</Button>
+          </Box>
+          <img
+            src={FitMan}
+            style={{
+              maxHeight: "100%",
+            }}
+            draggable="false"
+            alt="Fit man posing"
+          />
+        </Box>
       </Box>
     </>
   );

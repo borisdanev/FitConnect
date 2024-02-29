@@ -8,7 +8,7 @@ import WeightLossType from "../images/weight_loss_type.webp";
 import EnduranceType from "../images/endurance_type.webp";
 const WorkoutTypesList: React.FC = () => {
   return (
-    <Box sx={{ mt: 5 }}>
+    <Box sx={{ my: 5 }}>
       <Typography className="h2 heading-color" sx={{ mb: 2 }}>
         Workout Types
       </Typography>
@@ -39,12 +39,9 @@ const WorkoutTypesList: React.FC = () => {
                   objectFit: "cover",
                   borderRadius: "50%",
                 }}
+                alt={item.text}
               />
-              <Typography
-                className="h3 heading-color"
-                textAlign="center"
-                sx={{}}
-              >
+              <Typography className="h3 " textAlign="center" sx={{}}>
                 {item.text}
               </Typography>
               <Box
