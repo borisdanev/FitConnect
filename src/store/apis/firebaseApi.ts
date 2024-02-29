@@ -230,15 +230,15 @@ export const firebaseApi = createApi({
     }),
     updateUser: builder.mutation<
       void,
-      { userId: string; property: EditableUserData; value: string }
+      { userId: string; data: { key: EditableUserData; value: string }[] }
     >({
       queryFn: async (args) => {
-        const { userId, property, value } = args;
+        const { userId, data } = args;
         const userRef = doc(db, "users", userId);
-        const userSnapshot = await getDoc(userRef);
-        const user = userSnapshot.data() as User;
-        await updateDoc(userRef, {
-          [property]: value,
+        data.forEach(async (item) => {
+          await updateDoc(userRef, {
+            [item.key]: item.value,
+          });
         });
         return { data: undefined };
       },

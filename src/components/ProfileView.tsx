@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import { RootState, useUpdateUserMutation } from "../store";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -14,16 +14,27 @@ import EditProfile from "./EditProfile";
 import grey from "@mui/material/colors/grey";
 import { FormikErrors, FormikValues } from "formik";
 import { EditableUserData } from "../enums/EditableUserData";
+import SuccessMessage from "./SuccessMessage";
+import { FaRegFaceSmileBeam } from "react-icons/fa6";
 const ProfileView = () => {
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value
   );
-  const [dataToChange, setDataToChange] = useState<EditableUserData[]>([]);
+  const [updateUser] = useUpdateUserMutation();
+  const [dataToChange, setDataToChange] = useState<
+    {
+      key: EditableUserData;
+      value: string;
+    }[]
+  >([]);
   const [errors, setErrors] = useState<FormikErrors<FormikValues>>({});
+  const [showMessage, setShowMessage] = useState<boolean>(false);
   const handleSaveChanges = () => {
-    if (Object.keys(errors).length > 0) return;
-    console.log("here");
+    if (Object.keys(errors).length > 0 || dataToChange.length < 1) return;
+    setShowMessage(true);
+    updateUser({ userId: currentUser.id, data: dataToChange });
   };
+  const handleDiscardChanges = () => {};
   return (
     <>
       {currentUser.id ? (
@@ -47,12 +58,17 @@ const ProfileView = () => {
                     backgroundColor: grey[400],
                   },
                 }}
+                onClick={handleDiscardChanges}
               >
                 Discard Changes
               </Button>
               <Button
                 sx={{
-                  bgcolor: "hsl(151, 100%,20%)",
+                  bgcolor: `${
+                    dataToChange.length > 0
+                      ? "hsl(151, 100%,40%)"
+                      : "hsl(151, 100%, 20%)"
+                  }`,
                   "&:hover": {
                     backgroundColor: "hsl(151, 100%,20%)",
                   },
@@ -63,6 +79,13 @@ const ProfileView = () => {
                 Save Changes
               </Button>
             </Box>
+            {showMessage && (
+              <SuccessMessage
+                message="Changes added successfully"
+                width="18rem"
+                Icon={FaRegFaceSmileBeam}
+              />
+            )}
           </Grid>
           <Grid item xs={8}>
             <EditProfile

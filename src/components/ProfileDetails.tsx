@@ -99,7 +99,7 @@ const ProfileDetails: React.FC<Props> = ({ currentUser }) => {
             }, 0),
           },
         ].map((item, i, arr) => (
-          <Grid xs={i < arr.length - 1 ? 5 : 8}>
+          <Grid key={i} item xs={i < arr.length - 1 ? 5 : 8}>
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <Typography>{item.data}</Typography>
               <Typography sx={{ opacity: "0.8", ml: 1 }}>

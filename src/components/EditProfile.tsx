@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useUpdateUserMutation } from "../store";
 import { useFormik, FormikErrors, FormikValues } from "formik";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -13,14 +12,14 @@ import * as Yup from "yup";
 import { EditableUserData } from "../enums/EditableUserData";
 interface Props {
   currentUser: User;
-  setDataToChange: (data: EditableUserData[]) => void;
+  setDataToChange: (data: { key: EditableUserData; value: string }[]) => void;
   setErrors: (errors: FormikErrors<FormikValues>) => void;
 }
 interface FormValues {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
+  [EditableUserData.FirstName]: string;
+  [EditableUserData.LastName]: string;
+  [EditableUserData.Email]: string;
+  [EditableUserData.Password]: string;
 }
 const EditProfile: React.FC<Props> = ({
   currentUser,
@@ -54,17 +53,21 @@ const EditProfile: React.FC<Props> = ({
     validationSchema,
     onSubmit: (values: FormValues) => console.log(values),
   });
-  const [updateUser] = useUpdateUserMutation();
   useEffect(() => {
     setErrors(formik.errors);
   }, [formik.errors]);
   useEffect(() => {
-    const changedData = Object.keys(initialValues).filter(
-      (key) =>
-        formik.values[key as keyof FormValues] !==
-        initialValues[key as keyof FormValues]
-    );
-    setDataToChange(changedData as EditableUserData[]);
+    const changedData = Object.keys(initialValues)
+      .filter(
+        (key) =>
+          formik.values[key as keyof FormValues] !==
+          initialValues[key as keyof FormValues]
+      )
+      .map((key) => ({
+        key: key as EditableUserData,
+        value: formik.values[key as keyof FormValues],
+      }));
+    setDataToChange(changedData);
   }, [formik.values]);
   return (
     <Box sx={{ bgcolor: "#37423d", p: 2 }}>

@@ -2,8 +2,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import FitMan from "../images/fit_man.webp";
 import Typography from "@mui/material/Typography";
-import WorkoutList from "./WorkoutsList";
 import SuggestedWorkouts from "./SuggestedWorkouts";
+import WorkoutTypesList from "./WorkoutTypesList";
 const HomeView: React.FC = () => {
   return (
     <>
@@ -31,6 +31,7 @@ const HomeView: React.FC = () => {
         />
       </Box>
       <SuggestedWorkouts gridSpace={3} />
+      <WorkoutTypesList />
       <Box
         sx={{
           mt: 5,
