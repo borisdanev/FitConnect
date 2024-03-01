@@ -127,35 +127,26 @@ export const firebaseApi = createApi({
         return { data: undefined };
       },
     }),
-    createProgram: builder.mutation<
-      void,
-      { userId: string; program: WorkoutModel }
-    >({
-      queryFn: async (args) => {
-        const userPrograms = doc(db, "users", args.userId);
-        await updateDoc(userPrograms, {
-          programs: arrayUnion(args.program),
+    createProgram: builder.mutation<void, WorkoutModel>({
+      queryFn: async (program) => {
+        await setDoc(doc(db, "workouts", program.id), {
+          ...program,
         });
-        await setDoc(doc(db, "workouts", args.program.id), {
-          ...args.program,
-        });
-        console.log("workout is created");
         return { data: undefined };
       },
       invalidatesTags: ["Create"],
     }),
     joinWorkout: builder.mutation<void, { workout: WorkoutModel; id: string }>({
       queryFn: async (args) => {
-        const docRef = doc(db, "users", args.id);
+        const userRef = doc(db, "users", args.id);
         const workoutRef = doc(db, "workouts", args.workout.id);
         const getDocument = async () => {
           const docSnap = await getDoc(workoutRef);
-          console.log(docSnap);
           if (docSnap.exists()) {
             await updateDoc(workoutRef, {
               members: args.workout.members + 1,
             });
-            await updateDoc(docRef, {
+            await updateDoc(userRef, {
               workouts: arrayUnion({
                 workout: args.workout,
                 finishedSessions: 0,

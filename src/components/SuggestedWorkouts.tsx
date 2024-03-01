@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import useIsMember from "../hooks/useIsMember";
 import { RootState, useGetWorkoutsQuery } from "../store";
 import { WorkoutType } from "../enums/WorkoutType";
 import { SortType } from "../enums/SortType";
@@ -29,10 +30,11 @@ const SuggestedWorkouts: React.FC<Props> = ({ gridSpace }) => {
       <WorkoutList
         sortBy={sortBy}
         type={type}
-        workouts={data?.filter((workout) =>
+        workouts={data?.filter((workout, i, arr) =>
           searchKeyword
             ? workout.title.toLowerCase().includes(searchKeyword.toLowerCase())
-            : workout.creatorId !== currentUser.id
+            : workout.creatorId !== currentUser.id &&
+              !arr.some((item) => item.id.includes(workout.id))
         )}
         isLoading={isLoading}
         gridSpace={gridSpace}

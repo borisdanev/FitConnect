@@ -66,12 +66,9 @@ const TrainingSessionForm: React.FC<Props> = ({
     dispatch(setOpenedCreateProgramForm(false));
     setShowMessage(true);
     createProgram({
-      userId: currentUser.id,
-      program: {
-        ...createdProgram,
-        trainingSessions: createdSessions,
-        timesPerWeek: createdSessions.length,
-      },
+      ...createdProgram,
+      trainingSessions: createdSessions,
+      timesPerWeek: createdSessions.length,
     });
     joinWorkout({
       workout: {
