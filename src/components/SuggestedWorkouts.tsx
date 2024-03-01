@@ -30,11 +30,13 @@ const SuggestedWorkouts: React.FC<Props> = ({ gridSpace }) => {
       <WorkoutList
         sortBy={sortBy}
         type={type}
-        workouts={data?.filter((workout, i, arr) =>
+        workouts={data?.filter((workout) =>
           searchKeyword
             ? workout.title.toLowerCase().includes(searchKeyword.toLowerCase())
             : workout.creatorId !== currentUser.id &&
-              !arr.some((item) => item.id.includes(workout.id))
+              !currentUser.workouts.some(
+                (item) => item.workout.id === workout.id
+              )
         )}
         isLoading={isLoading}
         gridSpace={gridSpace}

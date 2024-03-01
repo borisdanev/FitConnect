@@ -253,6 +253,7 @@ export const firebaseApi = createApi({
             (workout) => workout.workout.id !== workoutId
           ),
         }));
+        console.log(filteredUsers);
         usersRef.forEach(
           async (doc) =>
             await updateDoc(doc.ref, {
@@ -315,41 +316,49 @@ export const firebaseApi = createApi({
       { notification: NotificationModel; workoutId: string }
     >({
       queryFn: async (args) => {
-        const usersSnaphots = await getDocs(collection(db, "users"));
-        const users = usersSnaphots.docs.map((doc) => doc.data() as User);
-        const filteredUsers = users.filter((user) =>
-          user.workouts.some((workout) => workout.workout.id === args.workoutId)
-        );
-        const usersRef = filteredUsers.map((user) => ({
-          ref: doc(db, "users", user.id),
-          notifications: user.workouts.filter(
-            (workout) => workout.workout.id === args.workoutId
-          )[0].workout.notifications,
-          outerWorkout: user.workouts.find(
-            (workout) => workout.workout.id === args.workoutId
-          ),
-          innerWorkout: user.workouts.find(
-            (workout) => workout.workout.id === args.workoutId
-          )?.workout,
-          otherWorkouts: user.workouts.filter(
-            (workout) => workout.workout.id !== args.workoutId
-          ),
-        }));
-        usersRef.forEach(
-          async (doc) =>
-            await updateDoc(doc.ref, {
-              workouts: [
-                ...doc.otherWorkouts,
-                {
-                  ...doc.outerWorkout,
-                  workout: {
-                    ...doc.innerWorkout,
-                    notifications: [...doc.notifications, args.notification],
-                  },
-                },
-              ],
-            })
-        );
+        const { notification, workoutId } = args;
+        const workoutRef = doc(db, "workouts", workoutId);
+        const workoutSnapshot = await getDoc(workoutRef);
+        const workout = workoutSnapshot.data() as WorkoutModel;
+        await updateDoc(workoutRef, {
+          notifications: [...workout.notifications, notification],
+        });
+        // const usersSnaphots = await getDocs(collection(db, "users"));
+        // const users = usersSnaphots.docs.map((doc) => doc.data() as User);
+        // const filteredUsers = users.filter((user) =>
+        //   user.workouts.some((workout) => workout.workout.id === args.workoutId)
+        // );
+        // const usersRef = filteredUsers.map((user) => ({
+        //   ref: doc(db, "users", user.id),
+        //   notifications: user.workouts.filter(
+        //     (workout) => workout.workout.id === args.workoutId
+        //   )[0].workout.notifications,
+        //   outerWorkout: user.workouts.find(
+        //     (workout) => workout.workout.id === args.workoutId
+        //   ),
+        //   innerWorkout: user.workouts.find(
+        //     (workout) => workout.workout.id === args.workoutId
+        //   )?.workout,
+        //   otherWorkouts: user.workouts.filter(
+        //     (workout) => workout.workout.id !== args.workoutId
+        //   ),
+        // }));
+        // usersRef.forEach(
+        //   async (doc) =>
+        //     await updateDoc(doc.ref, {
+        //       workouts: [
+        //         ...doc.otherWorkouts,
+        //         {
+        //           ...doc.outerWorkout,
+        //           workout: {
+        //             ...doc.innerWorkout,
+        //             notifications: [...doc.notifications, args.notification],
+        //           },
+        //         },
+        //       ],
+        //     })
+        // );
+        // console.log("added notification");
         return { data: undefined };
       },
     }),
