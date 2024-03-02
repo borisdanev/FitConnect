@@ -17,6 +17,9 @@ const Filters: React.FC<Props> = ({ type, setType }) => {
           setType(e.target.value as WorkoutType)
         }
         label="Type"
+        inputProps={{
+          "aria-label": "workout type",
+        }}
       >
         {Object.values(WorkoutType).map((type) => (
           <MenuItem key={type} value={type}>

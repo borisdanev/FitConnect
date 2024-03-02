@@ -43,7 +43,8 @@ const WorkoutDetails: React.FC<Props> = ({
       </Typography>
       <RatingStars rating={rating} rates={rates} />
       <Typography sx={{ display: "flex", alignItems: "center", mt: 1 }}>
-        <HiUsers style={{ marginRight: "0.9rem" }} /> {members} members
+        <HiUsers style={{ marginRight: "0.9rem" }} /> {members}{" "}
+        {members > 1 ? "members" : "member"}
       </Typography>
       <Typography sx={{ mt: 1, display: "flex" }}>
         <Typography sx={{ opacity: "0.8", mr: 1 }}>Created by</Typography>{" "}

@@ -80,8 +80,8 @@ const EditProfile: React.FC<Props> = ({
           { label: "Last Name", value: "lastName" },
           { label: "Email", value: "email", icon: <MdEmail /> },
           {
-            label: "password",
-            value: currentUser.password,
+            label: "Password",
+            value: "password",
             password: true,
             icon: <RiLockPasswordFill />,
           },

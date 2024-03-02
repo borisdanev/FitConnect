@@ -30,7 +30,6 @@ const MyProgramsView: React.FC = () => {
     (state: RootState) => state.form.openedCreateProgramForm
   );
   const [showMessage, setShowMessage] = useState<boolean>(false);
-  console.log(programs);
   return (
     <>
       <Grid container>

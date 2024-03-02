@@ -1,7 +1,7 @@
+import { useRef, useEffect } from "react";
 import { WorkoutModel } from "../types/workout.model";
 import { WorkoutType } from "../enums/WorkoutType";
 import { SortType } from "../enums/SortType";
-import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Skeleton from "@mui/material/Skeleton";
 import Workout from "./Workout";
@@ -24,6 +24,8 @@ const WorkoutList: React.FC<Props> = ({
   gridSpace,
   programList,
 }) => {
+  const ref = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {}, [ref.current]);
   return (
     <Grid container rowSpacing={3} columnSpacing={2}>
       {isLoading ? (
@@ -62,7 +64,7 @@ const WorkoutList: React.FC<Props> = ({
             (workout) => workout.type === type || type === WorkoutType.All
           )
           .map((workout: WorkoutModel, i) => (
-            <Grid key={i} item xs={gridSpace}>
+            <Grid key={i} ref={i === 0 ? ref : null} item xs={gridSpace}>
               <Workout workout={workout} />
             </Grid>
           ))
@@ -76,7 +78,7 @@ const WorkoutList: React.FC<Props> = ({
       )}
       {programList && (
         <Grid item xs={gridSpace}>
-          <CreateProgramAction width="100%" height="100%" />
+          <CreateProgramAction width="100%" height="17.8rem" />
         </Grid>
       )}
     </Grid>

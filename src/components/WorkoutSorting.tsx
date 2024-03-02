@@ -17,6 +17,9 @@ const WorkoutSorting: React.FC<Props> = ({ sortBy, setSortBy }) => {
           setSortBy(e.target.value as SortType)
         }
         label="Type"
+        inputProps={{
+          "aria-label": "sorting",
+        }}
       >
         <MenuItem value={SortType.Rating}>Rating</MenuItem>
         <MenuItem value={SortType.Members}>Members</MenuItem>

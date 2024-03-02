@@ -49,7 +49,9 @@ const WorkoutView: React.FC = () => {
               members={workout.members}
               creator={workout.creator}
             />
-            {isMember && <WorkoutRating />}
+            {isMember && workout.creatorId !== currentUser.id && (
+              <WorkoutRating />
+            )}
           </Grid>
           <Grid item xs={4}>
             <Box

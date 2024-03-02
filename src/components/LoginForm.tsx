@@ -54,7 +54,7 @@ const LoginForm: React.FC = () => {
         >
           {[
             { text: "Email", value: "email" },
-            { text: "Password", value: "password" },
+            { text: "Password", value: "password", password: true },
           ].map((item, i) => (
             <TextField
               key={i}
@@ -62,6 +62,7 @@ const LoginForm: React.FC = () => {
               name={item.value}
               variant="outlined"
               label={item.text}
+              type={item.password ? "password" : "text"}
               sx={{ my: i === 1 ? 2 : 0 }}
               helperText={
                 formik.touched[item.value as keyof FormValues] &&

@@ -17,7 +17,7 @@ const SideBarLink: React.FC<Props> = ({ text, Icon }) => {
 
       sx={{
         bgcolor: `${
-          selectedView === text ? "hsl(151, 100%, 87%)" : "transparent"
+          selectedView === text ? "hsl(151, 100%, 90%)" : "transparent"
         }`,
         width: "100%",
         color: `${selectedView === text ? "#00e676" : "white"}`,

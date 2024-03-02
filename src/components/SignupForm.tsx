@@ -8,10 +8,12 @@ import {
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
 import AuthOverlay from "./AuthOverlay";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { v4 as uuidv4 } from "uuid";
+import { IoEye } from "react-icons/io5";
 interface FormValues {
   firstName: string;
   lastName: string;
@@ -81,12 +83,18 @@ const SignupForm: React.FC = () => {
             { text: "First Name", value: "firstName" },
             { text: "Last Name", value: "lastName" },
             { text: "Email", value: "email" },
-            { text: "Password", value: "password" },
+            {
+              text: "Password",
+              value: "password",
+              password: true,
+              icon: <IoEye />,
+            },
           ].map((item, i) => (
             <TextField
               key={i}
               id={item.value}
               name={item.value}
+              type={item.password ? "password" : "text"}
               variant="outlined"
               label={item.text}
               sx={{ mt: i === 1 || 2 ? 2 : 0 }}

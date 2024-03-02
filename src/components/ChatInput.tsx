@@ -33,6 +33,7 @@ const ChatInput: React.FC = () => {
         alignItems: "center",
         backgroundColor: "hsl(153, 9%, 20%)",
         borderRadius: "2rem",
+        paddingRight: "0.6rem",
       }}
     >
       <TextField
