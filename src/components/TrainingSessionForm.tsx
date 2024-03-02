@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   useCreateProgramMutation,
@@ -14,6 +15,10 @@ import useDynamicInitialValues from "../hooks/useDynamicInitialValues";
 import useAdjustInputValues from "../hooks/useAdjustInputValues";
 import TrainingSessionDetails from "./TrainingSessionDetails";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import FormAlert from "./FormAlert";
+import grey from "@mui/material/colors/grey";
 interface Props {
   createdProgram: WorkoutModel;
   setShowMessage: (show: boolean) => void;
@@ -43,8 +48,11 @@ const TrainingSessionForm: React.FC<Props> = ({
   const initialValues = useDynamicInitialValues(
     trainingSessions.map((item) => item.exercises.length * 3)
   );
+  const [openedAlert, setOpenedAlert] = useState<boolean>(false);
   const handleSubmit = (values: any) => {
-    if (trainingSessions.length === 0) {
+    if (trainingSessions.length === 0) return;
+    if (!trainingSessions.some((session) => session.exercises.length > 0)) {
+      setOpenedAlert(true);
       return;
     }
     const filteredSessions = trainingSessions
@@ -88,7 +96,14 @@ const TrainingSessionForm: React.FC<Props> = ({
   return (
     <FormContainer text="Sessions" handleSubmit={formik.handleSubmit}>
       <SelectionCalendar formik={formik} />
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          mt: 3,
+          position: "relative",
+        }}
+      >
         {selectedDays
           .filter((item) => item === currentSessionIndex)
           .map((_, i) => (
@@ -100,6 +115,29 @@ const TrainingSessionForm: React.FC<Props> = ({
               }
             />
           ))}
+        {openedAlert && (
+          <FormAlert>
+            <Typography color="black">
+              Workout Must Have At Least One Session And One Exericse
+            </Typography>
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <Button
+                variant="contained"
+                sx={{
+                  bgcolor: grey[300],
+                  color: grey[700],
+                  mr: 2,
+                  "&:hover": {
+                    backgroundColor: grey[400],
+                  },
+                }}
+                onClick={() => setOpenedAlert(false)}
+              >
+                Close
+              </Button>
+            </Box>
+          </FormAlert>
+        )}
       </Box>
     </FormContainer>
   );

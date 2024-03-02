@@ -11,12 +11,12 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import Alert from "@mui/material/Alert";
 import { CiSquarePlus } from "react-icons/ci";
 import ExerciseSelection from "./ExerciseSelection";
 import ExerciseDetailsSelection from "./ExerciseDetailsSelection";
 import red from "@mui/material/colors/red";
 import grey from "@mui/material/colors/grey";
+import FormAlert from "./FormAlert";
 interface Props {
   formik: FormikProps<{ [key: string]: string }>;
   selectedExercises: ExerciseModel[];
@@ -92,17 +92,7 @@ const TrainingSessionDetails: React.FC<Props> = ({
       </Button>
       {visibleExerciseSelection && <ExerciseSelection />}
       {visibleAlert[currentSessionIndex] && (
-        <Alert
-          severity="error"
-          color="error"
-          sx={{
-            position: "absolute",
-            top: "40%",
-            right: "0.5rem",
-            left: "0.5rem",
-            bgcolor: "#FDEDED",
-          }}
-        >
+        <FormAlert>
           <Typography color="black">
             Are you sure you want to remove this training session
           </Typography>
@@ -136,7 +126,7 @@ const TrainingSessionDetails: React.FC<Props> = ({
               Yes
             </Button>
           </Box>
-        </Alert>
+        </FormAlert>
       )}
     </Box>
   );
