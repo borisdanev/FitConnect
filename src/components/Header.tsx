@@ -19,6 +19,7 @@ import Typography from "@mui/material/Typography";
 import ProfilePicture from "./ProfilePicture";
 import Tooltip from "@mui/material/Tooltip";
 import Notifications from "./Notifications";
+import Newsletter from "./Newsletter";
 const Header = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector(
@@ -59,9 +60,25 @@ const Header = () => {
             <IoNotifications />
           </IconButton>
         </Tooltip>
-        <IconButton aria-label="mail">
-          <IoMail />
-        </IconButton>
+        <Tooltip
+          title={<Newsletter />}
+          componentsProps={{
+            tooltip: {
+              sx: {
+                bgcolor: "#37423d",
+                boxShadow: "1px 1px 5px white",
+                "& .MuiTooltip-arrow": {
+                  color: "#37423d",
+                },
+              },
+            },
+          }}
+          arrow
+        >
+          <IconButton aria-label="mail">
+            <IoMail />
+          </IconButton>
+        </Tooltip>
       </Box>
       {!currentUser.id ? (
         <Box sx={{ display: "flex" }}>
