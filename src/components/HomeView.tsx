@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import FitMan from "../images/fit_man.webp";
@@ -11,10 +10,12 @@ const HomeView: React.FC = () => {
     <>
       <CoverImage />
       <Box sx={{ paddingTop: `32rem` }}>
-        <Typography className="h2 heading-color" sx={{ mb: 2 }}>
-          Find Workout
-        </Typography>
-        <SuggestedWorkouts gridSpace={3} />
+        <Box id="suggestions">
+          <Typography className="h2 heading-color" sx={{ mb: 2 }}>
+            Find Workout
+          </Typography>
+          <SuggestedWorkouts gridSpace={3} />
+        </Box>
         <WorkoutTypesList />
         <Box
           className="gradient"

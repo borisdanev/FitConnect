@@ -253,7 +253,6 @@ export const firebaseApi = createApi({
             (workout) => workout.workout.id !== workoutId
           ),
         }));
-        console.log(filteredUsers);
         usersRef.forEach(
           async (doc) =>
             await updateDoc(doc.ref, {

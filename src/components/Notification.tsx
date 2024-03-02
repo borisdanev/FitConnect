@@ -22,17 +22,18 @@ const Notification: React.FC<Props> = ({
   return (
     <Grid
       container
-      columnSpacing={3}
+      columnSpacing={1}
       sx={{
         bgcolor: "#37423d",
-        p: 2,
+        py: 2,
+        px: 2,
       }}
     >
-      <Grid item xs={3} sx={{ display: "flex", alignItems: "center" }}>
+      <Grid item xs={2} sx={{ display: "flex", alignItems: "center" }}>
         {imgSrc ? (
           <img
             src={imgSrc}
-            style={{ width: "2.5rem", height: "2.5rem", borderRadius: "50%" }}
+            style={{ width: "2rem", height: "2rem", borderRadius: "50%" }}
             alt="user image"
           />
         ) : (
@@ -41,8 +42,8 @@ const Notification: React.FC<Props> = ({
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              width: "2.5rem",
-              height: "2.5rem",
+              width: "2.1rem",
+              height: "2.1rem",
               borderRadius: "50%",
               bgcolor: "white",
             }}
@@ -51,7 +52,7 @@ const Notification: React.FC<Props> = ({
           </Box>
         )}
       </Grid>
-      <Grid item xs={9}>
+      <Grid item xs={10}>
         <Grid container>
           <Grid item xs={12}>
             <Typography className="h5" sx={{ opacity: "0.7" }}>

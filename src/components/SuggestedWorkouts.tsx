@@ -17,6 +17,9 @@ const SuggestedWorkouts: React.FC<Props> = ({ gridSpace }) => {
   const searchKeyword = useSelector(
     (state: RootState) => state.searchSlice.keyword
   );
+  const workoutTypeSeach = useSelector(
+    (state: RootState) => state.searchSlice.type
+  );
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value
   );
@@ -33,10 +36,12 @@ const SuggestedWorkouts: React.FC<Props> = ({ gridSpace }) => {
         workouts={data?.filter((workout) =>
           searchKeyword
             ? workout.title.toLowerCase().includes(searchKeyword.toLowerCase())
-            : workout.creatorId !== currentUser.id &&
+            : workoutTypeSeach === WorkoutType.All
+            ? workout.creatorId !== currentUser.id &&
               !currentUser.workouts.some(
                 (item) => item.workout.id === workout.id
               )
+            : workout.type === workoutTypeSeach
         )}
         isLoading={isLoading}
         gridSpace={gridSpace}

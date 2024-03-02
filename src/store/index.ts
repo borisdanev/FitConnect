@@ -50,7 +50,7 @@ import {
   setOpenedLoginForm,
   setOpenedCreateProgramForm,
 } from "./slices/formSlice";
-import { setSearchKeyword } from "./slices/searchSlice";
+import { setSearchKeyword, setWorkoutType } from "./slices/searchSlice";
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleWare) =>
@@ -102,5 +102,6 @@ export {
   setRemovedExerciseIndex,
   clearForm,
   setSearchKeyword,
+  setWorkoutType,
 };
 export default store;

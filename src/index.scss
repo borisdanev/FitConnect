@@ -2,7 +2,9 @@ $font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
   "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 $code-font-stack: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
   monospace;
-
+html {
+  scroll-behavior: smooth;
+}
 body {
   margin: 0;
   font-family: $font-stack;
