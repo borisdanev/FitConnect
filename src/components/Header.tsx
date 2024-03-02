@@ -52,7 +52,21 @@ const Header = () => {
     >
       <SearchBar />
       <Box className="h3">
-        <Tooltip title={<Notifications list={joinedWorkouts} />} arrow>
+        <Tooltip
+          title={<Notifications list={joinedWorkouts} />}
+          componentsProps={{
+            tooltip: {
+              sx: {
+                bgcolor: "#37423d",
+                boxShadow: "1px 1px 5px white",
+                "& .MuiTooltip-arrow": {
+                  color: "#37423d",
+                },
+              },
+            },
+          }}
+          arrow
+        >
           <IconButton
             aria-label="notifications"
             style={{ marginRight: "0.5rem" }}

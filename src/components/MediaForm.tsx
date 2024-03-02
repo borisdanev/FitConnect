@@ -36,7 +36,7 @@ const MediaForm: React.FC<Props> = ({
     title: Yup.string().required("Title is required"),
     description: Yup.string().required("Description is required"),
     imgFile: Yup.mixed()
-      .required()
+      .required("Image is required")
       .test(
         "imgFile",
         "Maximum file size is 700KB",

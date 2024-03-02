@@ -16,7 +16,8 @@ const CreateProgramAction: React.FC<Props> = ({ width, height }) => {
         alignItems: "center",
         alignSelf: "center",
         justifyContent: "center",
-        border: "1px solid white",
+        borderRadius: "0.5rem",
+        bgcolor: "#37423d",
         width,
         height,
       }}

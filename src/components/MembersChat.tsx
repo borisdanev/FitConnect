@@ -14,9 +14,7 @@ const MembersChat: React.FC<Props> = ({ isMember }) => {
   const currentWorkout = useSelector(
     (state: RootState) => state.currentWorkout.value
   );
-  const { data: chatMessages, refetch } = useGetMembersChatQuery(
-    currentWorkout.id
-  );
+  const { data: chatMessages } = useGetMembersChatQuery(currentWorkout.id);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const scrollToBottom = () => {
     if (!scrollContainerRef.current) return;
@@ -77,7 +75,7 @@ const MembersChat: React.FC<Props> = ({ isMember }) => {
               />
             ))}
           </Box>
-          <ChatInput refetch={refetch} />
+          <ChatInput />
         </>
       )}
     </Box>

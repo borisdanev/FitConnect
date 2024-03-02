@@ -2,11 +2,10 @@ import { FormEvent, useState } from "react";
 import { useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import { useSendMessageMutation, RootState } from "../store";
-interface Props {
-  refetch: Function;
-}
-const ChatInput: React.FC<Props> = ({ refetch }) => {
+import { IoMdSend } from "react-icons/io";
+const ChatInput: React.FC = () => {
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value
   );
@@ -23,17 +22,17 @@ const ChatInput: React.FC<Props> = ({ refetch }) => {
       content: message,
       workoutId: currentWorkout.id,
     });
-    refetch();
     setMessage("");
   };
-  console.log("here in input");
   return (
     <form
       onSubmit={(e) => handleSubmit(e)}
       style={{
         display: "flex",
         justifyContent: "space-between",
-        border: "1px solid #FFFFFF",
+        alignItems: "center",
+        backgroundColor: "hsl(153, 9%, 20%)",
+        borderRadius: "2rem",
       }}
     >
       <TextField
@@ -41,13 +40,14 @@ const ChatInput: React.FC<Props> = ({ refetch }) => {
         onChange={(e) => setMessage(e.target.value)}
         InputLabelProps={{ shrink: false }}
         sx={{
+          width: "85%",
           "& fieldset": { border: "none" },
         }}
-        placeholder="Type message"
+        placeholder="Type message..."
       />
-      <Button type="submit" variant="contained">
-        Send
-      </Button>
+      <IconButton sx={{ width: "2.5rem", height: "2.5rem" }}>
+        <IoMdSend />
+      </IconButton>
     </form>
   );
 };

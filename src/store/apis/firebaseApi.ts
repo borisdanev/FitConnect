@@ -34,7 +34,7 @@ const db = getFirestore(app);
 export const firebaseApi = createApi({
   reducerPath: "firebaseApi",
   baseQuery: fakeBaseQuery(),
-  tagTypes: ["Rating", "Join", "Create"],
+  tagTypes: ["Rating", "Join", "Create", "Message"],
   endpoints: (builder) => ({
     getWorkouts: builder.query<WorkoutModel[], void>({
       queryFn: async () => {
@@ -101,6 +101,7 @@ export const firebaseApi = createApi({
         const messages = data.membersChat.reverse();
         return { data: messages };
       },
+      providesTags: ["Message"],
     }),
     getStoragePicture: builder.query<string, string>({
       queryFn: async (id) => {
@@ -268,11 +269,14 @@ export const firebaseApi = createApi({
     sendMessage: builder.mutation<void, Message>({
       queryFn: async (message) => {
         const docRef = doc(db, "workouts", message.workoutId);
+        const workoutSnapshot = await getDoc(docRef);
+        const workout = workoutSnapshot.data() as WorkoutModel;
         await updateDoc(docRef, {
-          membersChat: arrayUnion(message),
+          membersChat: [...workout.membersChat, message],
         });
         return { data: undefined };
       },
+      invalidatesTags: ["Message"],
     }),
     uploadImage: builder.mutation<void, { file: File; id: string }>({
       queryFn: async (args) => {
@@ -322,42 +326,6 @@ export const firebaseApi = createApi({
         await updateDoc(workoutRef, {
           notifications: [...workout.notifications, notification],
         });
-        // const usersSnaphots = await getDocs(collection(db, "users"));
-        // const users = usersSnaphots.docs.map((doc) => doc.data() as User);
-        // const filteredUsers = users.filter((user) =>
-        //   user.workouts.some((workout) => workout.workout.id === args.workoutId)
-        // );
-        // const usersRef = filteredUsers.map((user) => ({
-        //   ref: doc(db, "users", user.id),
-        //   notifications: user.workouts.filter(
-        //     (workout) => workout.workout.id === args.workoutId
-        //   )[0].workout.notifications,
-        //   outerWorkout: user.workouts.find(
-        //     (workout) => workout.workout.id === args.workoutId
-        //   ),
-        //   innerWorkout: user.workouts.find(
-        //     (workout) => workout.workout.id === args.workoutId
-        //   )?.workout,
-        //   otherWorkouts: user.workouts.filter(
-        //     (workout) => workout.workout.id !== args.workoutId
-        //   ),
-        // }));
-        // usersRef.forEach(
-        //   async (doc) =>
-        //     await updateDoc(doc.ref, {
-        //       workouts: [
-        //         ...doc.otherWorkouts,
-        //         {
-        //           ...doc.outerWorkout,
-        //           workout: {
-        //             ...doc.innerWorkout,
-        //             notifications: [...doc.notifications, args.notification],
-        //           },
-        //         },
-        //       ],
-        //     })
-        // );
-        // console.log("added notification");
         return { data: undefined };
       },
     }),
