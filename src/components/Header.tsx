@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   RootState,
@@ -10,6 +10,7 @@ import useScreenSize from "../hooks/useScreenSize";
 import { selectView } from "../store";
 import { ViewEnum } from "../enums/View";
 import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import { IoNotifications, IoMail } from "react-icons/io5";
@@ -21,8 +22,11 @@ import ProfilePicture from "./ProfilePicture";
 import Tooltip from "@mui/material/Tooltip";
 import Notifications from "./Notifications";
 import Newsletter from "./Newsletter";
+import Navigation from "./Navigation";
+import { slide as Menu } from "react-burger-menu";
 const Header = () => {
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value
   );
@@ -45,90 +49,112 @@ const Header = () => {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
-      <SearchBar />
-      <Box className="h3">
-        <Tooltip
-          title={<Notifications list={joinedWorkouts} />}
-          componentsProps={{
-            tooltip: {
-              sx: {
-                bgcolor: "#37423d",
-                boxShadow: "1px 1px 5px white",
-                "& .MuiTooltip-arrow": {
-                  color: "#37423d",
-                },
-              },
-            },
-          }}
-          arrow
-        >
-          <IconButton
-            aria-label="notifications"
-            style={{ marginRight: "0.5rem" }}
+    <Grid container>
+      {screenSize < 900 && (
+        <Grid item xs={2}>
+          <Box
+            sx={{
+              position: "relative",
+              width: "2.5rem",
+              height: "2rem",
+            }}
           >
-            <IoNotifications />
-          </IconButton>
-        </Tooltip>
-        <Tooltip
-          title={<Newsletter />}
-          componentsProps={{
-            tooltip: {
-              sx: {
-                bgcolor: "#37423d",
-                boxShadow: "1px 1px 5px white",
-                "& .MuiTooltip-arrow": {
-                  color: "#37423d",
-                },
-              },
-            },
-          }}
-          arrow
-        >
-          <IconButton aria-label="mail">
-            <IoMail />
-          </IconButton>
-        </Tooltip>
-      </Box>
-      {!currentUser.id ? (
-        <Box sx={{ display: "flex" }}>
-          <Button
-            variant="contained"
-            sx={{ mr: 3 }}
-            onClick={() => dispatch(setOpenedSignupForm(true))}
-          >
-            Sign Up
-          </Button>
-          {screenSize > 1200 && (
-            <Button
-              variant="outlined"
-              onClick={() => dispatch(setOpenedLoginForm(true))}
+            <Menu
+              onOpen={() => setIsOpen(!isOpen)}
+              onClose={() => setIsOpen(!isOpen)}
+              isOpen={isOpen}
+              width="200px"
             >
-              Login
-            </Button>
+              <Navigation isOpen={isOpen} setIsOpen={setIsOpen} />
+            </Menu>
+          </Box>
+        </Grid>
+      )}
+      <Grid item xs={5}>
+        <SearchBar />
+      </Grid>
+      <Grid item xs={2}>
+        <Box className="h3" sx={{ display: "flex", justifyContent: "end" }}>
+          <Tooltip
+            title={<Notifications list={joinedWorkouts} />}
+            componentsProps={{
+              tooltip: {
+                sx: {
+                  bgcolor: "#37423d",
+                  boxShadow: "1px 1px 5px white",
+                  "& .MuiTooltip-arrow": {
+                    color: "#37423d",
+                  },
+                },
+              },
+            }}
+            arrow
+          >
+            <IconButton
+              aria-label="notifications"
+              style={{ marginRight: "0.5rem" }}
+            >
+              <IoNotifications />
+            </IconButton>
+          </Tooltip>
+          <Tooltip
+            title={<Newsletter />}
+            componentsProps={{
+              tooltip: {
+                sx: {
+                  bgcolor: "#37423d",
+                  boxShadow: "1px 1px 5px white",
+                  "& .MuiTooltip-arrow": {
+                    color: "#37423d",
+                  },
+                },
+              },
+            }}
+            arrow
+          >
+            <IconButton aria-label="mail">
+              <IoMail />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      </Grid>
+      <Grid item xs={3}>
+        <Box sx={{ display: "flex", justifyContent: "end" }}>
+          {!currentUser.id ? (
+            <Box sx={{ display: "flex" }}>
+              <Button
+                variant="contained"
+                sx={{ mr: 3 }}
+                onClick={() => dispatch(setOpenedSignupForm(true))}
+              >
+                Sign Up
+              </Button>
+              {screenSize > 1200 && (
+                <Button
+                  variant="outlined"
+                  onClick={() => dispatch(setOpenedLoginForm(true))}
+                >
+                  Login
+                </Button>
+              )}
+            </Box>
+          ) : (
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Typography>{currentUser.firstName}</Typography>
+              <Box onClick={() => dispatch(selectView(ViewEnum.Profile))}>
+                <ProfilePicture
+                  userId={currentUser.id}
+                  width="2rem"
+                  height="2rem"
+                />
+              </Box>
+            </Box>
           )}
         </Box>
-      ) : (
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Typography>{currentUser.firstName}</Typography>
-          <Box onClick={() => dispatch(selectView(ViewEnum.Profile))}>
-            <ProfilePicture
-              userId={currentUser.id}
-              width="2rem"
-              height="2rem"
-            />
-          </Box>
-        </Box>
-      )}
+      </Grid>
       {openedSignupForm && <SignupForm />}
       {openedLoginForm && <LoginForm />}
-    </Box>
+    </Grid>
   );
 };
 export default Header;

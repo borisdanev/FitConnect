@@ -16,7 +16,7 @@ const SearchBar = () => {
     <form
       onSubmit={handleSubmit}
       style={{
-        width: "40rem",
+        width: "100%",
         position: "relative",
         height: "2.5rem",
         fontSize: "1.2rem",

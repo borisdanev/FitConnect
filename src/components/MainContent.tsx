@@ -1,11 +1,15 @@
 import Box from "@mui/material/Box";
-import { drawerWidth } from "./Sidebar";
+import { drawerWidth } from "./Navigation";
 import Header from "./Header";
 import SelectedView from "./SelectedView";
+import useScreenSize from "../hooks/useScreenSize";
 const MainContent = () => {
+  const screenSize = useScreenSize();
   return (
     <Box
-      style={{ marginLeft: `${drawerWidth}px` }}
+      style={{
+        marginLeft: `${screenSize > 900 ? drawerWidth + "px" : ""}`,
+      }}
       sx={{ px: 4, pt: 2, position: "relative" }}
     >
       <Header />
