@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { useGetUserWorkoutsQuery, RootState } from "../store";
+import useScreenSize from "../hooks/useScreenSize";
 import { SortType } from "../enums/SortType";
 import { WorkoutType } from "../enums/WorkoutType";
 import Notifications from "./Notifications";
@@ -15,10 +16,11 @@ const MyWorkoutsView: React.FC = () => {
     (state: RootState) => state.currentUser.value
   );
   const { data, isLoading } = useGetUserWorkoutsQuery(currentUser.id);
+  const screenSize = useScreenSize();
   return (
     <>
       <Grid container>
-        <Grid item xs={9}>
+        <Grid item xs={screenSize > 1200 ? 9 : 12}>
           {data &&
           data.filter((workout) => workout.workout.creatorId !== currentUser.id)
             .length > 0 ? (
@@ -48,22 +50,24 @@ const MyWorkoutsView: React.FC = () => {
                 : ""}{" "}
               Workouts
             </Typography>
-            <SuggestedWorkouts gridSpace={[4]} />
+            <SuggestedWorkouts gridSpace={[12, 6, 6, 4]} />
           </Box>
         </Grid>
-        <Grid item xs={3}>
-          <Box
-            sx={{
-              bgcolor: "#00e676",
-              p: 1,
-              borderTopLeftRadius: "0.5rem",
-              borderTopRightRadius: "0.5rem",
-            }}
-          >
-            Notifications
-          </Box>
-          <Notifications list={data} />
-        </Grid>
+        {screenSize > 1200 && (
+          <Grid item xs={3}>
+            <Box
+              sx={{
+                bgcolor: "#00e676",
+                p: 1,
+                borderTopLeftRadius: "0.5rem",
+                borderTopRightRadius: "0.5rem",
+              }}
+            >
+              Notifications
+            </Box>
+            <Notifications list={data} />
+          </Grid>
+        )}
       </Grid>
     </>
   );

@@ -70,7 +70,7 @@ const Header = () => {
           </Box>
         </Grid>
       )}
-      <Grid item xs={5}>
+      <Grid item xs={screenSize < 900 ? 5 : 7}>
         <SearchBar />
       </Grid>
       <Grid item xs={2}>

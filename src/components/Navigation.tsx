@@ -41,7 +41,7 @@ const Navigation: React.FC<Props> = ({ setIsOpen }) => {
         draggable="false"
         style={{ maxWidth: "100%" }}
       />
-      <SidebarLinkList />
+      <SidebarLinkList setIsOpen={setIsOpen && setIsOpen} />
     </Drawer>
   );
 };

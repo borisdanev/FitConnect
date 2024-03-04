@@ -7,10 +7,12 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import SideBarLink from "./SidebarLink";
 import { FaHouse, FaDumbbell } from "react-icons/fa6";
-import { IoMdSettings } from "react-icons/io";
 import { IoLogOut } from "react-icons/io5";
 import { FaClipboard, FaUser } from "react-icons/fa";
-const SidebarLinkList = () => {
+interface Props {
+  setIsOpen: ((isOpen: boolean) => void) | undefined;
+}
+const SidebarLinkList: React.FC<Props> = ({ setIsOpen }) => {
   const dispatch = useDispatch();
   const links = [
     { text: ViewEnum.Home, icon: FaHouse },
@@ -37,7 +39,10 @@ const SidebarLinkList = () => {
           <ListItem
             key={i}
             sx={{ p: 0 }}
-            onClick={() => dispatch(selectView(link.text))}
+            onClick={() => {
+              dispatch(selectView(link.text));
+              setIsOpen && setIsOpen(false);
+            }}
           >
             <SideBarLink text={link.text} Icon={link.icon} />
           </ListItem>

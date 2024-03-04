@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useGetUserWorkoutsQuery } from "../store";
+import useScreenSize from "../hooks/useScreenSize";
 import useGetWorkoutPrograms from "../hooks/useGetWorkoutPrograms";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -21,6 +22,7 @@ const MyProgramsView: React.FC = () => {
   // const { data: programs, isLoading } = useGetWorkoutProgramsQuery(
   //   currentUser.id
   // );
+  const screenSize = useScreenSize();
   const { data: workouts, isLoading } = useGetUserWorkoutsQuery(currentUser.id);
   const programs = useGetWorkoutPrograms(
     currentUser.id,
@@ -33,14 +35,14 @@ const MyProgramsView: React.FC = () => {
   return (
     <>
       <Grid container>
-        <Grid item xs={9}>
+        <Grid item xs={screenSize > 1200 ? 9 : 12}>
           {programs && programs.length > 0 ? (
             <WorkoutList
               sortBy={SortType.Members}
               type={WorkoutType.All}
               workouts={programs}
               isLoading={isLoading}
-              gridSpace={[4]}
+              gridSpace={[12, 6, 6, 4]}
               programList={true}
             />
           ) : (
@@ -65,19 +67,21 @@ const MyProgramsView: React.FC = () => {
             />
           )}
         </Grid>
-        <Grid item xs={3} sx={{ pl: 1 }}>
-          <Box
-            sx={{
-              bgcolor: "#00e676",
-              p: 1,
-              borderTopLeftRadius: "0.5rem",
-              borderTopRightRadius: "0.5rem",
-            }}
-          >
-            Notifications
-          </Box>
-          <Notifications list={programs} />
-        </Grid>
+        {screenSize > 1200 && (
+          <Grid item xs={3} sx={{ pl: 1 }}>
+            <Box
+              sx={{
+                bgcolor: "#00e676",
+                p: 1,
+                borderTopLeftRadius: "0.5rem",
+                borderTopRightRadius: "0.5rem",
+              }}
+            >
+              Notifications
+            </Box>
+            <Notifications list={programs} />
+          </Grid>
+        )}
       </Grid>
     </>
   );
