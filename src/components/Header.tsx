@@ -6,6 +6,7 @@ import {
   setOpenedSignupForm,
   useGetUserWorkoutsQuery,
 } from "../store";
+import useScreenSize from "../hooks/useScreenSize";
 import { selectView } from "../store";
 import { ViewEnum } from "../enums/View";
 import Box from "@mui/material/Box";
@@ -32,6 +33,7 @@ const Header = () => {
   const openedLoginForm = useSelector(
     (state: RootState) => state.form.openedLoginForm
   );
+  const screenSize = useScreenSize();
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -103,12 +105,14 @@ const Header = () => {
           >
             Sign Up
           </Button>
-          <Button
-            variant="outlined"
-            onClick={() => dispatch(setOpenedLoginForm(true))}
-          >
-            Login
-          </Button>
+          {screenSize > 1200 && (
+            <Button
+              variant="outlined"
+              onClick={() => dispatch(setOpenedLoginForm(true))}
+            >
+              Login
+            </Button>
+          )}
         </Box>
       ) : (
         <Box sx={{ display: "flex", alignItems: "center" }}>

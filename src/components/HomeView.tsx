@@ -14,7 +14,7 @@ const HomeView: React.FC = () => {
           <Typography className="h2 heading-color" sx={{ mb: 2 }}>
             Find Workout
           </Typography>
-          <SuggestedWorkouts gridSpace={3} />
+          <SuggestedWorkouts gridSpace={[12, 6, 6, 4]} />
         </Box>
         <WorkoutTypesList />
         <Box
@@ -35,7 +35,9 @@ const HomeView: React.FC = () => {
             >
               Empower the community with your unique workout program
             </Typography>
-            <Button variant="contained">Create Program</Button>
+            <Button variant="contained" sx={{ ml: 3, mt: 2 }}>
+              Create Program
+            </Button>
           </Box>
           <img
             src={FitMan}

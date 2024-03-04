@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { setWorkoutType } from "../store";
 import Box from "@mui/material/Box";
@@ -16,7 +17,7 @@ const WorkoutTypesList: React.FC = () => {
       <Typography className="h2 heading-color" sx={{ mb: 2 }}>
         Workout Types
       </Typography>
-      <Grid container columnSpacing={2}>
+      <Grid container columnSpacing={2} rowSpacing={2}>
         {[
           {
             text: "Muscle Building",
@@ -38,8 +39,8 @@ const WorkoutTypesList: React.FC = () => {
             src: EnduranceType,
             type: WorkoutType.EnduranceWorkout,
           },
-        ].map((item) => (
-          <Grid item xs={12} md={6} lg={3}>
+        ].map((item, i) => (
+          <Grid key={i} item xs={12} md={6} lg={3}>
             <Box
               sx={{
                 width: "100%",
@@ -56,6 +57,7 @@ const WorkoutTypesList: React.FC = () => {
                 style={{
                   width: "100%",
                   height: "18.81rem",
+                  // aspectRatio: "1",
                   objectFit: "cover",
                   borderRadius: "50%",
                 }}

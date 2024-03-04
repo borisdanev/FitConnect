@@ -22,11 +22,11 @@ const Workout: React.FC<Props> = ({ workout }) => {
   return (
     <Box onClick={handleClick}>
       {isLoading ? (
-        <Skeleton variant="rectangular" width="18.5rem" height="12.5rem" />
+        <Skeleton variant="rectangular" width="100%" height="12.5rem" />
       ) : (
         <img
           src={workoutSrc}
-          style={{ width: "18.5rem", height: "12.5rem", objectFit: "cover" }}
+          style={{ width: "100%", height: "12.5rem", objectFit: "cover" }}
           alt="workout cover image"
         />
       )}

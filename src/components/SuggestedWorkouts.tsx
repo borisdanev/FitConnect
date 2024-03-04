@@ -8,7 +8,7 @@ import WorkoutSorting from "./WorkoutSorting";
 import Filters from "./Filters";
 import WorkoutList from "./WorkoutsList";
 interface Props {
-  gridSpace: number;
+  gridSpace: number[];
 }
 const SuggestedWorkouts: React.FC<Props> = ({ gridSpace }) => {
   const [type, setType] = useState<WorkoutType>(WorkoutType.All);

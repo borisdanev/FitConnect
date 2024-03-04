@@ -13,7 +13,7 @@ interface Props {
   type: WorkoutType;
   workouts: WorkoutModel[] | undefined;
   isLoading: boolean;
-  gridSpace: number;
+  gridSpace: number[];
   programList?: boolean;
 }
 const WorkoutList: React.FC<Props> = ({
@@ -32,7 +32,13 @@ const WorkoutList: React.FC<Props> = ({
         Array(8)
           .fill(null)
           .map((_, i) => (
-            <Grid item key={i} xs={gridSpace}>
+            <Grid
+              item
+              key={i}
+              sm={gridSpace[1]}
+              md={gridSpace[2]}
+              lg={gridSpace[3]}
+            >
               <Skeleton
                 variant="rectangular"
                 width="18.5rem"
@@ -64,7 +70,14 @@ const WorkoutList: React.FC<Props> = ({
             (workout) => workout.type === type || type === WorkoutType.All
           )
           .map((workout: WorkoutModel, i) => (
-            <Grid key={i} ref={i === 0 ? ref : null} item xs={gridSpace}>
+            <Grid
+              key={i}
+              ref={i === 0 ? ref : null}
+              item
+              sm={gridSpace[1]}
+              md={gridSpace[2]}
+              lg={gridSpace[3]}
+            >
               <Workout workout={workout} />
             </Grid>
           ))
@@ -77,7 +90,7 @@ const WorkoutList: React.FC<Props> = ({
         </Grid>
       )}
       {programList && (
-        <Grid item xs={gridSpace}>
+        <Grid item sm={gridSpace[1]} md={gridSpace[2]} lg={gridSpace[3]}>
           <CreateProgramAction width="100%" height="17.8rem" />
         </Grid>
       )}

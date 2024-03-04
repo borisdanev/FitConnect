@@ -40,7 +40,7 @@ const MyProgramsView: React.FC = () => {
               type={WorkoutType.All}
               workouts={programs}
               isLoading={isLoading}
-              gridSpace={4}
+              gridSpace={[4]}
               programList={true}
             />
           ) : (

@@ -29,7 +29,7 @@ const MyWorkoutsView: React.FC = () => {
                 ?.map((workout) => workout.workout)
                 .filter((workout) => workout.creatorId !== currentUser.id)}
               isLoading={isLoading}
-              gridSpace={4}
+              gridSpace={[4]}
             />
           ) : (
             <EmptyState
@@ -48,7 +48,7 @@ const MyWorkoutsView: React.FC = () => {
                 : ""}{" "}
               Workouts
             </Typography>
-            <SuggestedWorkouts gridSpace={4} />
+            <SuggestedWorkouts gridSpace={[4]} />
           </Box>
         </Grid>
         <Grid item xs={3}>
