@@ -4,11 +4,12 @@ import {
   useGetEmailsQuery,
   setCurrentUser,
   setOpenedSignupForm,
+  setOpenedLoginForm,
 } from "../store";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
 import AuthOverlay from "./AuthOverlay";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -111,6 +112,18 @@ const SignupForm: React.FC = () => {
         <Button type="submit" variant="contained">
           Sign Up
         </Button>
+        <Typography className="h5" sx={{ mt: 2 }}>
+          Already have an account?{" "}
+          <span
+            style={{ textDecoration: "underline", color: "#00e676" }}
+            onClick={() => {
+              dispatch(setOpenedSignupForm(false));
+              dispatch(setOpenedLoginForm(true));
+            }}
+          >
+            Login
+          </span>
+        </Typography>
       </form>
     </AuthOverlay>
   );

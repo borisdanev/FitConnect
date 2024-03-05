@@ -48,7 +48,12 @@ const SidebarLinkList: React.FC<Props> = ({ setIsOpen }) => {
           </ListItem>
         ))}
       </List>
-      <Box onClick={() => dispatch(logOut())}>
+      <Box
+        onClick={() => {
+          dispatch(logOut());
+          setIsOpen && setIsOpen(false);
+        }}
+      >
         <SideBarLink text={"Log out"} Icon={IoLogOut} />
       </Box>
     </Box>

@@ -2,6 +2,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useRef, useState, useEffect } from "react";
+import useScreenSize from "../hooks/useScreenSize";
 import { WorkoutType } from "../enums/WorkoutType";
 import { RootState, setOpenedCreateProgramForm } from "../store";
 import Box from "@mui/material/Box";
@@ -19,6 +20,7 @@ interface Props {
 }
 const CreateProgramForm: React.FC<Props> = ({ setShowMessage }) => {
   const dispatch = useDispatch();
+  const screenSize = useScreenSize();
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value
   );
@@ -66,7 +68,7 @@ const CreateProgramForm: React.FC<Props> = ({ setShowMessage }) => {
       }}
       className="position-fill"
     >
-      <Grid container width="70rem">
+      <Grid container width="clamp(30rem, 70vw, 70rem)">
         <Grid item xs={12}>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <img
@@ -76,7 +78,7 @@ const CreateProgramForm: React.FC<Props> = ({ setShowMessage }) => {
             />
           </Box>
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={screenSize > 1000 ? 7 : 12}>
           <Box
             sx={{
               bgcolor: "#2e4c3e",
@@ -109,15 +111,17 @@ const CreateProgramForm: React.FC<Props> = ({ setShowMessage }) => {
             </Slider>
           </Box>
         </Grid>
-        <Grid item xs={5}>
-          <Box height="100%" bgcolor="#2e4c3e">
-            <img
-              style={{ maxWidth: "100%", height: "100%", objectFit: "cover" }}
-              src={CreateProgramImg}
-              alt="Man lifting dumbbell"
-            />
-          </Box>
-        </Grid>
+        {screenSize > 1000 && (
+          <Grid item xs={5}>
+            <Box height="100%" bgcolor="#2e4c3e">
+              <img
+                style={{ maxWidth: "100%", height: "100%", objectFit: "cover" }}
+                src={CreateProgramImg}
+                alt="Man lifting dumbbell"
+              />
+            </Box>
+          </Grid>
+        )}
       </Grid>
     </Box>
   );

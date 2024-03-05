@@ -108,7 +108,7 @@ const MediaForm: React.FC<Props> = ({
             }}
           >
             <FaImage />
-            <Typography className="h4">
+            <Typography className="h4" textAlign="center">
               Choose Image For Your Program
             </Typography>
             <FormHelperText sx={{ textAlign: "center" }}>
