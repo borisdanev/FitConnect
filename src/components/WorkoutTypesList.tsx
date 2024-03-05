@@ -1,3 +1,5 @@
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import useScreenSize from "../hooks/useScreenSize";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -14,6 +16,14 @@ const sliderSettings = {
   dots: false,
   swipe: true,
   slidesToShow: 2,
+  responsive: [
+    {
+      breakpoint: 700,
+      settings: {
+        slidesToShow: 1,
+      },
+    },
+  ],
 };
 const WorkoutTypesList: React.FC = () => {
   const screenSize = useScreenSize();
