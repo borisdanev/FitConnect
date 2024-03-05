@@ -1,4 +1,3 @@
-import { useDispatch } from "react-redux";
 import useScreenSize from "../hooks/useScreenSize";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -60,13 +59,12 @@ const WorkoutTypesList: React.FC = () => {
       ) : (
         <Slider {...sliderSettings}>
           {workoutTypes.map((item, i) => (
-            <Box key={i} sx={{ pr: 2 }}>
-              <WorkoutTypeItem
-                src={item.src}
-                text={item.text}
-                type={item.type}
-              />
-            </Box>
+            <WorkoutTypeItem
+              key={i}
+              src={item.src}
+              text={item.text}
+              type={item.type}
+            />
           ))}
         </Slider>
       )}
