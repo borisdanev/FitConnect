@@ -12,11 +12,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #29332e;
   color: white !important;
-  overflow-x: hidden;
-
+  overflow-x: hidden !important;
+  width: 100vw;
   code {
     font-family: $code-font-stack;
   }
+  // html {
+  //   overflow-x: hidden;
+  // }
 }
 .h1 {
   font-size: clamp(2rem, 5vw, 3rem) !important;

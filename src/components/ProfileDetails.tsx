@@ -41,8 +41,8 @@ const ProfileDetails: React.FC<Props> = ({ currentUser }) => {
       <Box
         sx={{
           position: "relative",
-          width: "7rem",
-          height: "7rem",
+          width: "clamp(4rem, 8vw, 7rem)",
+          height: "clamp(4rem, 8vw, 7rem)",
         }}
       >
         <Box

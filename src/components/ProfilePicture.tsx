@@ -35,10 +35,10 @@ const ProfilePicture: React.FC<Props> = ({
       {(isLoading || !data) && !selectedImage ? (
         <Box
           sx={{
+            ...photoStyle,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            ...photoStyle,
           }}
         >
           <FaUser
@@ -52,10 +52,10 @@ const ProfilePicture: React.FC<Props> = ({
         <img
           src={selectedImage ? selectedImage : data}
           style={{
+            ...photoStyle,
             maxWidth: "100%",
             borderRadius: "50%",
             objectFit: "cover",
-            ...photoStyle,
           }}
         />
       )}

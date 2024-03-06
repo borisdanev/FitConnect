@@ -76,6 +76,7 @@ const Header = () => {
       <Grid item xs={2}>
         <Box className="h3" sx={{ display: "flex", justifyContent: "end" }}>
           <Tooltip
+            enterTouchDelay={0}
             title={<Notifications list={joinedWorkouts} />}
             componentsProps={{
               tooltip: {
@@ -98,6 +99,7 @@ const Header = () => {
             </IconButton>
           </Tooltip>
           <Tooltip
+            enterTouchDelay={0}
             title={<Newsletter />}
             componentsProps={{
               tooltip: {

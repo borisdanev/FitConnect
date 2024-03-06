@@ -85,26 +85,31 @@ const WorkoutList: React.FC<Props> = ({
           )}
         </Grid>
       ) : (
-        <Slider className="workouts-slider" {...sliderSettings}>
-          {isLoading
-            ? Array(8)
-                .fill(null)
-                .map((_, i) => <WorkoutSkeleton key={i} />)
-            : workouts &&
-              workouts.length > 0 &&
-              [...workouts]
-                .sort(
-                  (a, b) =>
-                    (b[sortBy as keyof WorkoutModel] as number) -
-                    (a[sortBy as keyof WorkoutModel] as number)
-                )
-                .filter(
-                  (workout) => workout.type === type || type === WorkoutType.All
-                )
-                .map((workout: WorkoutModel, i) => (
-                  <Workout key={i} workout={workout} />
-                ))}
-        </Slider>
+        <>
+          {workouts && workouts.length > 0 && (
+            <Slider className="workouts-slider" {...sliderSettings}>
+              {isLoading
+                ? Array(8)
+                    .fill(null)
+                    .map((_, i) => <WorkoutSkeleton key={i} />)
+                : workouts &&
+                  workouts.length > 0 &&
+                  [...workouts]
+                    .sort(
+                      (a, b) =>
+                        (b[sortBy as keyof WorkoutModel] as number) -
+                        (a[sortBy as keyof WorkoutModel] as number)
+                    )
+                    .filter(
+                      (workout) =>
+                        workout.type === type || type === WorkoutType.All
+                    )
+                    .map((workout: WorkoutModel, i) => (
+                      <Workout key={i} workout={workout} />
+                    ))}
+            </Slider>
+          )}
+        </>
       )}
       {screenSize < 900 && programList && (
         <Box sx={{ display: "flex", justifyContent: "center" }}>
