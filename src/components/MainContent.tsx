@@ -10,7 +10,7 @@ const MainContent = () => {
       style={{
         marginLeft: `${screenSize > 900 ? drawerWidth + "px" : ""}`,
       }}
-      sx={{ px: 4, pt: 2, position: "relative" }}
+      sx={{ px: screenSize > 700 ? 4 : 1, pt: 2, position: "relative" }}
     >
       <Header />
       <SelectedView />

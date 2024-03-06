@@ -10,7 +10,7 @@ import WeightLossType from "../images/weight_loss_type.webp";
 import EnduranceType from "../images/endurance_type.webp";
 import { WorkoutType } from "../enums/WorkoutType";
 import Slider from "react-slick";
-import WorkoutTypeItem from "./WorkoutType";
+import WorkoutTypeItem from "./WorkoutTypeItem";
 const sliderSettings = {
   arrows: true,
   dots: false,
@@ -18,7 +18,7 @@ const sliderSettings = {
   slidesToShow: 2,
   responsive: [
     {
-      breakpoint: 700,
+      breakpoint: 540,
       settings: {
         slidesToShow: 1,
       },
@@ -50,7 +50,7 @@ const WorkoutTypesList: React.FC = () => {
     },
   ];
   return (
-    <Box sx={{ my: 5 }}>
+    <Box sx={{ my: 5 }} className="workout-types-list">
       <Typography className="h2 heading-color" sx={{ mb: 2 }}>
         Workout Types
       </Typography>

@@ -77,7 +77,7 @@ const WorkoutList: React.FC<Props> = ({
           )}
         </Grid>
       ) : (
-        <Slider {...sliderSettings}>
+        <Slider className="workouts-slider" {...sliderSettings}>
           {isLoading
             ? Array(8)
                 .fill(null)
@@ -97,6 +97,11 @@ const WorkoutList: React.FC<Props> = ({
                   <Workout key={i} workout={workout} />
                 ))}
         </Slider>
+      )}
+      {screenSize < 900 && programList && (
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <CreateProgramAction width="7rem" height="7rem" />
+        </Box>
       )}
       {workouts && workouts.length === 0 && (
         <EmptyState

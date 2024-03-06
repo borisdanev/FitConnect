@@ -12,6 +12,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #29332e;
   color: white !important;
+  overflow-x: hidden;
 
   code {
     font-family: $code-font-stack;
@@ -195,10 +196,36 @@ body {
   top: 0;
   left: 0;
 }
-
-.slick-list {
-  margin: 0 -1re;
+.workout-types-list {
+  .slick-list {
+    margin: 0 -1re;
+  }
+  .slick-slide > div {
+    padding: 0 1rem;
+  }
 }
-.slick-slide > div {
-  padding: 0 1rem;
+.workouts-slider {
+  .slick-list {
+    margin: 0 -0.5rem;
+  }
+  .slick-slide > div {
+    padding: 0 0.5rem;
+  }
+}
+.slick-slider {
+  .slick-arrow {
+    width: 2rem;
+    height: 2rem;
+    z-index: 99;
+    &::before {
+      width: 2rem !important;
+      height: 2rem !important;
+    }
+  }
+  .slick-next {
+    right: 1rem;
+  }
+  .slick-prev {
+    left: 1rem;
+  }
 }

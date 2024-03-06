@@ -1,0 +1,20 @@
+@media (max-width: 50rem) {
+  .workout-types-list {
+    .slick-list {
+      margin: 0 -0.4rem;
+    }
+    .slick-slide > div {
+      padding: 0 0.4rem;
+    }
+  }
+}
+@media (max-width: 34.35rem) {
+  .workout-types-list {
+    .slick-list {
+      margin: 0 -0.2rem;
+    }
+    .slick-slide > div {
+      padding: 0 0.2rem;
+    }
+  }
+}
