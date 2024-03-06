@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useUpdateUserMutation } from "../store";
+import useScreenSize from "../hooks/useScreenSize";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -29,6 +30,7 @@ const ProfileView = () => {
   >([]);
   const [errors, setErrors] = useState<FormikErrors<FormikValues>>({});
   const [showMessage, setShowMessage] = useState<boolean>(false);
+  const screenSize = useScreenSize();
   const handleSaveChanges = () => {
     if (Object.keys(errors).length > 0 || dataToChange.length < 1) return;
     setShowMessage(true);
@@ -38,14 +40,16 @@ const ProfileView = () => {
   return (
     <>
       {currentUser.id ? (
-        <Grid container columnSpacing={3}>
+        <Grid container columnSpacing={screenSize > 900 ? 3 : 1}>
           <Grid item xs={4}>
             <ProfileDetails currentUser={currentUser} />
             <Box
               sx={{
                 display: "flex",
+                flexDirection: screenSize > 1300 ? "row" : "column",
                 width: "100%",
                 justifyContent: "space-between",
+                mt: 1,
               }}
             >
               <Button

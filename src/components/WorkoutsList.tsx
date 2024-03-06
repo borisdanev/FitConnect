@@ -20,6 +20,14 @@ interface Props {
 }
 const sliderSettings = {
   slidesToShow: 3,
+  responsive: [
+    {
+      breakpoint: 850,
+      settings: {
+        slidesToShow: 2,
+      },
+    },
+  ],
 };
 const WorkoutList: React.FC<Props> = ({
   sortBy,

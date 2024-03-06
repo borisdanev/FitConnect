@@ -86,7 +86,7 @@ const EditProfile: React.FC<Props> = ({
             icon: <RiLockPasswordFill />,
           },
         ].map((item, i) => (
-          <Grid key={i} item xs={6}>
+          <Grid key={i} item xs={12} md={6}>
             <TextField
               id={item.value}
               name={item.value}

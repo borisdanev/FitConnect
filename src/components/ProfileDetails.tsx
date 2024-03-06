@@ -1,10 +1,5 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import {
-  RootState,
-  useUploadImageMutation,
-  useGetUserWorkoutsQuery,
-} from "../store";
+import { useUploadImageMutation } from "../store";
 import useGetWorkoutPrograms from "../hooks/useGetWorkoutPrograms";
 import { User } from "../types/user.model";
 import Box from "@mui/material/Box";
@@ -18,7 +13,6 @@ interface Props {
 const ProfileDetails: React.FC<Props> = ({ currentUser }) => {
   const [setUserProfilePicture] = useUploadImageMutation();
   const [selectedImage, setSelectedImage] = useState<string>("");
-  // const { data: workouts } = useGetUserWorkoutsQuery(currentUser.id);
   const programs = useGetWorkoutPrograms(
     currentUser.id,
     currentUser.workouts?.map((workout) => workout.workout)
@@ -70,8 +64,8 @@ const ProfileDetails: React.FC<Props> = ({ currentUser }) => {
         <ProfilePicture
           selectedImage={selectedImage}
           userId={currentUser.id}
-          width="7rem"
-          height="7rem"
+          width="clamp(4rem, 8vw, 7rem)"
+          height="clamp(4rem, 8vw, 7rem)"
         />
         <input
           type="file"
@@ -99,7 +93,7 @@ const ProfileDetails: React.FC<Props> = ({ currentUser }) => {
             }, 0),
           },
         ].map((item, i, arr) => (
-          <Grid key={i} item xs={i < arr.length - 1 ? 5 : 8}>
+          <Grid key={i} item md={12} lg={i < arr.length - 1 ? 6 : 12}>
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <Typography>{item.data}</Typography>
               <Typography sx={{ opacity: "0.8", ml: 1 }}>
