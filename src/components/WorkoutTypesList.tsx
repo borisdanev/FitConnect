@@ -18,8 +18,8 @@ const sliderSettings = {
   dots: false,
   swipe: true,
   slidesToShow: 2,
-  nextArrow: <SliderArrow variant="next" />,
-  prevArrow: <SliderArrow variant="prev" />,
+  // nextArrow: <SliderArrow variant="next" />,
+  // prevArrow: <SliderArrow variant="prev" />,
   responsive: [
     {
       breakpoint: 540,

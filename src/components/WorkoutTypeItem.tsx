@@ -1,4 +1,5 @@
 import { useDispatch } from "react-redux";
+import useScreenSize from "../hooks/useScreenSize";
 import { setWorkoutType } from "../store";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -11,10 +12,12 @@ interface Props {
 }
 const WorkoutTypeItem: React.FC<Props> = ({ src, text, type }) => {
   const dispatch = useDispatch();
+  const screenSize = useScreenSize();
   return (
     <Box
       sx={{
-        width: "100%",
+        width: screenSize > 540 ? "100%" : screenSize > 400 ? "70%" : "80%",
+        margin: screenSize < 540 ? "0 auto" : "",
         height: "25rem",
         borderTopLeftRadius: "50%",
         borderTopRightRadius: "50%",

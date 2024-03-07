@@ -1,3 +1,4 @@
+import useScreenSize from "../hooks/useScreenSize";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import FitMan from "../images/fit_man.webp";
@@ -6,6 +7,7 @@ import SuggestedWorkouts from "./SuggestedWorkouts";
 import WorkoutTypesList from "./WorkoutTypesList";
 import CoverImage from "./CoverImage";
 const HomeView: React.FC = () => {
+  const screenSize = useScreenSize();
   return (
     <>
       <CoverImage />
@@ -39,14 +41,17 @@ const HomeView: React.FC = () => {
               Create Program
             </Button>
           </Box>
-          <img
-            src={FitMan}
-            style={{
-              maxHeight: "100%",
-            }}
-            draggable="false"
-            alt="Fit man posing"
-          />
+          {screenSize > 550 && (
+            <img
+              src={FitMan}
+              style={{
+                maxHeight: "100%",
+                maxWidth: "100%",
+              }}
+              draggable="false"
+              alt="Fit man posing"
+            />
+          )}
         </Box>
       </Box>
     </>
