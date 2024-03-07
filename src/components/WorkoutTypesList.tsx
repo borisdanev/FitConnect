@@ -4,6 +4,7 @@ import useScreenSize from "../hooks/useScreenSize";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import MuslceBuildingType from "../images/muscle_building_type.webp";
 import StrenghType from "../images/strength_type.webp";
 import WeightLossType from "../images/weight_loss_type.webp";
@@ -11,11 +12,14 @@ import EnduranceType from "../images/endurance_type.webp";
 import { WorkoutType } from "../enums/WorkoutType";
 import Slider from "react-slick";
 import WorkoutTypeItem from "./WorkoutTypeItem";
+import SliderArrow from "./SliderArrow";
 const sliderSettings = {
   arrows: true,
   dots: false,
   swipe: true,
   slidesToShow: 2,
+  nextArrow: <SliderArrow variant="next" />,
+  prevArrow: <SliderArrow variant="prev" />,
   responsive: [
     {
       breakpoint: 540,

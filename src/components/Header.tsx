@@ -51,26 +51,27 @@ const Header = () => {
   return (
     <Grid container>
       {screenSize < 900 && (
-        <Grid item xs={2}>
+        <Grid item xs={1} sm={2}>
           <Box
             sx={{
               position: "relative",
               width: "2.5rem",
               height: "2rem",
+              mt: 0.5,
             }}
           >
             <Menu
               onOpen={() => setIsOpen(!isOpen)}
               onClose={() => setIsOpen(!isOpen)}
               isOpen={isOpen}
-              width="200px"
+              width="clamp(7rem,7vw,12.5rem)"
             >
               <Navigation isOpen={isOpen} setIsOpen={setIsOpen} />
             </Menu>
           </Box>
         </Grid>
       )}
-      <Grid item xs={screenSize < 900 ? 5 : 7}>
+      <Grid item xs={6} sm={5} lg={7}>
         <SearchBar />
       </Grid>
       <Grid item xs={2}>

@@ -9,7 +9,10 @@ const EmptyState: React.FC<Props> = ({ illustrationSrc, text }) => {
     <Box
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      <img src={illustrationSrc} style={{ width: "32rem", height: "auto" }} />
+      <img
+        src={illustrationSrc}
+        style={{ width: "32rem", height: "auto", maxWidth: "100%" }}
+      />
       <Typography className="h3 heading-color">{text}</Typography>
     </Box>
   );
