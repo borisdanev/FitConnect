@@ -6,8 +6,8 @@ import {
   RootState,
   useGetUserQuery,
   useGetStoragePictureQuery,
-  useUpdateWeekProgressMutation,
 } from "../store";
+import useScreenSize from "../hooks/useScreenSize";
 import { TrainingSessionModel } from "../types/trainingSession.model";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -20,7 +20,6 @@ import JoinButton from "./JoinButton ";
 import StartWorkoutButton from "./StartWorkoutButton";
 import ActiveWorkout from "./ActiveWorkout";
 import WorkoutProgress from "./WorkoutProgress";
-import useIsWorkoutCreator from "../hooks/useIsWorkoutCreator";
 const WorkoutView: React.FC = () => {
   const workout = useSelector((state: RootState) => state.currentWorkout.value);
   const [selectedTrainingSession, setSelectedTrainingSession] =
@@ -34,12 +33,13 @@ const WorkoutView: React.FC = () => {
   const { data: user } = useGetUserQuery(currentUser.email);
   const { data: workoutSrc } = useGetStoragePictureQuery(workout.id);
   const isMember = useIsMember(workout.id, user ? user.workouts : []);
+  const screenSize = useScreenSize();
   useHandleNewWeek(currentUser.id, workout.id, isMember);
   return (
     <Grid container>
-      <Grid item xs={8}>
+      <Grid item xs={12} md={8}>
         <Grid container>
-          <Grid item xs={8}>
+          <Grid item xs={12} lg={8} order={1}>
             <WorkoutDetails
               title={workout.title}
               desc={workout.description}
@@ -52,8 +52,18 @@ const WorkoutView: React.FC = () => {
             {isMember && workout.creatorId !== currentUser.id && (
               <WorkoutRating />
             )}
+            {screenSize < 1200 && (
+              <>
+                <MembershipBenefits timesPerWeek={workout.timesPerWeek} />
+                {!isMember ? (
+                  <JoinButton workout={workout} user={user} />
+                ) : (
+                  <StartWorkoutButton />
+                )}
+              </>
+            )}
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} lg={4} order={0}>
             <Box
               sx={{
                 display: "flex",
@@ -65,24 +75,30 @@ const WorkoutView: React.FC = () => {
                 style={{ maxWidth: "100%" }}
                 alt="workout program cover"
               />
-              {!isMember ? (
-                <JoinButton workout={workout} user={user} />
-              ) : (
-                <StartWorkoutButton />
+              {screenSize > 1200 && (
+                <>
+                  {!isMember ? (
+                    <JoinButton workout={workout} user={user} />
+                  ) : (
+                    <StartWorkoutButton />
+                  )}
+                  <MembershipBenefits timesPerWeek={workout.timesPerWeek} />
+                </>
               )}
-              <MembershipBenefits timesPerWeek={workout.timesPerWeek} />
             </Box>
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={4}>
-        <TrainingSessionList
-          trainingSessions={workout.trainingSessions}
-          isMember={isMember}
-          setSelectedTrainingSession={setSelectedTrainingSession}
-        />
-      </Grid>
-      <Grid item xs={8}>
+      {screenSize > 900 && (
+        <Grid item xs={4}>
+          <TrainingSessionList
+            trainingSessions={workout.trainingSessions}
+            isMember={isMember}
+            setSelectedTrainingSession={setSelectedTrainingSession}
+          />
+        </Grid>
+      )}
+      <Grid item xs={12} lg={8}>
         <Grid container columnSpacing={4}>
           <Grid item xs={5}>
             <WorkoutProgress
@@ -102,9 +118,11 @@ const WorkoutView: React.FC = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={4}>
-        <MembersChat isMember={isMember} />
-      </Grid>
+      {screenSize > 1200 && (
+        <Grid item lg={4}>
+          <MembersChat isMember={isMember} />
+        </Grid>
+      )}
       {isActiveWorkout && (
         <ActiveWorkout trainingSession={selectedTrainingSession} />
       )}

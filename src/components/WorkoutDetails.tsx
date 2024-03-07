@@ -22,13 +22,6 @@ const WorkoutDetails: React.FC<Props> = ({
   members,
   creator,
 }) => {
-  let Icon = <GiBiceps />;
-  switch (type) {
-    case WorkoutType.WeightLoss: {
-      Icon = <GiRunningShoe />;
-      break;
-    }
-  }
   return (
     <>
       <Typography className="h1">{title}</Typography>

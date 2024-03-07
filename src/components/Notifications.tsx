@@ -10,15 +10,20 @@ import { WorkoutModel } from "../types/workout.model";
 import { JoinedWorkout } from "../types/joinedWorkout.model";
 interface Props {
   list: WorkoutModel[] | JoinedWorkout[] | undefined;
+  tooltip?: boolean;
 }
 const isJoinedWorkoutType = (obj: any): obj is JoinedWorkout => {
   return obj.hasOwnProperty("workout");
 };
-const Notifications: React.FC<Props> = ({ list }) => {
+const Notifications: React.FC<Props> = ({ list, tooltip }) => {
   return (
     <List
       sx={{
-        height: "30rem",
+        height: tooltip
+          ? list && list.length > 0
+            ? "20rem"
+            : "15rem"
+          : "30rem",
         overflow: "auto",
         pt: 0,
         topBottomRadius: "0.5rem",

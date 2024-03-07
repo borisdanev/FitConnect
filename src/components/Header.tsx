@@ -78,7 +78,7 @@ const Header = () => {
         <Box className="h3" sx={{ display: "flex", justifyContent: "end" }}>
           <Tooltip
             enterTouchDelay={0}
-            title={<Notifications list={joinedWorkouts} />}
+            title={<Notifications list={joinedWorkouts} tooltip />}
             componentsProps={{
               tooltip: {
                 sx: {
