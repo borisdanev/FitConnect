@@ -11,6 +11,9 @@ import useScreenSize from "../hooks/useScreenSize";
 import { TrainingSessionModel } from "../types/trainingSession.model";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import { IoChatbubbleEllipses } from "react-icons/io5";
 import WorkoutDetails from "./WorkoutDetails";
 import WorkoutRating from "./WorkoutRating";
 import TrainingSessionList from "./TrainingSessionList";
@@ -37,9 +40,9 @@ const WorkoutView: React.FC = () => {
   useHandleNewWeek(currentUser.id, workout.id, isMember);
   return (
     <Grid container>
-      <Grid item xs={12} md={8}>
+      <Grid item xs={12} sm={8}>
         <Grid container>
-          <Grid item xs={12} lg={8} order={1}>
+          <Grid item xs={12} lg={8} order={screenSize > 1200 ? 0 : 1}>
             <WorkoutDetails
               title={workout.title}
               desc={workout.description}
@@ -63,7 +66,7 @@ const WorkoutView: React.FC = () => {
               </>
             )}
           </Grid>
-          <Grid item xs={12} lg={4} order={0}>
+          <Grid item xs={12} lg={4} order={screenSize > 1200 ? 1 : 0}>
             <Box
               sx={{
                 display: "flex",
@@ -118,10 +121,35 @@ const WorkoutView: React.FC = () => {
           </Grid>
         </Grid>
       </Grid>
-      {screenSize > 1200 && (
+      {screenSize > 1200 ? (
         <Grid item lg={4}>
           <MembersChat isMember={isMember} />
         </Grid>
+      ) : (
+        <Tooltip
+          enterTouchDelay={0}
+          title={<MembersChat isMember={isMember} />}
+          sx={{
+            position: "fixed",
+            top: "20%",
+            right: "10rem",
+            color: "#00e676",
+          }}
+          componentsProps={{
+            tooltip: {
+              sx: {
+                bgcolor: "#37423d",
+                boxShadow: "1px 1px 5px white",
+                "& .MuiTooltip-arrow": {
+                  color: "#37423d",
+                },
+              },
+            },
+          }}
+          arrow
+        >
+          <IconButton>{<IoChatbubbleEllipses />}</IconButton>
+        </Tooltip>
       )}
       {isActiveWorkout && (
         <ActiveWorkout trainingSession={selectedTrainingSession} />
