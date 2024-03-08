@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useScreenSize from "../hooks/useScreenSize";
 import Box from "@mui/material/Box";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -27,8 +28,15 @@ const TrainingSessionList: React.FC<Props> = ({
     );
     setSelectedTrainingSession(trainingSession);
   };
+  const screenSize = useScreenSize();
   return (
-    <Box sx={{ ml: 2, height: "26rem", overflow: "auto" }}>
+    <Box
+      sx={{
+        ml: 2,
+        height: screenSize > 1200 ? "26rem" : "15rem",
+        overflow: "auto",
+      }}
+    >
       <Select
         value={value}
         sx={{

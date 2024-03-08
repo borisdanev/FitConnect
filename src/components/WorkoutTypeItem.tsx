@@ -46,7 +46,7 @@ const WorkoutTypeItem: React.FC<Props> = ({ src, text, type }) => {
           underline="none"
           onClick={() => dispatch(setWorkoutType(type))}
         >
-          <Typography sx={{ fontSize: "clamp(0.75rem, 2vw, 1.rem)" }}>
+          <Typography sx={{ fontSize: "clamp(0.85rem, 2vw, 1rem)" }}>
             FIND WORKOUTS
           </Typography>
         </Link>

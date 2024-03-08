@@ -8,7 +8,7 @@ interface Props {
 }
 const MembershipBenefits: React.FC<Props> = ({ timesPerWeek }) => {
   return (
-    <Box sx={{ mt: 2 }}>
+    <Box sx={{ mt: 2 }} className="h5">
       {[
         { icon: <FaRegCalendarAlt />, text: `${timesPerWeek}x/week` },
         {

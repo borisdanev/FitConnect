@@ -1,6 +1,7 @@
 import { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useGetMembersChatQuery, RootState } from "../store";
+import useScreenSize from "../hooks/useScreenSize";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { IoIosLock } from "react-icons/io";
@@ -16,6 +17,7 @@ const MembersChat: React.FC<Props> = ({ isMember }) => {
   );
   const { data: chatMessages } = useGetMembersChatQuery(currentWorkout.id);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const screenSize = useScreenSize();
   const scrollToBottom = () => {
     if (!scrollContainerRef.current) return;
     const scrollHeight = scrollContainerRef.current.scrollHeight;
@@ -34,8 +36,9 @@ const MembersChat: React.FC<Props> = ({ isMember }) => {
         p: 2,
         borderRadius: "0.5rem",
         ml: 2,
-        mt: 2,
-        height: "25rem",
+        mb: screenSize < 1200 ? 2 : 0,
+        mt: screenSize > 1200 ? 2 : 0,
+        height: screenSize > 1200 ? "25rem" : "17rem",
       }}
     >
       {!isMember ? (

@@ -11,9 +11,6 @@ import useScreenSize from "../hooks/useScreenSize";
 import { TrainingSessionModel } from "../types/trainingSession.model";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import { IoChatbubbleEllipses } from "react-icons/io5";
 import WorkoutDetails from "./WorkoutDetails";
 import WorkoutRating from "./WorkoutRating";
 import TrainingSessionList from "./TrainingSessionList";
@@ -23,6 +20,7 @@ import JoinButton from "./JoinButton ";
 import StartWorkoutButton from "./StartWorkoutButton";
 import ActiveWorkout from "./ActiveWorkout";
 import WorkoutProgress from "./WorkoutProgress";
+import WorkoutViewToggle from "./WorkoutViewToggle";
 const WorkoutView: React.FC = () => {
   const workout = useSelector((state: RootState) => state.currentWorkout.value);
   const [selectedTrainingSession, setSelectedTrainingSession] =
@@ -39,10 +37,16 @@ const WorkoutView: React.FC = () => {
   const screenSize = useScreenSize();
   useHandleNewWeek(currentUser.id, workout.id, isMember);
   return (
-    <Grid container>
-      <Grid item xs={12} sm={8}>
+    <Grid container rowSpacing={2}>
+      <Grid item xs={12} lg={8}>
         <Grid container>
-          <Grid item xs={12} lg={8} order={screenSize > 1200 ? 0 : 1}>
+          <Grid
+            item
+            xs={12}
+            lg={8}
+            order={screenSize > 1200 ? 0 : 1}
+            sx={{ textAlign: "center" }}
+          >
             <WorkoutDetails
               title={workout.title}
               desc={workout.description}
@@ -92,7 +96,7 @@ const WorkoutView: React.FC = () => {
           </Grid>
         </Grid>
       </Grid>
-      {screenSize > 900 && (
+      {screenSize > 1200 && (
         <Grid item xs={4}>
           <TrainingSessionList
             trainingSessions={workout.trainingSessions}
@@ -126,30 +130,16 @@ const WorkoutView: React.FC = () => {
           <MembersChat isMember={isMember} />
         </Grid>
       ) : (
-        <Tooltip
-          enterTouchDelay={0}
-          title={<MembersChat isMember={isMember} />}
-          sx={{
-            position: "fixed",
-            top: "20%",
-            right: "10rem",
-            color: "#00e676",
-          }}
-          componentsProps={{
-            tooltip: {
-              sx: {
-                bgcolor: "#37423d",
-                boxShadow: "1px 1px 5px white",
-                "& .MuiTooltip-arrow": {
-                  color: "#37423d",
-                },
-              },
-            },
-          }}
-          arrow
-        >
-          <IconButton>{<IoChatbubbleEllipses />}</IconButton>
-        </Tooltip>
+        <WorkoutViewToggle
+          toRender={[
+            <TrainingSessionList
+              trainingSessions={workout.trainingSessions}
+              isMember={isMember}
+              setSelectedTrainingSession={setSelectedTrainingSession}
+            />,
+            <MembersChat isMember={isMember} />,
+          ]}
+        />
       )}
       {isActiveWorkout && (
         <ActiveWorkout trainingSession={selectedTrainingSession} />

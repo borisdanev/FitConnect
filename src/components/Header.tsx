@@ -51,7 +51,7 @@ const Header = () => {
   return (
     <Grid container>
       {screenSize < 900 && (
-        <Grid item xs={1} sm={2}>
+        <Grid item xs={1}>
           <Box
             sx={{
               position: "relative",
@@ -71,10 +71,10 @@ const Header = () => {
           </Box>
         </Grid>
       )}
-      <Grid item xs={6} sm={5} lg={7}>
+      <Grid item xs={5} sm={6} md={7} lg={7}>
         <SearchBar />
       </Grid>
-      <Grid item xs={2}>
+      <Grid item xs={3} sm={2}>
         <Box className="h3" sx={{ display: "flex", justifyContent: "end" }}>
           <Tooltip
             enterTouchDelay={0}
@@ -121,18 +121,18 @@ const Header = () => {
           </Tooltip>
         </Box>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={3} sm={3} md={4} lg={3}>
         <Box sx={{ display: "flex", justifyContent: "end" }}>
           {!currentUser.id ? (
             <Box sx={{ display: "flex" }}>
               <Button
                 variant="contained"
-                sx={{ mr: 3 }}
+                sx={{ mr: screenSize > 900 ? 3 : 0 }}
                 onClick={() => dispatch(setOpenedSignupForm(true))}
               >
                 Sign Up
               </Button>
-              {screenSize > 1200 && (
+              {screenSize > 900 && (
                 <Button
                   variant="outlined"
                   onClick={() => dispatch(setOpenedLoginForm(true))}
