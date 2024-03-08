@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useUploadImageMutation } from "../store";
 import useGetWorkoutPrograms from "../hooks/useGetWorkoutPrograms";
+import useScreenSize from "../hooks/useScreenSize";
 import { User } from "../types/user.model";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -17,6 +18,7 @@ const ProfileDetails: React.FC<Props> = ({ currentUser }) => {
     currentUser.id,
     currentUser.workouts?.map((workout) => workout.workout)
   );
+  const screenSize = useScreenSize();
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -41,8 +43,8 @@ const ProfileDetails: React.FC<Props> = ({ currentUser }) => {
       <Box
         sx={{
           position: "relative",
-          width: "clamp(4rem, 8vw, 7rem)",
-          height: "clamp(4rem, 8vw, 7rem)",
+          width: `${screenSize > 1200 ? "7rem" : "5rem"}`,
+          height: `${screenSize > 1200 ? "7rem" : "5rem"}`,
         }}
       >
         <Box
@@ -64,8 +66,8 @@ const ProfileDetails: React.FC<Props> = ({ currentUser }) => {
         <ProfilePicture
           selectedImage={selectedImage}
           userId={currentUser.id}
-          width="clamp(4rem, 8vw, 7rem)"
-          height="clamp(4rem, 8vw, 7rem)"
+          width={screenSize > 1200 ? "7rem" : "5rem"}
+          height={screenSize > 1200 ? "7rem" : "5rem"}
         />
         <input
           type="file"

@@ -71,7 +71,7 @@ const Header = () => {
           </Box>
         </Grid>
       )}
-      <Grid item xs={5} sm={6} md={7} lg={7}>
+      <Grid item xs={5} sm={6} lg={7}>
         <SearchBar />
       </Grid>
       <Grid item xs={3} sm={2}>
@@ -121,7 +121,7 @@ const Header = () => {
           </Tooltip>
         </Box>
       </Grid>
-      <Grid item xs={3} sm={3} md={4} lg={3}>
+      <Grid item xs={3} md={4} lg={3}>
         <Box sx={{ display: "flex", justifyContent: "end" }}>
           {!currentUser.id ? (
             <Box sx={{ display: "flex" }}>

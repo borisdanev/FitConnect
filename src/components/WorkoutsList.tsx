@@ -43,6 +43,7 @@ const WorkoutList: React.FC<Props> = ({
   gridSpace,
   programList,
 }) => {
+  console.log(workouts);
   const screenSize = useScreenSize();
   return (
     <>
@@ -98,9 +99,7 @@ const WorkoutList: React.FC<Props> = ({
                 ? Array(8)
                     .fill(null)
                     .map((_, i) => <WorkoutSkeleton key={i} />)
-                : workouts &&
-                  workouts.length > 0 &&
-                  [...workouts]
+                : [...workouts]
                     .sort(
                       (a, b) =>
                         (b[sortBy as keyof WorkoutModel] as number) -
