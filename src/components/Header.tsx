@@ -55,7 +55,7 @@ const Header = () => {
           <Box
             sx={{
               position: "relative",
-              width: "2.5rem",
+              width: "clamp(2rem, 6vw, 2.5rem)",
               height: "2rem",
               mt: 0.5,
             }}
@@ -64,7 +64,6 @@ const Header = () => {
               onOpen={() => setIsOpen(!isOpen)}
               onClose={() => setIsOpen(!isOpen)}
               isOpen={isOpen}
-              width="clamp(7rem,7vw,12.5rem)"
             >
               <Navigation isOpen={isOpen} setIsOpen={setIsOpen} />
             </Menu>
@@ -94,7 +93,7 @@ const Header = () => {
           >
             <IconButton
               aria-label="notifications"
-              style={{ marginRight: "0.5rem" }}
+              style={{ marginRight: screenSize > 500 ? "0.5rem" : "0" }}
             >
               <IoNotifications />
             </IconButton>
