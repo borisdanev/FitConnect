@@ -16,7 +16,9 @@ const HomeView: React.FC = () => {
           <Typography className="h2 heading-color" sx={{ mb: 2 }}>
             Find Workout
           </Typography>
-          <SuggestedWorkouts gridSpace={[12, 6, 6, 4]} />
+          <SuggestedWorkouts
+            gridSpace={{ xs: 12, sm: 6, md: 6, lg: 3, xl: 3 }}
+          />
         </Box>
         <WorkoutTypesList />
         <Box

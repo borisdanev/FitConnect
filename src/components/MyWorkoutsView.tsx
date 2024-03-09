@@ -28,10 +28,10 @@ const MyWorkoutsView: React.FC = () => {
               sortBy={SortType.Members}
               type={WorkoutType.All}
               workouts={data
-                ?.map((workout) => workout.workout)
+                .map((workout) => workout.workout)
                 .filter((workout) => workout.creatorId !== currentUser.id)}
               isLoading={isLoading}
-              gridSpace={[12, 6, 6, 4]}
+              gridSpace={{ xs: 12, sm: 6, md: 6, lg: 4, xl: 4 }}
             />
           ) : (
             <EmptyState
@@ -50,7 +50,9 @@ const MyWorkoutsView: React.FC = () => {
                 : ""}{" "}
               Workouts
             </Typography>
-            <SuggestedWorkouts gridSpace={[12, 6, 6, 4]} />
+            <SuggestedWorkouts
+              gridSpace={{ xs: 12, sm: 6, md: 6, lg: 4, xl: 4 }}
+            />
           </Box>
         </Grid>
         {screenSize > 1200 && (

@@ -19,9 +19,6 @@ const MyProgramsView: React.FC = () => {
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value
   );
-  // const { data: programs, isLoading } = useGetWorkoutProgramsQuery(
-  //   currentUser.id
-  // );
   const screenSize = useScreenSize();
   const { data: workouts, isLoading } = useGetUserWorkoutsQuery(currentUser.id);
   const programs = useGetWorkoutPrograms(
@@ -42,7 +39,7 @@ const MyProgramsView: React.FC = () => {
               type={WorkoutType.All}
               workouts={programs}
               isLoading={isLoading}
-              gridSpace={[12, 6, 6, 4]}
+              gridSpace={{ xs: 12, sm: 6, md: 6, lg: 4, xl: 4 }}
               programList={true}
             />
           ) : (

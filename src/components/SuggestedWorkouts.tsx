@@ -7,8 +7,9 @@ import Box from "@mui/material/Box";
 import WorkoutSorting from "./WorkoutSorting";
 import Filters from "./Filters";
 import WorkoutList from "./WorkoutsList";
+import { BreakPoints } from "../types/breakpoints.model";
 interface Props {
-  gridSpace: number[];
+  gridSpace: BreakPoints;
 }
 const SuggestedWorkouts: React.FC<Props> = ({ gridSpace }) => {
   const [type, setType] = useState<WorkoutType>(WorkoutType.All);
@@ -21,6 +22,7 @@ const SuggestedWorkouts: React.FC<Props> = ({ gridSpace }) => {
         <Filters type={type} setType={setType} />
         <WorkoutSorting sortBy={sortBy} setSortBy={setSortBy} />
       </Box>
+
       <WorkoutList
         sortBy={sortBy}
         type={type}

@@ -9,32 +9,16 @@ import Workout from "./Workout";
 import CreateProgramAction from "./CreateProgramAction";
 import EmptyState from "./EmptyState";
 import NoResultIllustration from "../images/no_results.webp";
-import Slider from "react-slick";
+import WorkoutSlider from "./WorkoutSlider";
+import { BreakPoints } from "../types/breakpoints.model";
 interface Props {
   sortBy: SortType;
   type: WorkoutType;
   workouts: WorkoutModel[] | undefined;
   isLoading: boolean;
-  gridSpace: number[];
+  gridSpace: BreakPoints;
   programList?: boolean;
 }
-const sliderSettings = {
-  slidesToShow: 3,
-  responsive: [
-    {
-      breakpoint: 850,
-      settings: {
-        slidesToShow: 2,
-      },
-    },
-    {
-      breakpoint: 450,
-      settings: {
-        slidesToShow: 1,
-      },
-    },
-  ],
-};
 const WorkoutList: React.FC<Props> = ({
   sortBy,
   type,
@@ -43,7 +27,6 @@ const WorkoutList: React.FC<Props> = ({
   gridSpace,
   programList,
 }) => {
-  console.log(workouts);
   const screenSize = useScreenSize();
   return (
     <>
@@ -56,9 +39,9 @@ const WorkoutList: React.FC<Props> = ({
                   <Grid
                     item
                     key={i}
-                    sm={gridSpace[1]}
-                    md={gridSpace[2]}
-                    lg={gridSpace[3]}
+                    sm={gridSpace.sm}
+                    md={gridSpace.md}
+                    lg={gridSpace.lg}
                   >
                     <WorkoutSkeleton />
                   </Grid>
@@ -78,15 +61,15 @@ const WorkoutList: React.FC<Props> = ({
                   <Grid
                     key={i}
                     item
-                    sm={gridSpace[1]}
-                    md={gridSpace[2]}
-                    lg={gridSpace[3]}
+                    sm={gridSpace.sm}
+                    md={gridSpace.md}
+                    lg={gridSpace.lg}
                   >
                     <Workout workout={workout} />
                   </Grid>
                 ))}
           {programList && (
-            <Grid item sm={gridSpace[1]} md={gridSpace[2]} lg={gridSpace[3]}>
+            <Grid item sm={gridSpace.sm} md={gridSpace.md} lg={gridSpace.lg}>
               <CreateProgramAction width="100%" height="17.8rem" />
             </Grid>
           )}
@@ -94,25 +77,12 @@ const WorkoutList: React.FC<Props> = ({
       ) : (
         <>
           {workouts && workouts.length > 0 && (
-            <Slider className="workouts-slider" {...sliderSettings}>
-              {isLoading
-                ? Array(8)
-                    .fill(null)
-                    .map((_, i) => <WorkoutSkeleton key={i} />)
-                : [...workouts]
-                    .sort(
-                      (a, b) =>
-                        (b[sortBy as keyof WorkoutModel] as number) -
-                        (a[sortBy as keyof WorkoutModel] as number)
-                    )
-                    .filter(
-                      (workout) =>
-                        workout.type === type || type === WorkoutType.All
-                    )
-                    .map((workout: WorkoutModel, i) => (
-                      <Workout key={i} workout={workout} />
-                    ))}
-            </Slider>
+            <WorkoutSlider
+              isLoading={isLoading}
+              workouts={workouts}
+              sortBy={sortBy}
+              type={type}
+            />
           )}
         </>
       )}
