@@ -4,6 +4,6 @@ export interface JoinedWorkout {
   workout: WorkoutModel;
   finishedSessions: number;
   previousWeekProgress: number;
-  lastSessionFinishDate: Timestamp;
+  lastSessionFinishDate?: Timestamp;
   isRated: boolean;
 }

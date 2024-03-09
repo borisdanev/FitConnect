@@ -42,7 +42,20 @@ const JoinButton: React.FC<Props> = ({ workout, user }) => {
       workoutId: currentWorkout.id,
     });
     updateJoinedWorkout(currentWorkout.id);
-    dispatch(setCurrentUser(user));
+    dispatch(
+      setCurrentUser({
+        ...currentUser,
+        workouts: [
+          ...currentUser.workouts,
+          {
+            workout: workout,
+            finishedSessions: 0,
+            previousWeekProgress: 0,
+            isRated: false,
+          },
+        ],
+      })
+    );
   };
   return (
     <Button

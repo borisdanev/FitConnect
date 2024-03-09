@@ -12,6 +12,7 @@ const useHandleSearch = () => {
   const workoutTypeSearch = useSelector(
     (state: RootState) => state.searchSlice.type
   );
+  console.log(currentUser);
   return (workout: WorkoutModel) =>
     searchKeyword
       ? workout.title.toLowerCase().includes(searchKeyword.toLowerCase())

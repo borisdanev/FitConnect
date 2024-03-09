@@ -1,3 +1,4 @@
+import useScreenSize from "../hooks/useScreenSize";
 import Slider from "react-slick";
 import WorkoutSkeleton from "./WorkoutSkeleton";
 import Workout from "./Workout";
@@ -10,29 +11,37 @@ interface Props {
   sortBy: SortType;
   type: WorkoutType;
 }
-const sliderSettings = {
-  slidesToShow: 3,
-  responsive: [
-    {
-      breakpoint: 850,
-      settings: {
-        slidesToShow: 2,
-      },
-    },
-    {
-      breakpoint: 450,
-      settings: {
-        slidesToShow: 1,
-      },
-    },
-  ],
-};
 const WorkoutSlider: React.FC<Props> = ({
   isLoading,
   workouts,
   sortBy,
   type,
 }) => {
+  useScreenSize();
+  const sliderSettings = {
+    slidesToShow: 3,
+    infinite: false,
+    responsive: [
+      {
+        breakpoint: 2000,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 850,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 450,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
   return (
     <Slider className="workouts-slider" {...sliderSettings}>
       {isLoading

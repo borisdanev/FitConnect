@@ -9,7 +9,6 @@ import {
   arrayUnion,
   updateDoc,
   getDoc,
-  getCountFromServer,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { WorkoutModel } from "../../types/workout.model";
@@ -61,7 +60,7 @@ export const firebaseApi = createApi({
         const workouts = data.workouts;
         return { data: workouts };
       },
-      providesTags: ["Create"],
+      providesTags: ["Create", "Join"],
     }),
     getJoinedWorkout: builder.query<
       JoinedWorkout,

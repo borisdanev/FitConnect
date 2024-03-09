@@ -102,7 +102,12 @@ const ProfileDetails: React.FC<Props> = ({ currentUser }) => {
             sm={12}
             lg={i < arr.length - 1 ? 6 : 12}
           >
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
               <Typography>{item.data}</Typography>
               <Typography sx={{ opacity: "0.8", ml: 1 }}>
                 {item.text}
