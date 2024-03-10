@@ -49,7 +49,10 @@ const MyProgramsView: React.FC = () => {
                 text="No Workout Programs Created Yet"
               />
               <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-                <CreateProgramAction width="7rem" height="7rem" />
+                <CreateProgramAction
+                  width="clamp(7rem, 20vw, 9rem)"
+                  height="clamp(7rem, 20vw, 9rem)"
+                />
               </Box>
             </Box>
           )}

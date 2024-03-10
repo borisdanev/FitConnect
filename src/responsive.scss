@@ -7,6 +7,9 @@
       padding: 0 0.4rem;
     }
   }
+  .signup-button {
+    height: clamp(1.7rem, 6vw, 2rem);
+  }
 }
 @media (max-width: 34.35rem) {
   .workout-types-list {

@@ -1,4 +1,3 @@
-import useScreenSize from "../hooks/useScreenSize";
 import Typography from "@mui/material/Typography";
 import RatingStars from "./RatingStars";
 import { HiUsers } from "react-icons/hi";
@@ -21,7 +20,6 @@ const WorkoutDetails: React.FC<Props> = ({
   members,
   creator,
 }) => {
-  const screenSize = useScreenSize();
   return (
     <>
       <Typography className="h1">{title}</Typography>
@@ -32,7 +30,6 @@ const WorkoutDetails: React.FC<Props> = ({
         sx={{
           display: "flex",
           mb: 1,
-          justifyContent: screenSize < 1200 ? "center" : "start",
         }}
         className="h5"
       >
@@ -47,7 +44,6 @@ const WorkoutDetails: React.FC<Props> = ({
           display: "flex",
           alignItems: "center",
           mt: 1,
-          justifyContent: screenSize < 1200 ? "center" : "start",
         }}
         className="h5"
       >
@@ -59,11 +55,12 @@ const WorkoutDetails: React.FC<Props> = ({
           mt: 1,
           display: "flex",
           alignItems: "center",
-          justifyContent: screenSize < 1200 ? "center" : "start",
         }}
         className="h5"
       >
-        <Typography sx={{ opacity: "0.8", mr: 1 }}>Created by</Typography>{" "}
+        <Typography sx={{ opacity: "0.8", mr: 1 }} className="h5">
+          Created by
+        </Typography>{" "}
         {creator}
       </Typography>
     </>

@@ -142,8 +142,8 @@ const Header = () => {
                 variant="contained"
                 sx={{
                   mr: screenSize > 900 ? 3 : 0,
-                  height: "clamp(1.8rem, 6vw, 2rem)",
                 }}
+                className="signup-button"
                 onClick={() => dispatch(setOpenedSignupForm(true))}
               >
                 Sign Up

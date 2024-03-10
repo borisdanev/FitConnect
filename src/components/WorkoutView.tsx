@@ -40,13 +40,7 @@ const WorkoutView: React.FC = () => {
     <Grid container rowSpacing={2}>
       <Grid item xs={12} lg={8}>
         <Grid container>
-          <Grid
-            item
-            xs={12}
-            lg={8}
-            order={screenSize > 1200 ? 0 : 1}
-            sx={{ textAlign: "center" }}
-          >
+          <Grid item xs={12} lg={8} order={screenSize > 1200 ? 0 : 1}>
             <WorkoutDetails
               title={workout.title}
               desc={workout.description}
