@@ -24,7 +24,10 @@ const WorkoutViewToggle: React.FC<Props> = ({ toRender }) => {
       }}
     >
       {!opened && (
-        <IconButton sx={{ bgcolor: "#00e676" }} onClick={() => setOpened(true)}>
+        <IconButton
+          sx={{ bgcolor: "#00e676", border: "3px solid white" }}
+          onClick={() => setOpened(true)}
+        >
           <VscListSelection />
         </IconButton>
       )}

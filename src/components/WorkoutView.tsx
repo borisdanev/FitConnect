@@ -100,8 +100,8 @@ const WorkoutView: React.FC = () => {
         </Grid>
       )}
       <Grid item xs={12} lg={8}>
-        <Grid container columnSpacing={4}>
-          <Grid item xs={5}>
+        <Grid container columnSpacing={4} rowSpacing={2}>
+          <Grid item sm={6}>
             <WorkoutProgress
               timesPerWeek={workout.timesPerWeek}
               variant="current"
@@ -109,7 +109,7 @@ const WorkoutView: React.FC = () => {
               currentWorkout={workout}
             />
           </Grid>
-          <Grid item xs={5}>
+          <Grid item sm={6}>
             <WorkoutProgress
               timesPerWeek={workout.timesPerWeek}
               variant="previous"

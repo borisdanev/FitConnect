@@ -70,7 +70,11 @@ const SignupForm: React.FC = () => {
   });
   return (
     <AuthOverlay setOpenedForm={setOpenedSignupForm}>
-      <form className="auth-form" onSubmit={formik.handleSubmit}>
+      <form
+        className="auth-form"
+        style={{ width: "clamp(20rem, 80vw, 23rem)" }}
+        onSubmit={formik.handleSubmit}
+      >
         <Box
           sx={{
             my: 3,

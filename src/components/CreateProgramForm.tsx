@@ -68,7 +68,7 @@ const CreateProgramForm: React.FC<Props> = ({ setShowMessage }) => {
       }}
       className="position-fill"
     >
-      <Grid container width="clamp(30rem, 70vw, 70rem)">
+      <Grid container width="clamp(21rem, 70vw, 70rem)">
         <Grid item xs={12}>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <img
