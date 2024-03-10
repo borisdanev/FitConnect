@@ -4,25 +4,30 @@ import { useDispatch } from "react-redux";
 import useScreenSize from "../hooks/useScreenSize";
 import { ViewEnum } from "../enums/View";
 import { FormEvent } from "react";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
 import { IoIosSearch } from "react-icons/io";
+import { IoMdClose } from "react-icons/io";
 const SearchBar = () => {
   const dispatch = useDispatch();
   const [value, setValue] = useState<string>("");
+  const [openedSearch, setOpenedSearch] = useState<boolean>(false);
   const handleSubmit = (e: FormEvent): void => {
     e.preventDefault();
     dispatch(setSearchKeyword(value));
     dispatch(selectView(ViewEnum.Home));
+    setOpenedSearch(false);
   };
   const screenSize = useScreenSize();
-  return (
+  const searchForm = (
     <form
       onSubmit={handleSubmit}
       style={{
-        width: "100%",
+        width: "90%",
         position: "relative",
         height: screenSize > 600 ? "2.5rem" : "2rem",
         fontSize: "1.2rem",
-        maxWidth: "100%",
+        maxWidth: "90%",
       }}
     >
       <IoIosSearch
@@ -48,6 +53,40 @@ const SearchBar = () => {
         placeholder="Search Workout"
       />
     </form>
+  );
+  return (
+    <>
+      {screenSize > 430 ? (
+        <>{searchForm}</>
+      ) : (
+        <>
+          <IconButton onClick={() => setOpenedSearch(true)}>
+            <IoIosSearch />
+          </IconButton>
+          {openedSearch && (
+            <Box
+              className="position-fill"
+              sx={{
+                position: "fixed",
+                display: "flex",
+                justifyContent: "center",
+                bgcolor: "rgba(0, 0, 0, 0.6)",
+                zIndex: 99,
+                pt: 4,
+              }}
+            >
+              <IconButton
+                sx={{ position: "absolute", right: "0.5rem", top: "0.5rem" }}
+                onClick={() => setOpenedSearch(false)}
+              >
+                <IoMdClose />
+              </IconButton>
+              <Box sx={{ width: "70%" }}>{searchForm}</Box>
+            </Box>
+          )}
+        </>
+      )}
+    </>
   );
 };
 export default SearchBar;

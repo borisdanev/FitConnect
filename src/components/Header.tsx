@@ -56,7 +56,7 @@ const Header = () => {
             sx={{
               position: "relative",
               width: "clamp(2rem, 6vw, 2.5rem)",
-              height: "2rem",
+              height: "clamp(1.5rem, 4.5vw, 2rem)",
               mt: 0.5,
             }}
           >
@@ -70,10 +70,15 @@ const Header = () => {
           </Box>
         </Grid>
       )}
-      <Grid item xs={!currentUser.id ? 5 : 7} sm={6} lg={7}>
+      <Grid
+        item
+        xs={screenSize > 430 ? (!currentUser.id ? 6 : 7) : 4}
+        sm={6}
+        lg={7}
+      >
         <SearchBar />
       </Grid>
-      <Grid item xs={3} sm={2}>
+      <Grid item xs={2} sm={2}>
         <Box className="h3" sx={{ display: "flex", justifyContent: "end" }}>
           <Tooltip
             enterTouchDelay={0}
@@ -94,6 +99,7 @@ const Header = () => {
             <IconButton
               aria-label="notifications"
               style={{ marginRight: screenSize > 500 ? "0.5rem" : "0" }}
+              sx={{ fontSize: "clamp(1.3rem,4vw,1.5rem)" }}
             >
               <IoNotifications />
             </IconButton>
@@ -114,19 +120,30 @@ const Header = () => {
             }}
             arrow
           >
-            <IconButton aria-label="mail">
+            <IconButton
+              aria-label="mail"
+              sx={{ fontSize: "clamp(1.3rem,4vw,1.5rem)" }}
+            >
               <IoMail />
             </IconButton>
           </Tooltip>
         </Box>
       </Grid>
-      <Grid item xs={!currentUser.id ? 3 : 1} md={4} lg={3}>
+      <Grid
+        item
+        xs={screenSize > 430 ? (!currentUser.id ? 3 : 1) : 4}
+        md={4}
+        lg={3}
+      >
         <Box sx={{ display: "flex", justifyContent: "end" }}>
           {!currentUser.id ? (
             <Box sx={{ display: "flex" }}>
               <Button
                 variant="contained"
-                sx={{ mr: screenSize > 900 ? 3 : 0 }}
+                sx={{
+                  mr: screenSize > 900 ? 3 : 0,
+                  height: "clamp(1.8rem, 6vw, 2rem)",
+                }}
                 onClick={() => dispatch(setOpenedSignupForm(true))}
               >
                 Sign Up
