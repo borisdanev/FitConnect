@@ -5,18 +5,24 @@ import { EditableUserData } from "../enums/EditableUserData";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import grey from "@mui/material/colors/grey";
-import { FormikErrors, FormikValues } from "formik";
+import { FormikErrors, FormikValues, FormikProps } from "formik";
+import { ProfileModel } from "../types/profile.model";
+import useDynamicInitialValues from "../hooks/useDynamicInitialValues";
 interface Props {
   userId: string;
   setShowMessage: (show: boolean) => void;
   errors: FormikErrors<FormikValues>;
   dataToChange: { key: EditableUserData; value: string }[];
+  formik: FormikProps<ProfileModel>;
+  initialValues: ProfileModel;
 }
 const EditProfileButtons: React.FC<Props> = ({
   userId,
   setShowMessage,
   errors,
   dataToChange,
+  formik,
+  initialValues,
 }) => {
   const screenSize = useScreenSize();
   const [updateUser] = useUpdateUserMutation();
@@ -26,7 +32,10 @@ const EditProfileButtons: React.FC<Props> = ({
     setShowMessage(true);
     updateUser({ userId, data: dataToChange });
   };
-  const handleDiscardChanges = () => {};
+  const handleDiscardChanges = () => {
+    console.log(formik.values);
+    formik.setValues(initialValues);
+  };
   return (
     <Box
       sx={{

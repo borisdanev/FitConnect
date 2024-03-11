@@ -49,8 +49,8 @@ const HomeView: React.FC = () => {
             </Button> */}
             <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
               <CreateProgramAction
-                width={"5.5rem"}
-                height="5.5rem"
+                width={"clamp(5.5rem, 20vw, 6.5rem)"}
+                height="clamp(5.5rem, 20vw, 6.5rem)"
                 bgColor="#29332e"
               />
             </Box>
