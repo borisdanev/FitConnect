@@ -228,8 +228,15 @@ body {
   }
   .slick-next {
     right: 1rem;
+    &:before {
+      color: #00e676 !important;
+    }
   }
   .slick-prev {
     left: 1rem;
+
+    &:before {
+      color: #00e676 !important;
+    }
   }
 }

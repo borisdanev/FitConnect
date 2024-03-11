@@ -35,7 +35,10 @@ const HomeView: React.FC = () => {
           <Box>
             <Typography
               className="h3 heading-color"
-              sx={{ pl: 3, width: "50%" }}
+              sx={{
+                pl: 3,
+                width: screenSize > 550 ? "clamp(19rem, 3vw, 23.75rem)" : "90%",
+              }}
             >
               Empower the community with your unique workout program
             </Typography>
@@ -49,6 +52,9 @@ const HomeView: React.FC = () => {
               style={{
                 maxHeight: "100%",
                 maxWidth: "100%",
+                width: "clamp(15rem, 30vw, 22.5rem)",
+                height: "100%",
+                objectFit: "cover",
               }}
               draggable="false"
               alt="Fit man posing"
