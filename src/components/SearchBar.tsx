@@ -60,7 +60,7 @@ const SearchBar = () => {
         <>{searchForm}</>
       ) : (
         <>
-          <IconButton onClick={() => setOpenedSearch(true)}>
+          <IconButton sx={{ ml: 1 }} onClick={() => setOpenedSearch(true)}>
             <IoIosSearch />
           </IconButton>
           {openedSearch && (

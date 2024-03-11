@@ -22,9 +22,10 @@ const HomeView: React.FC = () => {
         </Box>
         <WorkoutTypesList />
         <Box
-          className="gradient"
+          // className="gradient"
           sx={{
             height: "15rem",
+            bgcolor: "#37423d",
             borderRadius: "10px",
             display: "flex",
             justifyContent: "space-between",
@@ -37,7 +38,7 @@ const HomeView: React.FC = () => {
               className="h3 heading-color"
               sx={{
                 pl: 3,
-                width: screenSize > 550 ? "clamp(19rem, 3vw, 23.75rem)" : "90%",
+                width: screenSize > 550 ? "clamp(19rem, 40vw, 30rem)" : "90%",
               }}
             >
               Empower the community with your unique workout program

@@ -101,22 +101,21 @@ const WorkoutView: React.FC = () => {
       )}
       <Grid item xs={12} lg={8}>
         <Grid container columnSpacing={4} rowSpacing={2}>
-          <Grid item sm={6}>
-            <WorkoutProgress
-              timesPerWeek={workout.timesPerWeek}
-              variant="current"
-              currentUser={currentUser}
-              currentWorkout={workout}
-            />
-          </Grid>
-          <Grid item sm={6}>
-            <WorkoutProgress
-              timesPerWeek={workout.timesPerWeek}
-              variant="previous"
-              currentUser={currentUser}
-              currentWorkout={workout}
-            />
-          </Grid>
+          {["current", "previous"].map((item) => (
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              sx={{ display: "flex", justifyContent: "center" }}
+            >
+              <WorkoutProgress
+                timesPerWeek={workout.timesPerWeek}
+                variant={item}
+                currentUser={currentUser}
+                currentWorkout={workout}
+              />
+            </Grid>
+          ))}
         </Grid>
       </Grid>
       {screenSize > 1200 ? (

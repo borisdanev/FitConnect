@@ -27,16 +27,14 @@ const WorkoutDetails: React.FC<Props> = ({
         {desc}
       </Typography>
       <Typography
-        sx={{
-          display: "flex",
-          mb: 1,
-        }}
         className="h5"
+        sx={{
+          borderBottom: "1px solid #00e676",
+          mb: 1,
+          display: "inline-block",
+        }}
       >
-        <Typography sx={{ opacity: "0.8", mr: 1 }}>Type:</Typography>
-        <Typography sx={{ borderBottom: "1px solid #00e676" }}>
-          {type}
-        </Typography>
+        {type} Workout
       </Typography>
       <RatingStars rating={rating} rates={rates} />
       <Typography

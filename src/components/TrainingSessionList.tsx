@@ -41,6 +41,9 @@ const TrainingSessionList: React.FC<Props> = ({
         value={value}
         sx={{
           width: "10rem",
+          bgcolor: "#29332e",
+          pl: 1,
+          mb: 2,
         }}
         disableUnderline
         variant="standard"

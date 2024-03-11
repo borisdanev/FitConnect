@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import useScreenSize from "../hooks/useScreenSize";
 import {
   RootState,
   useGetJoinedWorkoutQuery,
@@ -27,6 +28,7 @@ const WorkoutProgress: React.FC<Props> = ({
   currentWorkout,
 }) => {
   const dispatch = useDispatch();
+  const screenSize = useScreenSize();
   const finishedTrainingSessions = useSelector(
     (state: RootState) => state.activeWorkout.finishedTrainingSessions
   );
@@ -42,7 +44,9 @@ const WorkoutProgress: React.FC<Props> = ({
     dispatch(setFinishedTrainingSessions(data.finishedSessions));
   }, [data]);
   return (
-    <Box>
+    <Box
+      sx={{ width: screenSize > 600 ? "100%" : "clamp(15rem, 40vw, 20rem)" }}
+    >
       <CircularProgressbarWithChildren
         value={
           variant === "current"
