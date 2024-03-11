@@ -70,7 +70,11 @@ const WorkoutList: React.FC<Props> = ({
                 ))}
           {programList && (
             <Grid item sm={gridSpace.sm} md={gridSpace.md} lg={gridSpace.lg}>
-              <CreateProgramAction width="100%" height="17.8rem" />
+              <CreateProgramAction
+                width="100%"
+                height="17.8rem"
+                bgColor="#37423d"
+              />
             </Grid>
           )}
         </Grid>
@@ -88,7 +92,7 @@ const WorkoutList: React.FC<Props> = ({
       )}
       {screenSize < 900 && programList && (
         <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <CreateProgramAction width="7rem" height="7rem" />
+          <CreateProgramAction width="7rem" height="7rem" bgColor="#37423d" />
         </Box>
       )}
       {workouts && workouts.length === 0 && (

@@ -1,12 +1,13 @@
+import useCreateProgram from "../hooks/useCreateProgram";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { IoMdAdd } from "react-icons/io";
-import useCreateProgram from "../hooks/useCreateProgram";
 interface Props {
   width: string;
   height: string;
+  bgColor: string;
 }
-const CreateProgramAction: React.FC<Props> = ({ width, height }) => {
+const CreateProgramAction: React.FC<Props> = ({ width, height, bgColor }) => {
   const createProgram = useCreateProgram();
   return (
     <Box
@@ -17,7 +18,7 @@ const CreateProgramAction: React.FC<Props> = ({ width, height }) => {
         alignSelf: "center",
         justifyContent: "center",
         borderRadius: "0.5rem",
-        bgcolor: "#37423d",
+        bgcolor: bgColor,
         width,
         height,
       }}

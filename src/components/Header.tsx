@@ -134,7 +134,7 @@ const Header = () => {
         xs={screenSize > 430 ? (!currentUser.id ? 3 : 1) : 4}
         md={4}
         lg={3}
-        sx={{ display: "flex", alignItems: "center" }}
+        // sx={{ display: "flex", alignItems: "center" }}
       >
         <Box sx={{ display: "flex", justifyContent: "end" }}>
           {!currentUser.id ? (

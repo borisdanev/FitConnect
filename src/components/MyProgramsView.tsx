@@ -52,6 +52,7 @@ const MyProgramsView: React.FC = () => {
                 <CreateProgramAction
                   width="clamp(7rem, 20vw, 9rem)"
                   height="clamp(7rem, 20vw, 9rem)"
+                  bgColor="#37423d"
                 />
               </Box>
             </Box>

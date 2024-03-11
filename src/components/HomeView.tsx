@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import SuggestedWorkouts from "./SuggestedWorkouts";
 import WorkoutTypesList from "./WorkoutTypesList";
 import CoverImage from "./CoverImage";
+import CreateProgramAction from "./CreateProgramAction";
 const HomeView: React.FC = () => {
   const screenSize = useScreenSize();
   return (
@@ -43,9 +44,16 @@ const HomeView: React.FC = () => {
             >
               Empower the community with your unique workout program
             </Typography>
-            <Button variant="contained" sx={{ ml: 3, mt: 2 }}>
+            {/* <Button variant="contained" sx={{ ml: 3, mt: 2 }}>
               Create Program
-            </Button>
+            </Button> */}
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+              <CreateProgramAction
+                width={"5.5rem"}
+                height="5.5rem"
+                bgColor="#29332e"
+              />
+            </Box>
           </Box>
           {screenSize > 550 && (
             <img

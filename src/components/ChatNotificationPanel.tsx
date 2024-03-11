@@ -26,22 +26,39 @@ const ChatNotificationPanel: React.FC<Props> = ({
       style={{ display: isOpened ? "block" : "none" }}
     >
       <Box sx={{ width: "18rem", bgcolor: "#37423d" }}>
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Box sx={{ display: "flex" }}>
           {["Sessions", "Chat"].map((item, i) => (
-            <Typography
-              className="h5"
-              sx={{
-                width: "50%",
-                textAlign: "center",
-                bgcolor:
+            <motion.div
+              initial={{ backgroundColor: "#37423d", color: "white" }}
+              animate={{
+                backgroundColor:
                   item === active.label ? "hsl(151, 100%, 90%)" : "#37423d",
                 color: item === active.label ? "#00e676" : "white",
                 borderBottom: item === active.label ? "5px solid #00e676" : "",
               }}
-              onClick={() => setActive({ label: item, index: i })}
+              transition={{ duration: 0.15 }}
+              style={{
+                width: "50%",
+                display: "flex",
+                justifyContent: "center",
+              }}
             >
-              {item}
-            </Typography>
+              <Typography
+                className="h5"
+                sx={{
+                  width: "50%",
+                  textAlign: "center",
+                  // bgcolor:
+                  //   item === active.label ? "hsl(151, 100%, 90%)" : "#37423d",
+                  // color: item === active.label ? "#00e676" : "white",
+                  // borderBottom:
+                  //   item === active.label ? "5px solid #00e676" : "",
+                }}
+                onClick={() => setActive({ label: item, index: i })}
+              >
+                {item}
+              </Typography>
+            </motion.div>
           ))}
         </Box>
         <IconButton onClick={() => setOpened(false)}>
