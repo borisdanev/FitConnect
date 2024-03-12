@@ -58,8 +58,26 @@ const MediaForm: React.FC<Props> = ({
   useEffect(() => {
     if (!formik.values.imgFile) return;
     const reader = new FileReader();
+    console.log(reader);
     reader.onloadend = () => {
-      setWorkoutImgSrc(reader.result as string);
+      const img = new Image();
+      img.onload = () => {
+        console.log("here again");
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        if (!ctx) return;
+        ctx.drawImage(img, 0, 0);
+        const webPDataUrl = canvas.toDataURL("image/webp");
+        console.log(webPDataUrl);
+      };
+      img.onerror = (error) => {
+        console.error("Error loading image:", error);
+      };
+      // setWorkoutImgSrc(reader.result as string);
+      // Convert the canvas content to a data URL representing a WebP image
+      // setWorkoutImgSrc(reader.result as string);
     };
     reader.readAsDataURL(formik.values.imgFile);
   }, [formik.values.imgFile]);

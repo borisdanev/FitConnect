@@ -7,6 +7,7 @@ import { WorkoutModel } from "../types/workout.model";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { HiUsers } from "react-icons/hi";
+import WorkoutImg from "./WorkoutImg";
 import RatingStars from "./RatingStars";
 import Skeleton from "@mui/material/Skeleton";
 interface Props {
@@ -24,11 +25,7 @@ const Workout: React.FC<Props> = ({ workout }) => {
       {isLoading ? (
         <Skeleton variant="rectangular" width="100%" height="12.5rem" />
       ) : (
-        <img
-          src={workoutSrc}
-          style={{ width: "100%", height: "12.5rem", objectFit: "cover" }}
-          alt="workout cover image"
-        />
+        <WorkoutImg workoutId={workout.id} />
       )}
       <Typography variant="h4" className="h3">
         {workout.title}

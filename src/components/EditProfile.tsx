@@ -38,7 +38,6 @@ const EditProfile: React.FC<Props> = ({
         value: formik.values[key as keyof ProfileModel],
       }));
     setDataToChange(changedData);
-    console.log("changing");
   }, [formik.values]);
   return (
     <Box sx={{ bgcolor: "#37423d", p: 2 }}>

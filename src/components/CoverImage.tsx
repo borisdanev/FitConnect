@@ -1,7 +1,8 @@
+import { lazy } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ImageSrc from "../images/cover.webp";
-
+import { Helmet } from "react-helmet";
 const CoverImage: React.FC = () => {
   return (
     <Box
@@ -15,6 +16,14 @@ const CoverImage: React.FC = () => {
         zIndex: "-1",
       }}
     >
+      <Helmet>
+        <link
+          rel="preload"
+          href={"./images/cover.webp"}
+          as="image"
+          fetchPriority="high"
+        />
+      </Helmet>
       <Box
         sx={{ position: "absolute", bgcolor: "black", opacity: "0.5" }}
         className="position-fill"
