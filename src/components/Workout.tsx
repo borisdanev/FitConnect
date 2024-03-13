@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { selectView, useGetStoragePictureQuery } from "../store";
-import { setWorkout } from "../store";
+import { useGetStoragePictureQuery, selectView, setWorkout } from "../store";
 import { ViewEnum } from "../enums/View";
 import { WorkoutModel } from "../types/workout.model";
 import Box from "@mui/material/Box";
@@ -16,6 +15,7 @@ interface Props {
 const Workout: React.FC<Props> = ({ workout }) => {
   const dispatch = useDispatch();
   const { data: workoutSrc, isLoading } = useGetStoragePictureQuery(workout.id);
+
   const handleClick = () => {
     dispatch(setWorkout(workout));
     dispatch(selectView(ViewEnum.Workout));

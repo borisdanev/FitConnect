@@ -2,7 +2,7 @@ import { lazy } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ImageSrc from "../images/cover.webp";
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 const CoverImage: React.FC = () => {
   return (
     <Box
@@ -16,14 +16,11 @@ const CoverImage: React.FC = () => {
         zIndex: "-1",
       }}
     >
-      <Helmet>
-        <link
-          rel="preload"
-          href={"./images/cover.webp"}
-          as="image"
-          fetchPriority="high"
-        />
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <link rel="preload" href={ImageSrc} as="image" fetchPriority="high" />
+        </Helmet>
+      </HelmetProvider>
       <Box
         sx={{ position: "absolute", bgcolor: "black", opacity: "0.5" }}
         className="position-fill"
@@ -38,13 +35,14 @@ const CoverImage: React.FC = () => {
           left: "4rem",
         }}
       >
-        <span style={{ color: "#00e676" }}>Find</span> a Workout That Align Best
-        With Your <span style={{ color: "#00e676" }}>Goals</span>
+        <span style={{ color: "#00e676" }}>Find</span> a Workout That Aligns
+        Best With Your <span style={{ color: "#00e676" }}>Goals</span>
       </Typography>
       <img
         src={ImageSrc}
         style={{ width: "100%", height: "100%", objectFit: "cover" }}
         alt="Cover image of man lifting barbell"
+        // fetchPriority="high"
       />
     </Box>
   );

@@ -101,8 +101,9 @@ const WorkoutView: React.FC = () => {
       )}
       <Grid item xs={12} lg={8}>
         <Grid container columnSpacing={4} rowSpacing={2}>
-          {["current", "previous"].map((item) => (
+          {["current", "previous"].map((item, i) => (
             <Grid
+              key={i}
               item
               xs={12}
               sm={6}

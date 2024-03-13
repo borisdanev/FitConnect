@@ -1,3 +1,4 @@
+import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import RatingStars from "./RatingStars";
 import { HiUsers } from "react-icons/hi";
@@ -48,7 +49,7 @@ const WorkoutDetails: React.FC<Props> = ({
         <HiUsers style={{ marginRight: "0.9rem" }} /> {members}{" "}
         {members > 1 ? "members" : "member"}
       </Typography>
-      <Typography
+      <Box
         sx={{
           mt: 1,
           display: "flex",
@@ -58,9 +59,9 @@ const WorkoutDetails: React.FC<Props> = ({
       >
         <Typography sx={{ opacity: "0.8", mr: 1 }} className="h5">
           Created by
-        </Typography>{" "}
-        {creator}
-      </Typography>
+        </Typography>
+        <Typography> {creator}</Typography>
+      </Box>
     </>
   );
 };

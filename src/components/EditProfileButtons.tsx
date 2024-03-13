@@ -40,7 +40,7 @@ const EditProfileButtons: React.FC<Props> = ({
     <Box
       sx={{
         display: "flex",
-        flexDirection: screenSize < 1300 && screenSize > 600 ? "column" : "row",
+        flexDirection: screenSize < 1300 ? "column" : "row",
         width: "100%",
         justifyContent: "space-between",
         mt: 1,
@@ -51,7 +51,7 @@ const EditProfileButtons: React.FC<Props> = ({
         sx={{
           bgcolor: grey[300],
           color: grey[700],
-          width: screenSize < 1300 && screenSize > 600 ? "100%" : "50%",
+          width: screenSize < 1300 ? "100%" : "50%",
           mr: 2,
           "&:hover": {
             backgroundColor: grey[400],
@@ -63,7 +63,8 @@ const EditProfileButtons: React.FC<Props> = ({
       </Button>
       <Button
         sx={{
-          width: screenSize < 1300 && screenSize > 600 ? "100%" : "50%",
+          width: screenSize < 1300 ? "100%" : "50%",
+          mt: screenSize < 1330 ? 1 : 0,
           bgcolor: `${
             dataToChange.length > 0
               ? "hsl(151, 100%,40%)"

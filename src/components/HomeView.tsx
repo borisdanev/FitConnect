@@ -66,6 +66,7 @@ const HomeView: React.FC = () => {
                 objectFit: "cover",
               }}
               draggable="false"
+              loading="lazy"
               alt="Fit man posing"
             />
           )}
