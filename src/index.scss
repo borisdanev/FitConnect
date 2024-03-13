@@ -151,6 +151,11 @@ body {
   color: white !important;
   font-size: 0.5rem !important;
 }
+.create-program-slider {
+  .slick-slider {
+    overflow: hidden;
+  }
+}
 .slick-dots li.slick-active button:before {
   color: rgb(0, 230, 118) !important;
 }

@@ -17,7 +17,11 @@ const FormContainer: React.FC<Props> = ({ children, text, handleSubmit }) => {
         handleSubmit(e);
       }}
     >
-      <Typography textAlign="center" className="h3" sx={{ mb: 2 }}>
+      <Typography
+        textAlign="center"
+        className="h3 heading-color"
+        sx={{ mb: 2 }}
+      >
         {text}
       </Typography>
       <Box

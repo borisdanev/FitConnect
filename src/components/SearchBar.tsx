@@ -60,7 +60,11 @@ const SearchBar = () => {
         <>{searchForm}</>
       ) : (
         <>
-          <IconButton sx={{ ml: 1 }} onClick={() => setOpenedSearch(true)}>
+          <IconButton
+            aria-label="Search"
+            sx={{ ml: 1 }}
+            onClick={() => setOpenedSearch(true)}
+          >
             <IoIosSearch />
           </IconButton>
           {openedSearch && (

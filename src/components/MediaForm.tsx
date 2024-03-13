@@ -59,6 +59,7 @@ const MediaForm: React.FC<Props> = ({
     if (!formik.values.imgFile) return;
     const reader = new FileReader();
     reader.onloadend = () => {
+      console.log(reader.result);
       setWorkoutImgSrc(reader.result as string);
     };
     reader.readAsDataURL(formik.values.imgFile);

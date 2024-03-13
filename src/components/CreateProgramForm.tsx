@@ -28,6 +28,9 @@ const CreateProgramForm: React.FC<Props> = ({ setShowMessage }) => {
     arrows: false,
     dots: true,
     swipe: false,
+    infinite: false,
+    slidesToScroll: 1,
+    slidesToShow: 1,
   };
   const model: WorkoutModel = {
     title: "",
@@ -86,6 +89,7 @@ const CreateProgramForm: React.FC<Props> = ({ setShowMessage }) => {
               maxWidth: "100% !important",
               height: "30rem",
             }}
+            className="create-program-slider"
           >
             <Slider ref={sliderRef} {...sliderSettings}>
               {[
