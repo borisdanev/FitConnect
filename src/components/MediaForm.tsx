@@ -8,6 +8,7 @@ import Slider from "react-slick";
 import FormContainer from "./FormContainer";
 import { FaImage } from "react-icons/fa6";
 import Typography from "@mui/material/Typography";
+import Textarea from "./Textarea";
 import { WorkoutModel } from "../types/workout.model";
 import FormHelperText from "@mui/material/FormHelperText";
 interface Props {
@@ -70,7 +71,7 @@ const MediaForm: React.FC<Props> = ({
       text="Title & Description"
     >
       <Box>
-        {[
+        {/* {[
           { text: "Title", value: "title" },
           { text: "Description", value: "description" },
         ].map((item) => (
@@ -88,7 +89,18 @@ const MediaForm: React.FC<Props> = ({
             value={formik.values[item.value as keyof FormValues]}
             onChange={formik.handleChange}
           />
-        ))}
+        ))} */}
+        <TextField
+          id="title"
+          name="title"
+          label={"Title"}
+          sx={{ width: "100%", mb: 2 }}
+          helperText={formik.touched.title && formik.errors.title}
+          className="form-input"
+          value={formik.values.title}
+          onChange={formik.handleChange}
+        />
+        <Textarea />
         <Box
           sx={{
             display: "flex",

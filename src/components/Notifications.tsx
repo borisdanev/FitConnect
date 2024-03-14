@@ -1,5 +1,3 @@
-import { useSelector } from "react-redux";
-import { RootState, useGetJoinedWorkoutQuery } from "../store";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Box from "@mui/material/Box";
