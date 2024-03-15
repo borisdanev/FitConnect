@@ -64,7 +64,7 @@ const ExerciseDetailsSelection: React.FC<Props> = ({
                     : ""
                 }
                 onChange={formik.handleChange}
-                placeholder={item}
+                placeholder={i < 2 ? item : `${item} (min)`}
               />
               <Box sx={{ color: "#59B386" }}>
                 {

@@ -10,10 +10,7 @@ const useDynamicSchema = (inputs: number[]) => {
       const key = `input${i}${k + 1}`;
       return [
         key,
-        Yup.number()
-          .integer("Enter whole number")
-          .required("Required")
-          .min(0, "Enter positive number"),
+        Yup.number().required("Required").min(0, "Enter positive number"),
       ];
     });
 

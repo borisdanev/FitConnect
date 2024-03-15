@@ -1,6 +1,11 @@
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import useScreenSize from "../hooks/useScreenSize";
+import { RootState } from "../store";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import CreateProgramForm from "./CreateProgramForm";
+import SuccessMessage from "./SuccessMessage";
+import { IoMdCheckmark } from "react-icons/io";
 import FitMan from "../images/fit_man.webp";
 import Typography from "@mui/material/Typography";
 import SuggestedWorkouts from "./SuggestedWorkouts";
@@ -9,6 +14,10 @@ import CoverImage from "./CoverImage";
 import CreateProgramAction from "./CreateProgramAction";
 const HomeView: React.FC = () => {
   const screenSize = useScreenSize();
+  const openedCreateProgramForm = useSelector(
+    (state: RootState) => state.form.openedCreateProgramForm
+  );
+  const [showMessage, setShowMessage] = useState<boolean>(false);
   return (
     <>
       <CoverImage />
@@ -54,6 +63,9 @@ const HomeView: React.FC = () => {
                 bgColor="#29332e"
               />
             </Box>
+            {openedCreateProgramForm && (
+              <CreateProgramForm setShowMessage={setShowMessage} />
+            )}
           </Box>
           {screenSize > 550 && (
             <img
@@ -68,6 +80,13 @@ const HomeView: React.FC = () => {
               draggable="false"
               loading="lazy"
               alt="Fit man posing"
+            />
+          )}
+          {showMessage && (
+            <SuccessMessage
+              width="20rem"
+              message="Program created successfully!"
+              Icon={IoMdCheckmark}
             />
           )}
         </Box>
