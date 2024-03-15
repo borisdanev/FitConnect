@@ -1,8 +1,14 @@
 import { TextareaAutosize as BaseTextareaAutosize } from "@mui/base/TextareaAutosize";
-import grey from "@mui/material/colors/grey";
-import blue from "@mui/material/colors/blue";
+import { FormikValues, FormikProps } from "formik";
 import styled from "@mui/system/styled";
-const Textarea: React.FC = () => {
+interface Props {
+  formik: FormikProps<{
+    title: string;
+    description: string;
+    imgFile: File | null;
+  }>;
+}
+const Textarea: React.FC<Props> = ({ formik }) => {
   const Textarea = styled(BaseTextareaAutosize)(
     () => `
     box-sizing: border-box;
@@ -29,9 +35,14 @@ const Textarea: React.FC = () => {
   );
   return (
     <Textarea
+      id="description"
+      name="description"
+      value={formik.values.description}
       aria-label="minimum height"
       minRows={5}
       placeholder="Description"
+      className="form-input"
+      onChange={formik.handleChange}
     />
   );
 };

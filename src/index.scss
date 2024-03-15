@@ -94,7 +94,9 @@ body {
   & label {
     color: rgb(0, 230, 118);
   }
-
+  ::-webkit-scrollbar {
+    width: 0;
+  }
   & .MuiInput-underline:after {
     border-bottom-color: rgb(0, 230, 118);
   }

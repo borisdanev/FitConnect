@@ -71,36 +71,27 @@ const MediaForm: React.FC<Props> = ({
       text="Title & Description"
     >
       <Box>
-        {/* {[
-          { text: "Title", value: "title" },
-          { text: "Description", value: "description" },
-        ].map((item) => (
-          <TextField
-            key={item.value}
-            id={item.value}
-            name={item.value}
-            label={item.text}
-            sx={{ width: "100%", mb: 2 }}
-            helperText={
-              formik.touched[item.value as keyof FormValues] &&
-              formik.errors[item.value as keyof FormValues]
-            }
-            className="form-input"
-            value={formik.values[item.value as keyof FormValues]}
-            onChange={formik.handleChange}
-          />
-        ))} */}
         <TextField
           id="title"
           name="title"
-          label={"Title"}
+          label="Title"
           sx={{ width: "100%", mb: 2 }}
           helperText={formik.touched.title && formik.errors.title}
           className="form-input"
           value={formik.values.title}
           onChange={formik.handleChange}
         />
-        <Textarea />
+        <TextField
+          id="description"
+          label="Description"
+          multiline
+          value={formik.values.description}
+          helperText={formik.touched.description && formik.errors.description}
+          sx={{ width: "100%", mb: 2 }}
+          rows={4}
+          className="form-input"
+          onChange={formik.handleChange}
+        />
         <Box
           sx={{
             display: "flex",
