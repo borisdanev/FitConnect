@@ -22,7 +22,7 @@ const CoverImage: React.FC = () => {
         className="h2 heading-color"
         sx={{
           position: "absolute",
-          width: "clamp(22rem,35vw,29rem)",
+          width: "clamp(22rem,35vw,31rem)",
           maxWidth: "90%",
           top: "40%",
           left: "4rem",
