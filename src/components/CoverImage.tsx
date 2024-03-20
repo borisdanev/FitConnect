@@ -17,7 +17,7 @@ const CoverImage: React.FC = () => {
     >
       <HelmetProvider>
         <Helmet>
-          <link rel="preload" as="image" href={ImageSrc} />
+          <link rel="preload" fetchPriority="high" as="image" href={ImageSrc} />
         </Helmet>
       </HelmetProvider>
       <Box
@@ -40,6 +40,7 @@ const CoverImage: React.FC = () => {
       <img
         src={ImageSrc}
         style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        loading="lazy"
         alt="Cover image of man lifting barbell"
       />
     </Box>

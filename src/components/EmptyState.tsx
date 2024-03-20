@@ -17,7 +17,13 @@ const EmptyState: React.FC<Props> = ({ illustrationSrc, text }) => {
       </HelmetProvider>
       <img
         src={illustrationSrc}
-        style={{ width: "32rem", height: "auto", maxWidth: "100%" }}
+        style={{
+          width: "32rem",
+          height: "350px",
+          objectFit: "cover",
+          maxWidth: "100%",
+        }}
+        alt="Empty state"
       />
       <Typography className="h3 heading-color">{text}</Typography>
     </Box>
