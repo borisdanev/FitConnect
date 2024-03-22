@@ -13,8 +13,6 @@ const SideBarLink: React.FC<Props> = ({ text, Icon }) => {
   return (
     <Box
       className="h5 "
-      // variant={selectedView !== text ? "text" : "contained"}
-
       sx={{
         bgcolor: `${
           selectedView === text ? "hsl(151, 100%, 90%)" : "transparent"

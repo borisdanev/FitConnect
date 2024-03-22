@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useUpdateUserMutation } from "../store";
 import useScreenSize from "../hooks/useScreenSize";
 import { EditableUserData } from "../enums/EditableUserData";

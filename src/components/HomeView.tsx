@@ -53,9 +53,6 @@ const HomeView: React.FC = () => {
             >
               Empower the community with your unique workout program
             </Typography>
-            {/* <Button variant="contained" sx={{ ml: 3, mt: 2 }}>
-              Create Program
-            </Button> */}
             <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
               <CreateProgramAction
                 width={"clamp(5.5rem, 20vw, 6.5rem)"}

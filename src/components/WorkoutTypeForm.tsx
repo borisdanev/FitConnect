@@ -6,7 +6,6 @@ import MuscleBuildingImg from "../images/muscle_building.webp";
 import WeightLossImg from "../images/weight_loss.webp";
 import EnduranceImg from "../images/endurance.webp";
 import StrengthImg from "../images/strength.webp";
-import FlexibilityImg from "../images/flexibility.jpg";
 import Grid from "@mui/material/Grid";
 import Slider from "react-slick";
 import FormContainer from "./FormContainer";

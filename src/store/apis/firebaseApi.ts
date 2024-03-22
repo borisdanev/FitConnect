@@ -10,6 +10,14 @@ import {
   updateDoc,
   getDoc,
 } from "firebase/firestore";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  GithubAuthProvider,
+} from "firebase/auth";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { WorkoutModel } from "../../types/workout.model";
 import { User } from "../../types/user.model";
@@ -30,6 +38,7 @@ const config = {
 };
 const app = initializeApp(config);
 const db = getFirestore(app);
+// auth.getUsers().then()
 export const firebaseApi = createApi({
   reducerPath: "firebaseApi",
   baseQuery: fakeBaseQuery(),
@@ -40,13 +49,22 @@ export const firebaseApi = createApi({
         const collectionRef = collection(db, "workouts");
         const snapshots = await getDocs(collectionRef);
         const data = snapshots.docs.map((doc) => doc.data() as WorkoutModel);
-        console.log(data);
         return { data };
       },
       providesTags: ["Create"],
     }),
-    getUser: builder.query<User, string>({
-      queryFn: async (email) => {
+    getUser: builder.query<User, { email: string; password: string }>({
+      queryFn: async (props) => {
+        const { email, password } = props;
+        const auth = getAuth(app);
+        if (email && password) {
+          const userCredentials = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          const user = userCredentials.user;
+        }
         const snapshots = await getDocs(collection(db, "users"));
         const users = snapshots.docs.map((doc) => doc.data() as User);
         const [data] = users.filter((user) => user.email === email);
@@ -70,7 +88,6 @@ export const firebaseApi = createApi({
     >({
       queryFn: async (args) => {
         const docRef = doc(db, "users", args.userId);
-        console.log("here");
         const snapshot = await getDoc(docRef);
         const data = snapshot.data() as User;
         const [workout] = data.workouts.filter(
@@ -82,7 +99,6 @@ export const firebaseApi = createApi({
     }),
     getEmails: builder.query<string[], void>({
       queryFn: async () => {
-        console.log("here");
         const snapshots = await getDocs(collection(db, "users"));
         const users = snapshots.docs.map((doc) => doc.data() as User);
         const data = users.map((user) => user.email);
@@ -91,8 +107,6 @@ export const firebaseApi = createApi({
     }),
     getExercises: builder.query<ExerciseModel[], void>({
       queryFn: async () => {
-        console.log("here");
-
         const snapshots = await getDocs(collection(db, "exercises"));
         const data = snapshots.docs.map((doc) => doc.data() as ExerciseModel);
         return { data };
@@ -101,8 +115,6 @@ export const firebaseApi = createApi({
     getMembersChat: builder.query<Message[], string>({
       queryFn: async (workoutId) => {
         const docRef = doc(db, "workouts", workoutId);
-        console.log("here");
-
         const snap = await getDoc(docRef);
         const data = snap.data() as WorkoutModel;
         const messages = data.membersChat.reverse();
@@ -115,10 +127,8 @@ export const firebaseApi = createApi({
         try {
           const storage = getStorage();
           const url = (await getDownloadURL(ref(storage, id))) as string;
-          console.log("here again");
           return { data: url };
         } catch (err) {
-          console.log(err);
           return {
             error: {
               status: 500,
@@ -131,16 +141,31 @@ export const firebaseApi = createApi({
     }),
     createUser: builder.mutation<void, User>({
       queryFn: async (user) => {
-        console.log("here");
-
+        const auth = getAuth(app);
+        await createUserWithEmailAndPassword(auth, user.email, user.password);
         await setDoc(doc(db, "users", user.id), user);
+        return { data: undefined };
+      },
+    }),
+    googleAuth: builder.mutation<void, void>({
+      queryFn: async () => {
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        return { data: undefined };
+      },
+    }),
+    githubAuth: builder.mutation<void, void>({
+      queryFn: async () => {
+        const auth = getAuth(app);
+        const provider = new GithubAuthProvider();
+        const result = await signInWithPopup(auth, provider);
         return { data: undefined };
       },
     }),
     createProgram: builder.mutation<void, WorkoutModel>({
       queryFn: async (program) => {
-        console.log("here");
-
         await setDoc(doc(db, "workouts", program.id), {
           ...program,
         });
@@ -151,8 +176,6 @@ export const firebaseApi = createApi({
     joinWorkout: builder.mutation<void, { workout: WorkoutModel; id: string }>({
       queryFn: async (args) => {
         const userRef = doc(db, "users", args.id);
-        console.log("here");
-
         const workoutRef = doc(db, "workouts", args.workout.id);
         const getDocument = async () => {
           const docSnap = await getDoc(workoutRef);
@@ -183,8 +206,6 @@ export const firebaseApi = createApi({
     >({
       queryFn: async (args) => {
         const docRef = doc(db, "users", args.userId);
-        console.log("here");
-
         const userSnapshot = await getDoc(docRef);
         const user = userSnapshot.data() as User;
         const [workout] = user.workouts.filter(
@@ -213,8 +234,6 @@ export const firebaseApi = createApi({
     >({
       queryFn: async (args) => {
         const { userId, workoutId, finishedSessions } = args;
-        console.log("here");
-
         const userRef = doc(db, "users", userId);
         const userSnapshot = await getDoc(userRef);
         const user = userSnapshot.data() as User;
@@ -243,8 +262,6 @@ export const firebaseApi = createApi({
     >({
       queryFn: async (args) => {
         const { userId, data } = args;
-        console.log("here");
-
         const userRef = doc(db, "users", userId);
         data.forEach(async (item) => {
           await updateDoc(userRef, {
@@ -257,8 +274,6 @@ export const firebaseApi = createApi({
     updateJoinedWorkout: builder.mutation<void, string>({
       queryFn: async (workoutId) => {
         const userSnapshots = await getDocs(collection(db, "users"));
-        console.log("here");
-
         const users = userSnapshots.docs.map((doc) => doc.data() as User);
         const workoutRef = doc(db, "workouts", workoutId);
         const workoutSnapshot = await getDoc(workoutRef);
@@ -290,8 +305,6 @@ export const firebaseApi = createApi({
     sendMessage: builder.mutation<void, Message>({
       queryFn: async (message) => {
         const docRef = doc(db, "workouts", message.workoutId);
-        console.log("here");
-
         const workoutSnapshot = await getDoc(docRef);
         const workout = workoutSnapshot.data() as WorkoutModel;
         await updateDoc(docRef, {
@@ -304,8 +317,6 @@ export const firebaseApi = createApi({
     uploadImage: builder.mutation<void, { file: File; id: string }>({
       queryFn: async (args) => {
         const storage = getStorage();
-        console.log("here");
-
         const storageRef = ref(storage, args.id);
         await uploadBytes(storageRef, args.file);
         return { data: undefined };
@@ -317,8 +328,6 @@ export const firebaseApi = createApi({
     >({
       queryFn: async (args) => {
         const { currentRating, newRating, totalRates } = args.rating;
-        console.log("here");
-
         const workoutRef = doc(db, "workouts", args.id);
         const userRef = doc(db, "users", args.uid);
         const userSnapshot = await getDoc(userRef);
@@ -347,7 +356,6 @@ export const firebaseApi = createApi({
     >({
       queryFn: async (args) => {
         const { notification, workoutId } = args;
-        console.log("here");
 
         const workoutRef = doc(db, "workouts", workoutId);
         const workoutSnapshot = await getDoc(workoutRef);
@@ -363,6 +371,8 @@ export const firebaseApi = createApi({
 export const {
   useGetWorkoutsQuery,
   useCreateUserMutation,
+  useGoogleAuthMutation,
+  useGithubAuthMutation,
   useGetEmailsQuery,
   useGetUserQuery,
   useGetUserWorkoutsQuery,

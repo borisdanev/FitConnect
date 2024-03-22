@@ -6,12 +6,13 @@ import {
   setOpenedSignupForm,
   setOpenedLoginForm,
 } from "../store";
+import { useFormik } from "formik";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import AuthOverlay from "./AuthOverlay";
-import { useFormik } from "formik";
+import PlatformAuthList from "./PlatformAuthList";
 import * as Yup from "yup";
 import { v4 as uuidv4 } from "uuid";
 import { IoEye } from "react-icons/io5";
@@ -116,6 +117,7 @@ const SignupForm: React.FC = () => {
         <Button type="submit" variant="contained">
           Sign Up
         </Button>
+        <PlatformAuthList />
         <Typography className="h5" sx={{ mt: 2 }}>
           Already have an account?{" "}
           <span

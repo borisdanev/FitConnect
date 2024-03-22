@@ -5,9 +5,6 @@ import useScreenSize from "../hooks/useScreenSize";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
-import { FaLink } from "react-icons/fa6";
-import { FaUsers } from "react-icons/fa";
-import { FaClipboard } from "react-icons/fa";
 import UserIllustation from "../images/user_illustration.webp";
 import EmptyState from "./EmptyState";
 import ProfileDetails from "./ProfileDetails";
@@ -44,11 +41,6 @@ const ProfileView = () => {
       .email("Invalid email")
       .matches(/@[^.]*\./, "Invalid email")
       .required("Email is required"),
-    // .test(
-    //   "email",
-    //   "Email is alredy in use",
-    //   (value) => !emailsList?.includes(value)
-    // ),
     password: Yup.string()
       .min(6, "Password must be at least 6 characters")
       .required("Password is required"),

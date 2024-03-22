@@ -9,7 +9,6 @@ import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 interface Props {
   isMember: boolean;
-  // isCreator: boolean;
 }
 const MembersChat: React.FC<Props> = ({ isMember }) => {
   const currentWorkout = useSelector(
@@ -30,9 +29,7 @@ const MembersChat: React.FC<Props> = ({ isMember }) => {
   return (
     <Box
       sx={{
-        // bgcolor: "#4E6157",
         bgcolor: "#37423d",
-        // border: "3px #4E6157 solid",
         p: 2,
         borderRadius: "0.5rem",
         ml: 2,

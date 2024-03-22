@@ -1,4 +1,4 @@
-import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ExerciseModel } from "../../types/exercise.model";
 import { TrainingSessionModel } from "../../types/trainingSession.model";
 interface State {

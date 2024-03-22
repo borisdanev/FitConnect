@@ -1,11 +1,12 @@
+import { useGetUserQuery, setCurrentUser, setOpenedLoginForm } from "../store";
 import { useDispatch } from "react-redux";
+import { useFormik } from "formik";
 import AuthOverlay from "./AuthOverlay";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import PlatformAuthList from "./PlatformAuthList";
 import * as Yup from "yup";
-import { useGetUserQuery, setCurrentUser, setOpenedLoginForm } from "../store";
-import { useFormik } from "formik";
 interface FormValues {
   email: string;
   password: string;
@@ -39,7 +40,10 @@ const LoginForm: React.FC = () => {
     validationSchema,
     onSubmit: handleSubmit,
   });
-  const { data } = useGetUserQuery(formik.values.email);
+  const { data } = useGetUserQuery({
+    email: formik.values.email,
+    password: formik.values.password,
+  });
   return (
     <AuthOverlay setOpenedForm={setOpenedLoginForm}>
       <form className="auth-form" onSubmit={formik.handleSubmit}>
@@ -77,6 +81,7 @@ const LoginForm: React.FC = () => {
         <Button type="submit" variant="contained">
           Login
         </Button>
+        <PlatformAuthList />
       </form>
     </AuthOverlay>
   );

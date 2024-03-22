@@ -4,5 +4,4 @@ export enum WorkoutType {
   MuscleBuilding = "Muscle Building",
   StrengthWorkout = "Strength Workout",
   EnduranceWorkout = "Endurance Workout",
-  Flexibility = "Flexibility",
 }

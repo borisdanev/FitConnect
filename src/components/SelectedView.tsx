@@ -9,9 +9,6 @@ import MyProgramsView from "./MyProgramsView";
 import MyWorkoutsView from "./MyWorkoutsView";
 const SelectedView = () => {
   const selectedView = useSelector((state: RootState) => state.view.value);
-  const currentUser = useSelector(
-    (state: RootState) => state.currentUser.value
-  );
   switch (selectedView) {
     case ViewEnum.Home: {
       return (

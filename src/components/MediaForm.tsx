@@ -8,7 +8,6 @@ import Slider from "react-slick";
 import FormContainer from "./FormContainer";
 import { FaImage } from "react-icons/fa6";
 import Typography from "@mui/material/Typography";
-import Textarea from "./Textarea";
 import { WorkoutModel } from "../types/workout.model";
 import FormHelperText from "@mui/material/FormHelperText";
 interface Props {
