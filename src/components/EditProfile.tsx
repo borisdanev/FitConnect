@@ -83,7 +83,7 @@ const EditProfile: React.FC<Props> = ({
           <TextField
             label="Bio"
             variant="outlined"
-            value="Nothing"
+            value=""
             sx={{ width: "100%" }}
           />
         </Grid>

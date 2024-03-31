@@ -29,6 +29,7 @@ const ChatNotificationPanel: React.FC<Props> = ({
         <Box sx={{ display: "flex" }}>
           {["Sessions", "Chat"].map((item, i) => (
             <motion.div
+              key={i}
               initial={{ backgroundColor: "#37423d", color: "white" }}
               animate={{
                 backgroundColor:
@@ -48,11 +49,6 @@ const ChatNotificationPanel: React.FC<Props> = ({
                 sx={{
                   width: "50%",
                   textAlign: "center",
-                  // bgcolor:
-                  //   item === active.label ? "hsl(151, 100%, 90%)" : "#37423d",
-                  // color: item === active.label ? "#00e676" : "white",
-                  // borderBottom:
-                  //   item === active.label ? "5px solid #00e676" : "",
                 }}
                 onClick={() => setActive({ label: item, index: i })}
               >
