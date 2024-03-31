@@ -15,6 +15,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signInWithRedirect,
   GoogleAuthProvider,
   GithubAuthProvider,
 } from "firebase/auth";
@@ -151,7 +152,10 @@ export const firebaseApi = createApi({
       queryFn: async () => {
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
-        const result = await signInWithPopup(auth, provider);
+        let result;
+        if (window.innerWidth > 600)
+          result = await signInWithPopup(auth, provider);
+        else result = await signInWithRedirect(auth, provider);
         const user = result.user;
         return { data: undefined };
       },
