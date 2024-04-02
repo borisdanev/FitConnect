@@ -32,7 +32,6 @@ const HomeView: React.FC = () => {
         </Box>
         <WorkoutTypesList />
         <Box
-          // className="gradient"
           sx={{
             height: "15rem",
             bgcolor: "#37423d",

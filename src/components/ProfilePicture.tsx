@@ -11,16 +11,20 @@ const photoStyle: React.CSSProperties = {
 interface Props {
   selectedImage?: string;
   userId: string;
+  hasProfilePicture: boolean;
   width: string;
   height: string;
 }
 const ProfilePicture: React.FC<Props> = ({
   selectedImage,
   userId,
+  hasProfilePicture,
   width,
   height,
 }) => {
-  const { data, isLoading } = useGetStoragePictureQuery(userId);
+  const { data, isLoading } = useGetStoragePictureQuery(
+    hasProfilePicture ? userId : ""
+  );
   return (
     <Box
       sx={{

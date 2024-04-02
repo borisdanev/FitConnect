@@ -21,6 +21,9 @@ const CreateProgramAction: React.FC<Props> = ({ width, height, bgColor }) => {
         bgcolor: bgColor,
         width,
         height,
+        "&:hover": {
+          cursor: "pointer",
+        },
       }}
       onClick={createProgram}
     >

@@ -48,7 +48,7 @@ const ProfileView = () => {
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values: ProfileModel) => console.log(values),
+    onSubmit: (values: ProfileModel) => {},
   });
   const Buttons = (
     <EditProfileButtons

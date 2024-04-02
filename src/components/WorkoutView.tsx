@@ -31,10 +31,7 @@ const WorkoutView: React.FC = () => {
   const isActiveWorkout = useSelector(
     (state: RootState) => state.activeWorkout.isActive
   );
-  const { data: user } = useGetUserQuery({
-    email: currentUser.email,
-    password: currentUser.password,
-  });
+  const { data: user } = useGetUserQuery(currentUser.email);
   const { data: workoutSrc } = useGetStoragePictureQuery(workout.id);
   const isMember = useIsMember(workout.id, user ? user.workouts : []);
   const screenSize = useScreenSize();

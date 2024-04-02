@@ -22,7 +22,6 @@ const SuggestedWorkouts: React.FC<Props> = ({ gridSpace }) => {
         <Filters type={type} setType={setType} />
         <WorkoutSorting sortBy={sortBy} setSortBy={setSortBy} />
       </Box>
-
       <WorkoutList
         sortBy={sortBy}
         type={type}

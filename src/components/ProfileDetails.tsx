@@ -66,6 +66,7 @@ const ProfileDetails: React.FC<Props> = ({ currentUser }) => {
         <ProfilePicture
           selectedImage={selectedImage}
           userId={currentUser.id}
+          hasProfilePicture={currentUser.hasProfilePicture}
           width={screenSize > 1200 ? "7rem" : "5rem"}
           height={screenSize > 1200 ? "7rem" : "5rem"}
         />
@@ -90,9 +91,9 @@ const ProfileDetails: React.FC<Props> = ({ currentUser }) => {
           { text: "Joined Workout", data: currentUser.workouts.length },
           {
             text: "Total Members",
-            data: currentUser.workouts.reduce((acc, current) => {
-              return acc + current.workout.members;
-            }, 0),
+            data: currentUser.workouts
+              .filter((workout) => workout.workout.creatorId === currentUser.id)
+              .reduce((acc, current) => acc + current.workout.members, 0),
           },
         ].map((item, i, arr) => (
           <Grid

@@ -10,7 +10,7 @@ interface Props {
   userId: string;
 }
 const HeaderTooltips: React.FC<Props> = ({ screenSize, userId }) => {
-  const { data: joinedWorkouts } = useGetUserWorkoutsQuery(userId);
+  const { data: joinedWorkouts, error } = useGetUserWorkoutsQuery(userId);
   return (
     <Box className="h3" sx={{ display: "flex", justifyContent: "end" }}>
       <Tooltip

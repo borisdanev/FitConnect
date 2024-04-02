@@ -40,10 +40,7 @@ const LoginForm: React.FC = () => {
     validationSchema,
     onSubmit: handleSubmit,
   });
-  const { data } = useGetUserQuery({
-    email: formik.values.email,
-    password: formik.values.password,
-  });
+  const { data } = useGetUserQuery(formik.values.email);
   return (
     <AuthOverlay setOpenedForm={setOpenedLoginForm}>
       <form className="auth-form" onSubmit={formik.handleSubmit}>

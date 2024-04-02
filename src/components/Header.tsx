@@ -107,6 +107,7 @@ const Header = () => {
               <Box onClick={() => dispatch(selectView(ViewEnum.Profile))}>
                 <ProfilePicture
                   userId={currentUser.id}
+                  hasProfilePicture={currentUser.hasProfilePicture}
                   width="2rem"
                   height="2rem"
                 />

@@ -56,8 +56,8 @@ const SignupForm: React.FC = () => {
       lastName,
       email,
       password,
+      hasProfilePicture: false,
       workouts: [],
-      programs: [],
       id: uuidv4(),
     };
     createUser(user);

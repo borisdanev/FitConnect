@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { rootReducer } from "./rootReducer";
+import { getFirestore } from "firebase/firestore";
 import {
   firebaseApi,
   useGetWorkoutsQuery,
   useCreateUserMutation,
   useGoogleAuthMutation,
-  useGithubAuthMutation,
   useGetEmailsQuery,
   useGetUserQuery,
   useGetUserWorkoutsQuery,
@@ -56,9 +56,10 @@ import { setSearchKeyword, setWorkoutType } from "./slices/searchSlice";
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleWare) =>
-    getDefaultMiddleWare({ serializableCheck: false }).concat([
-      firebaseApi.middleware,
-    ]),
+    getDefaultMiddleWare({
+      serializableCheck: false,
+      thunk: { extraArgument: { getFirestore } },
+    }).concat([firebaseApi.middleware]),
 });
 export type RootState = ReturnType<typeof store.getState>;
 export {
@@ -66,7 +67,6 @@ export {
   selectView,
   useCreateUserMutation,
   useGoogleAuthMutation,
-  useGithubAuthMutation,
   setCurrentUser,
   useGetEmailsQuery,
   useGetUserQuery,

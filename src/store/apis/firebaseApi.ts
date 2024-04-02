@@ -12,7 +12,7 @@ import {
 } from "firebase/firestore";
 import {
   getAuth,
-  createUserWithEmailAndPassword,
+  User as FirebaseUser,
   signInWithEmailAndPassword,
   signInWithPopup,
   signInWithRedirect,
@@ -39,7 +39,6 @@ const config = {
 };
 const app = initializeApp(config);
 const db = getFirestore(app);
-// auth.getUsers().then()
 export const firebaseApi = createApi({
   reducerPath: "firebaseApi",
   baseQuery: fakeBaseQuery(),
@@ -54,18 +53,8 @@ export const firebaseApi = createApi({
       },
       providesTags: ["Create"],
     }),
-    getUser: builder.query<User, { email: string; password: string }>({
-      queryFn: async (props) => {
-        const { email, password } = props;
-        const auth = getAuth(app);
-        if (email && password) {
-          const userCredentials = await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-          );
-          const user = userCredentials.user;
-        }
+    getUser: builder.query<User, string>({
+      queryFn: async (email) => {
         const snapshots = await getDocs(collection(db, "users"));
         const users = snapshots.docs.map((doc) => doc.data() as User);
         const [data] = users.filter((user) => user.email === email);
@@ -75,6 +64,7 @@ export const firebaseApi = createApi({
     }),
     getUserWorkouts: builder.query<JoinedWorkout[], string>({
       queryFn: async (userId) => {
+        if (!userId) return { data: [] };
         const docRef = doc(db, "users", userId);
         const snapshot = await getDoc(docRef);
         const data = snapshot.data() as User;
@@ -126,6 +116,7 @@ export const firebaseApi = createApi({
     getStoragePicture: builder.query<string, string>({
       queryFn: async (id) => {
         try {
+          if (!id) return { data: "" };
           const storage = getStorage();
           const url = (await getDownloadURL(ref(storage, id))) as string;
           return { data: url };
@@ -142,22 +133,30 @@ export const firebaseApi = createApi({
     }),
     createUser: builder.mutation<void, User>({
       queryFn: async (user) => {
-        const auth = getAuth(app);
-        await createUserWithEmailAndPassword(auth, user.email, user.password);
         await setDoc(doc(db, "users", user.id), user);
         return { data: undefined };
       },
     }),
-    googleAuth: builder.mutation<void, void>({
+    googleAuth: builder.mutation<FirebaseUser, void>({
       queryFn: async () => {
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-        let result;
-        if (window.innerWidth > 600)
-          result = await signInWithPopup(auth, provider);
-        else result = await signInWithRedirect(auth, provider);
-        const user = result.user;
-        return { data: undefined };
+        try {
+          const auth = getAuth(app);
+          const provider = new GoogleAuthProvider();
+          let result;
+          if (window.innerWidth > 600)
+            result = await signInWithPopup(auth, provider);
+          else result = await signInWithRedirect(auth, provider);
+          const user = result.user;
+          return { data: user };
+        } catch (err) {
+          return {
+            error: {
+              status: 500,
+              statusText: "Internal Server Error",
+              data: "Auth error occured.",
+            },
+          };
+        }
       },
     }),
     githubAuth: builder.mutation<void, void>({
@@ -326,6 +325,17 @@ export const firebaseApi = createApi({
         return { data: undefined };
       },
     }),
+    setProfilePictur: builder.mutation<void, string>({
+      queryFn: async (userId) => {
+        const docRef = doc(db, "users", userId);
+        const userSnapshot = await getDoc(docRef);
+        const user = userSnapshot.data() as User;
+        await updateDoc(docRef, {
+          hasProfilePicture: true,
+        });
+        return { data: undefined };
+      },
+    }),
     rateWorkout: builder.mutation<
       void,
       { id: string; uid: string; rating: RatingModel }
@@ -376,7 +386,6 @@ export const {
   useGetWorkoutsQuery,
   useCreateUserMutation,
   useGoogleAuthMutation,
-  useGithubAuthMutation,
   useGetEmailsQuery,
   useGetUserQuery,
   useGetUserWorkoutsQuery,

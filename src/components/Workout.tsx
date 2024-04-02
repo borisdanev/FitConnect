@@ -15,13 +15,12 @@ interface Props {
 const Workout: React.FC<Props> = ({ workout }) => {
   const dispatch = useDispatch();
   const { data: workoutSrc, isLoading } = useGetStoragePictureQuery(workout.id);
-
   const handleClick = () => {
     dispatch(setWorkout(workout));
     dispatch(selectView(ViewEnum.Workout));
   };
   return (
-    <Box onClick={handleClick}>
+    <Box onClick={handleClick} sx={{ "&:hover": { cursor: "pointer" } }}>
       {isLoading ? (
         <Skeleton variant="rectangular" width="100%" height="12.5rem" />
       ) : (

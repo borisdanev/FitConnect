@@ -20,7 +20,12 @@ const ChatMessage: React.FC<Props> = ({ message, sender, lastSender }) => {
       }}
     >
       {lastSender !== sender && currentUser.id !== sender && (
-        <ProfilePicture userId={sender} width="2rem" height="2rem" />
+        <ProfilePicture
+          userId={sender}
+          hasProfilePicture={currentUser.hasProfilePicture}
+          width="2rem"
+          height="2rem"
+        />
       )}
       <Box
         sx={{

@@ -10,6 +10,7 @@ const initialState: State = {
     lastName: "",
     email: "",
     password: "",
+    hasProfilePicture: false,
     workouts: [],
     id: "",
   },

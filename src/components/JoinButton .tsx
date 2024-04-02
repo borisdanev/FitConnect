@@ -20,6 +20,7 @@ const JoinButton: React.FC<Props> = ({ workout, user }) => {
   const currentUser = useSelector(
     (state: RootState) => state.currentUser.value
   );
+  console.log(currentUser);
   const currentWorkout = useSelector(
     (state: RootState) => state.currentWorkout.value
   );
@@ -27,6 +28,7 @@ const JoinButton: React.FC<Props> = ({ workout, user }) => {
   const [addNotification] = useAddNotificationMutation();
   const [updateJoinedWorkout] = useUpdateJoinedWorkoutMutation();
   const handleJoin = () => {
+    console.log(user);
     if (!user) {
       dispatch(setOpenedSignupForm(true));
       return;
